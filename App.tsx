@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import {
   useFonts,
   Lato_400Regular,
   Lato_700Bold,
 } from "@expo-google-fonts/lato";
 import AppLoading from "expo-app-loading";
+import AccountNavigator from "./src/navigation/AccountNavigation";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -17,19 +17,5 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return (
-    <View style={styles.container}>
-      <Text>Music Box app!</Text>
-      <Text>Music Box app!</Text>
-    </View>
-  );
+  return <AccountNavigator />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
