@@ -13,7 +13,11 @@ const AccountNavigator = () => {
   return (
     <NavigationContainer>
       <Navigator initialRouteName="StartScreen">
-        <Screen name="StartScreen" component={StartScreen} />
+        <Screen
+          options={{ title: "Music Box", headerShown: false }}
+          name="StartScreen"
+          component={StartScreen}
+        />
         <Screen name="Login" component={Login} />
         <Screen name="Signup" component={Signup} />
       </Navigator>
