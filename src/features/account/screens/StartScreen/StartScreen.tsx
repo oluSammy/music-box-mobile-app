@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  //   Button,
   StyleSheet,
   ImageBackground,
   Image,
@@ -47,9 +46,15 @@ const StartScreen: React.FC<Props> = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity activeOpacity={0.8} style={styles.socialBtnBox}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={styles.socialBtnBox}
+          onPress={() => {
+            navigation.navigate("Signup");
+          }}
+        >
           <View style={styles.socialBtnEmail}>
-            <Text style={styles.socialBtnTextEmail}>Sign Up With Google</Text>
+            <Text style={styles.socialBtnTextEmail}>Sign Up With Email</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.loginBox}>

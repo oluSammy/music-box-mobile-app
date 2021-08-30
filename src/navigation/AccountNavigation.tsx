@@ -18,8 +18,16 @@ const AccountNavigator = () => {
           name="StartScreen"
           component={StartScreen}
         />
-        <Screen name="Login" component={Login} />
-        <Screen name="Signup" component={Signup} />
+        <Screen
+          options={{ title: "Log In", headerShown: false }}
+          name="Login"
+          component={Login}
+        />
+        <Screen
+          options={{ title: "Log In", headerShown: false }}
+          name="Signup"
+          component={Signup}
+        />
       </Navigator>
     </NavigationContainer>
   );
