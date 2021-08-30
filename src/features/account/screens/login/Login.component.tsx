@@ -11,10 +11,10 @@ import {
 } from "react-native";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { StyledSafeArea } from "../../../../components/SafeArea/SafeArea";
+import GradientBg from "../../../../components/Ui/GradientBg";
 
 type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
 const isAndroid = Platform.OS === "android" && Platform.Version >= 21;
@@ -23,10 +23,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
   let passwordRef: any;
 
   return (
-    <LinearGradient
-      style={styles.container}
-      colors={["#CA42F2", "#6A42F2", "#4294F2", "#42B5F2"]}
-    >
+    <GradientBg>
       <StyledSafeArea>
         {isAndroid ? (
           <TouchableNativeFeedback
@@ -100,7 +97,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </StyledSafeArea>
-    </LinearGradient>
+    </GradientBg>
   );
 };
 

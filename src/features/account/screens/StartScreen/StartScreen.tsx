@@ -1,24 +1,22 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FontAwesome } from "@expo/vector-icons";
+import {
+  StyledFacebookBtn,
+  StyledFacebookGoogle,
+  StyledFacebookEmail,
+} from "../../../../components/Buttons/SocialButtons";
+import ImageBg from "../../../../components/Ui/ImageBg";
 
 type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
 
 const StartScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require("../../../../../assets/images/start-screen-bg.png")}
-        style={styles.image}
+      <ImageBg
+        image={require("../../../../../assets/images/start-screen-bg.png")}
       >
         <View style={styles.imgBox}>
           <Image
@@ -31,19 +29,19 @@ const StartScreen: React.FC<Props> = ({ navigation }) => {
 
         <View>
           <TouchableOpacity activeOpacity={0.8} style={styles.socialBtnBox}>
-            <View style={styles.socialBtn}>
+            <StyledFacebookBtn>
               <FontAwesome name="facebook" size={28} color="#FFFFFF" />
               <Text style={styles.socialBtnText}>Sign Up With Facebook</Text>
-            </View>
+            </StyledFacebookBtn>
           </TouchableOpacity>
 
           <TouchableOpacity activeOpacity={0.8} style={styles.socialBtnBox}>
-            <View style={styles.socialBtnGoogle}>
+            <StyledFacebookGoogle>
               <FontAwesome name="google" size={28} color="red" />
               <Text style={styles.socialBtnTextGoogle}>
                 Sign Up With Google
               </Text>
-            </View>
+            </StyledFacebookGoogle>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -53,9 +51,9 @@ const StartScreen: React.FC<Props> = ({ navigation }) => {
             navigation.navigate("Signup");
           }}
         >
-          <View style={styles.socialBtnEmail}>
+          <StyledFacebookEmail>
             <Text style={styles.socialBtnTextEmail}>Sign Up With Email</Text>
-          </View>
+          </StyledFacebookEmail>
         </TouchableOpacity>
         <View style={styles.loginBox}>
           <Text style={styles.loginQ}>Already have an account?</Text>
@@ -66,7 +64,7 @@ const StartScreen: React.FC<Props> = ({ navigation }) => {
             <Text style={styles.loginAction}>Log In</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
+      </ImageBg>
     </View>
   );
 };
@@ -91,15 +89,6 @@ const styles = StyleSheet.create({
     marginBottom: "10%",
     alignItems: "center",
   },
-  socialBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#4267B2",
-    width: "85%",
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 30,
-  },
   socialBtnText: {
     marginLeft: "16%",
     color: "#FFFFFF",
@@ -115,27 +104,6 @@ const styles = StyleSheet.create({
   socialBtnBox: {
     alignItems: "center",
     marginBottom: 20,
-  },
-  socialBtnGoogle: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#ffffff",
-    width: "85%",
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 30,
-  },
-  socialBtnEmail: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "85%",
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 30,
-    borderColor: "#FFFFFF",
-    borderWidth: 2,
-    justifyContent: "center",
-    marginTop: "15%",
   },
 
   socialBtnTextEmail: {

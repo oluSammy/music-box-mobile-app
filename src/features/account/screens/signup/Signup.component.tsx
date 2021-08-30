@@ -11,15 +11,15 @@ import {
 } from "react-native";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { StyledSafeArea } from "../../../../components/SafeArea/SafeArea";
+import GradientBg from "../../../../components/Ui/GradientBg";
 
 type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
-const isAndroid = Platform.OS === "android" && Platform.Version >= 21;
+const isAndroid = Platform.OS === "android";
 
 const Signup: React.FC<Props> = ({ navigation }) => {
   let passwordRef: any;
@@ -41,22 +41,23 @@ const Signup: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleConfirm = (selectedDate: Date) => {
-    setDate(
-      selectedDate.toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    );
+    if (isAndroid) {
+      setDate(
+        selectedDate.toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      );
+    } else {
+      setDate(selectedDate.toLocaleString().split(",")[0]);
+    }
     hideDatePicker();
   };
 
   return (
-    <LinearGradient
-      style={styles.container}
-      colors={["#CA42F2", "#6A42F2", "#4294F2", "#42B5F2"]}
-    >
+    <GradientBg>
       <StyledSafeArea>
         {isAndroid ? (
           <TouchableNativeFeedback
@@ -164,6 +165,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
+          maximumDate={new Date()}
         />
 
         <View style={styles.btnContainer}>
@@ -172,14 +174,11 @@ const Signup: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </StyledSafeArea>
-    </LinearGradient>
+    </GradientBg>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   arrowBack: {
     marginLeft: "10%",
     marginTop: 10,
