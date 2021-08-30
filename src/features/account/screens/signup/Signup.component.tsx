@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   Platform,
   TouchableOpacity,
   TouchableNativeFeedback,
@@ -17,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import { StyledSafeArea } from "../../../../components/SafeArea/SafeArea";
 
 type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
 const isAndroid = Platform.OS === "android" && Platform.Version >= 21;
@@ -41,7 +41,14 @@ const Signup: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleConfirm = (selectedDate: Date) => {
-    setDate(selectedDate.toLocaleString().split(",")[0]);
+    setDate(
+      selectedDate.toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    );
     hideDatePicker();
   };
 
@@ -50,7 +57,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
       style={styles.container}
       colors={["#CA42F2", "#6A42F2", "#4294F2", "#42B5F2"]}
     >
-      <SafeAreaView>
+      <StyledSafeArea>
         {isAndroid ? (
           <TouchableNativeFeedback
             onPress={() => navigation.goBack()}
@@ -121,28 +128,34 @@ const Signup: React.FC<Props> = ({ navigation }) => {
               >
                 Gender
               </Text>
-              <DropDownPicker
-                open={open}
-                value={value}
-                items={items}
-                setOpen={setOpen}
-                setValue={setValue}
-                setItems={setItems}
-                placeholder="select Gender"
-                style={styles.dropdownStyle}
-                placeholderStyle={styles.dropdownPlaceholderStyle}
-                ArrowUpIconComponent={() => (
-                  <SimpleLineIcons name="arrow-up" size={13} color="#FFFFFF" />
-                )}
-                ArrowDownIconComponent={() => (
-                  <SimpleLineIcons
-                    name="arrow-down"
-                    size={13}
-                    color="#FFFFFF"
-                  />
-                )}
-                labelStyle={styles.dropdownLabelStyle}
-              />
+              <View style={styles.pickerContainer}>
+                <DropDownPicker
+                  open={open}
+                  value={value}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  setItems={setItems}
+                  placeholder="select Gender"
+                  style={styles.dropdownStyle}
+                  placeholderStyle={styles.dropdownPlaceholderStyle}
+                  ArrowUpIconComponent={() => (
+                    <SimpleLineIcons
+                      name="arrow-up"
+                      size={13}
+                      color="#FFFFFF"
+                    />
+                  )}
+                  ArrowDownIconComponent={() => (
+                    <SimpleLineIcons
+                      name="arrow-down"
+                      size={13}
+                      color="#FFFFFF"
+                    />
+                  )}
+                  labelStyle={styles.dropdownLabelStyle}
+                />
+              </View>
             </View>
           </View>
         </KeyboardAvoidingView>
@@ -158,7 +171,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
             <Text style={styles.creatAcctText}>DONE</Text>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
+      </StyledSafeArea>
     </LinearGradient>
   );
 };
@@ -257,6 +270,9 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontFamily: "Lato_900Black",
     fontSize: 18,
+  },
+  pickerContainer: {
+    minHeight: 100,
   },
 });
 

@@ -7,6 +7,7 @@ import {
 } from "@expo-google-fonts/lato";
 import AppLoading from "expo-app-loading";
 import AccountNavigator from "./src/navigation/AccountNavigation";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -19,5 +20,10 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return <AccountNavigator />;
+  return (
+    <>
+      <AccountNavigator />
+      <ExpoStatusBar style="auto" />
+    </>
+  );
 }

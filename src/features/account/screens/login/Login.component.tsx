@@ -2,9 +2,7 @@ import React from "react";
 import {
   View,
   Text,
-  // Button,
   StyleSheet,
-  SafeAreaView,
   Platform,
   TouchableOpacity,
   TouchableNativeFeedback,
@@ -16,6 +14,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { StyledSafeArea } from "../../../../components/SafeArea/SafeArea";
 
 type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
 const isAndroid = Platform.OS === "android" && Platform.Version >= 21;
@@ -28,7 +27,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
       style={styles.container}
       colors={["#CA42F2", "#6A42F2", "#4294F2", "#42B5F2"]}
     >
-      <SafeAreaView style={styles.safeArea}>
+      <StyledSafeArea>
         {isAndroid ? (
           <TouchableNativeFeedback
             onPress={() => navigation.goBack()}
@@ -100,7 +99,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
+      </StyledSafeArea>
     </LinearGradient>
   );
 };
