@@ -8,6 +8,8 @@ import {
   TouchableNativeFeedback,
   TextInput,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -15,9 +17,20 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { StyledSafeArea } from "../../../../components/SafeArea/SafeArea";
 import GradientBg from "../../../../components/Ui/GradientBg";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import {
+  ErrorWrapper,
+  ErrorText,
+} from "../../../../components/Text/ErrorWrapper";
 
 type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
 const isAndroid = Platform.OS === "android" && Platform.Version >= 21;
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().required("required*"),
+});
 
 const Login: React.FC<Props> = ({ navigation }) => {
   let passwordRef: any;
@@ -25,86 +38,143 @@ const Login: React.FC<Props> = ({ navigation }) => {
   return (
     <GradientBg>
       <StyledSafeArea>
-        {isAndroid ? (
-          <TouchableNativeFeedback
-            onPress={() => navigation.goBack()}
-            style={styles.arrowBack}
-          >
-            <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
-          </TouchableNativeFeedback>
-        ) : (
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.arrowBack}
-          >
-            <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
-          </TouchableOpacity>
-        )}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View>
+            {isAndroid ? (
+              <TouchableNativeFeedback
+                onPress={() => navigation.goBack()}
+                style={styles.arrowBack}
+              >
+                <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
+              </TouchableNativeFeedback>
+            ) : (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={styles.arrowBack}
+              >
+                <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
+              </TouchableOpacity>
+            )}
 
-        <Text style={styles.title}>Log In</Text>
-        <KeyboardAvoidingView>
-          <View style={styles.inputContainer}>
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Email</Text>
-              <TextInput
-                style={styles.input}
-                textContentType="emailAddress"
-                selectionColor="#000"
-                // autoFocus={true}
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() => passwordRef.focus()}
-                blurOnSubmit={false}
-              />
-            </View>
-          </View>
-          <View style={styles.inputContainer}>
-            <View style={styles.inputGroup}>
-              <Text style={styles.inputLabel}>Password</Text>
-              <TextInput
-                style={styles.input}
-                textContentType="password"
-                selectionColor="#000"
-                autoCapitalize="none"
-                returnKeyType="done"
-                secureTextEntry={true}
-                ref={(ref) => (passwordRef = ref)}
-              />
-            </View>
-          </View>
-          <View style={styles.btnBox}>
-            <TouchableOpacity style={styles.loginBtn}>
-              <Text style={styles.loginBtnText}>Log In</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-        <View style={styles.socials}>
-          <TouchableOpacity activeOpacity={0.8} style={styles.socialBtnBox}>
-            <View style={styles.socialBtn}>
-              <FontAwesome name="facebook" size={28} color="#FFFFFF" />
-              <Text style={styles.socialBtnText}>Sign Up With Facebook</Text>
-            </View>
-          </TouchableOpacity>
+            <Text style={styles.title}>Log In</Text>
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              onSubmit={(values) => {
+                console.log(values);
+              }}
+              validationSchema={LoginSchema}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                values,
+                touched,
+                errors,
+                // isValid,
+              }) => (
+                <KeyboardAvoidingView
+                  behavior={!isAndroid ? "padding" : "height"}
+                >
+                  <View style={styles.inputContainer}>
+                    <View style={styles.inputGroup}>
+                      <Text style={styles.inputLabel}>Email</Text>
+                      <TextInput
+                        style={styles.input}
+                        textContentType="emailAddress"
+                        selectionColor="#000"
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                        returnKeyType="next"
+                        onSubmitEditing={() => passwordRef.focus()}
+                        blurOnSubmit={false}
+                        onChangeText={handleChange("email")}
+                        onBlur={handleBlur("email")}
+                        value={values.email}
+                      />
+                      <ErrorWrapper>
+                        <ErrorText>
+                          {errors.email && touched.email && errors.email}
+                        </ErrorText>
+                      </ErrorWrapper>
+                    </View>
+                  </View>
+                  <View style={styles.inputContainer}>
+                    <View style={styles.inputGroup}>
+                      <Text style={styles.inputLabel}>Password</Text>
+                      <TextInput
+                        style={styles.input}
+                        textContentType="password"
+                        selectionColor="#000"
+                        autoCapitalize="none"
+                        returnKeyType="done"
+                        secureTextEntry={true}
+                        ref={(ref) => (passwordRef = ref)}
+                        onChangeText={handleChange("password")}
+                        onBlur={handleBlur("password")}
+                        value={values.password}
+                      />
+                      <ErrorWrapper>
+                        <ErrorText>
+                          {errors.password &&
+                            touched.password &&
+                            errors.password}
+                        </ErrorText>
+                      </ErrorWrapper>
+                    </View>
+                    {/* <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={styles.inputGroup}
+                    >
+                      <Text style={styles.forgotPassword}>
+                        Forgot Password? click here
+                      </Text>
+                    </TouchableOpacity> */}
+                  </View>
+                  <View style={styles.btnBox}>
+                    <TouchableOpacity
+                      style={styles.loginBtn}
+                      activeOpacity={0.8}
+                      onPress={() => {
+                        console.log(values);
+                      }}
+                    >
+                      <Text style={styles.loginBtnText}>Log In</Text>
+                    </TouchableOpacity>
+                  </View>
+                </KeyboardAvoidingView>
+              )}
+            </Formik>
 
-          <TouchableOpacity activeOpacity={0.8} style={styles.socialBtnBox}>
-            <View style={styles.socialBtnGoogle}>
-              <FontAwesome name="google" size={28} color="red" />
-              <Text style={styles.socialBtnTextGoogle}>
-                Sign Up With Google
-              </Text>
+            <View style={styles.socials}>
+              <TouchableOpacity activeOpacity={0.8} style={styles.socialBtnBox}>
+                <View style={styles.socialBtn}>
+                  <FontAwesome name="facebook" size={28} color="#FFFFFF" />
+                  <Text style={styles.socialBtnText}>
+                    Sign Up With Facebook
+                  </Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity activeOpacity={0.8} style={styles.socialBtnBox}>
+                <View style={styles.socialBtnGoogle}>
+                  <FontAwesome name="google" size={28} color="red" />
+                  <Text style={styles.socialBtnTextGoogle}>
+                    Sign Up With Google
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableWithoutFeedback>
       </StyledSafeArea>
     </GradientBg>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     flex: 1,
   },
@@ -121,6 +191,12 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: 30,
+  },
+  forgotPassword: {
+    fontSize: 16,
+    color: "#FFFFFF",
+    marginTop: 20,
+    fontFamily: "Lato_700Bold",
   },
   inputGroup: {
     paddingHorizontal: 20,

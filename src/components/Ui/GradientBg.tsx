@@ -2,7 +2,11 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet } from "react-native";
 
-const GradientBg: React.FC = (props) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const GradientBg: React.FC<Props> = (props) => {
   return (
     <LinearGradient
       colors={["#CA42F2", "#6A42F2", "#4294F2", "#42B5F2"]}
