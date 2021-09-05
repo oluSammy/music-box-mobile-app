@@ -3,8 +3,10 @@ import React, {
   Dispatch,
   SetStateAction,
   useState,
+  useEffect,
 } from "react";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IUser {
   user: any;
@@ -56,14 +58,36 @@ interface Props {
   children: React.ReactNode;
 }
 
+const loadUser = async () => {
+  try {
+    const loggedInUser = await AsyncStorage.getItem("music-box-user");
+    if (loggedInUser) {
+      return JSON.parse(loggedInUser);
+    } else {
+      return null;
+    }
+  } catch (err) {
+    return null;
+  }
+};
+
 export const AuthContext = createContext({} as AuthProp);
 
 const AuthProvider = (props: Props) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
   const [isSigningUp, setIsSigningUp] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
   const [signupError, setSignupError] = useState<any>(null);
+
+  useEffect(() => {
+    const loadPrevUser = async () => {
+      const prevUser = await loadUser();
+      setUser(prevUser);
+    };
+
+    loadPrevUser();
+  }, [setUser]);
 
   const signUp = async ({
     email,
@@ -91,7 +115,7 @@ const AuthProvider = (props: Props) => {
       );
       setIsSigningUp(false);
       setUser(data);
-      console.log(data);
+      await AsyncStorage.setItem("music-box-user", JSON.stringify(data));
     } catch (err) {
       setIsSigningUp(false);
       setSignupError(err.response.data.message);
@@ -112,9 +136,9 @@ const AuthProvider = (props: Props) => {
       );
       setIsLoggingIn(false);
       setUser(data);
-      console.log(data);
+
+      await AsyncStorage.setItem("music-box-user", JSON.stringify(data));
     } catch (err) {
-      console.log(err.response.data.message);
       setIsLoggingIn(false);
       setError(err.response.data.message);
     }

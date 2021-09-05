@@ -105,9 +105,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
                 email: "",
                 password: "",
               }}
-              onSubmit={(values) => {
-                console.log(values);
-              }}
+              onSubmit={() => {}}
               validationSchema={LoginSchema}
               validateOnMount={true}
             >

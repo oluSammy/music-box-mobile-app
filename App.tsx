@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   useFonts,
   Lato_400Regular,
@@ -6,9 +6,10 @@ import {
   Lato_900Black,
 } from "@expo-google-fonts/lato";
 import AppLoading from "expo-app-loading";
-import AccountNavigator from "./src/navigation/AccountNavigation";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import AuthProvider from "./src/services/authentication/auth.service";
+
+import Navigation from "./src/navigation";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -24,7 +25,7 @@ export default function App() {
   return (
     <>
       <AuthProvider>
-        <AccountNavigator />
+        <Navigation />
       </AuthProvider>
       <ExpoStatusBar style="auto" />
     </>

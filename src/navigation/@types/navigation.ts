@@ -5,3 +5,7 @@ export type accountNavigatorParamsList = {
   RecoverPassword: undefined;
   ResetPassword: undefined;
 };
+
+export type drawerNavigationParamsList = {
+  Home: undefined;
+};
