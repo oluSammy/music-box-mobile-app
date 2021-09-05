@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,8 @@ import {
   NativeTouchEvent,
   Keyboard,
   TouchableWithoutFeedback,
+  ActivityIndicator,
+  Button,
 } from "react-native";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -28,6 +30,16 @@ import {
   ErrorWrapper,
   ErrorText,
 } from "../../../../components/Text/ErrorWrapper";
+import {
+  AuthContext,
+  ISignupParam,
+} from "../../../../services/authentication/auth.service";
+import Modal from "react-native-modal";
+import {
+  ModalContainer,
+  ModalContent,
+  ModalErrText,
+} from "../../../../components/Ui/Modals/AuthModal";
 
 type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
 const isAndroid = Platform.OS === "android";
@@ -57,6 +69,12 @@ const Signup: React.FC<Props> = ({ navigation }) => {
   let emailRef: any;
   let confirmPasswordRef: any;
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+
+  const { signUp, isSigningUp, signupError, setSignupError } =
+    useContext(AuthContext);
+
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState<null | string>(null);
   const [open, setOpen] = useState(false);
@@ -65,6 +83,17 @@ const Signup: React.FC<Props> = ({ navigation }) => {
     { label: "Male", value: "Male" },
     { label: "Female", value: "Female" },
   ]);
+
+  useEffect(() => {
+    if (signupError) {
+      setIsModalVisible(true);
+      setErrMsg(signupError);
+    }
+
+    return () => {
+      setSignupError(null);
+    };
+  }, [setSignupError, signupError]);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -90,6 +119,15 @@ const Signup: React.FC<Props> = ({ navigation }) => {
     hideDatePicker();
   };
 
+  const handleSignUp = (vals: ISignupParam) => {
+    signUp(vals);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setErrMsg("");
+  };
+
   return (
     <GradientBg>
       <StyledSafeArea>
@@ -97,6 +135,20 @@ const Signup: React.FC<Props> = ({ navigation }) => {
           <ScrollView>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View>
+                <Modal
+                  isVisible={isModalVisible}
+                  onBackdropPress={handleCloseModal}
+                  animationInTiming={450}
+                  animationOutTiming={400}
+                  onBackButtonPress={handleCloseModal}
+                >
+                  <ModalContainer>
+                    <ModalContent>
+                      <ModalErrText>{errMsg}</ModalErrText>
+                      <Button title="Close" onPress={handleCloseModal} />
+                    </ModalContent>
+                  </ModalContainer>
+                </Modal>
                 {isAndroid ? (
                   <TouchableNativeFeedback
                     onPress={() => navigation.goBack()}
@@ -121,8 +173,28 @@ const Signup: React.FC<Props> = ({ navigation }) => {
                     password: "",
                     passwordConfirm: "",
                   }}
+                  validateOnMount={true}
                   validationSchema={SignupSchema}
-                  onSubmit={(values) => console.log(values)}
+                  onSubmit={(values) => {
+                    if (date && value) {
+                      const dateArr = date.split("/");
+                      const month =
+                        dateArr[0].length === 2
+                          ? `${dateArr[0]}`
+                          : `0${dateArr[0]}`;
+                      const day =
+                        dateArr[1].length === 2
+                          ? `${dateArr[1]}`
+                          : `0${dateArr[1]}`;
+                      const newDate = `${dateArr[2]}/${month}/${day}`;
+
+                      handleSignUp({
+                        ...values,
+                        dateOfBirth: newDate,
+                        gender: value,
+                      });
+                    }
+                  }}
                 >
                   {({
                     handleChange,
@@ -347,12 +419,18 @@ const Signup: React.FC<Props> = ({ navigation }) => {
                             }
                             activeOpacity={0.7}
                             onPress={
-                              handleSubmit as unknown as (
-                                ev: NativeSyntheticEvent<NativeTouchEvent>
-                              ) => void
+                              isValid
+                                ? (handleSubmit as unknown as (
+                                    ev: NativeSyntheticEvent<NativeTouchEvent>
+                                  ) => void)
+                                : () => {}
                             }
                           >
-                            <Text style={styles.creatAcctText}>DONE</Text>
+                            {isSigningUp ? (
+                              <ActivityIndicator size="small" color="#FFFFFF" />
+                            ) : (
+                              <Text style={styles.creatAcctText}>DONE</Text>
+                            )}
                           </TouchableOpacity>
                         </View>
                       </View>

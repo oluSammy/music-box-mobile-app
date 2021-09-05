@@ -8,6 +8,7 @@ import {
 import AppLoading from "expo-app-loading";
 import AccountNavigator from "./src/navigation/AccountNavigation";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import AuthProvider from "./src/services/authentication/auth.service";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -22,7 +23,9 @@ export default function App() {
 
   return (
     <>
-      <AccountNavigator />
+      <AuthProvider>
+        <AccountNavigator />
+      </AuthProvider>
       <ExpoStatusBar style="auto" />
     </>
   );

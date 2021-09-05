@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   Platform,
   TouchableOpacity,
   TouchableNativeFeedback,
@@ -10,7 +9,10 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  ActivityIndicator,
+  Button,
 } from "react-native";
+import Modal from "react-native-modal";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,23 +25,64 @@ import {
   ErrorWrapper,
   ErrorText,
 } from "../../../../components/Text/ErrorWrapper";
+import { styles } from "./loginStyles";
+import { AuthContext } from "../../../../services/authentication/auth.service";
+import {
+  ModalContainer,
+  ModalContent,
+  ModalErrText,
+} from "../../../../components/Ui/Modals/AuthModal";
 
 type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
 const isAndroid = Platform.OS === "android" && Platform.Version >= 21;
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email("Invalid email").required("required*"),
   password: Yup.string().required("required*"),
 });
 
 const Login: React.FC<Props> = ({ navigation }) => {
   let passwordRef: any;
+  const { login, isLoggingIn, error, setError } = useContext(AuthContext);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+
+  useEffect(() => {
+    if (error) {
+      setIsModalVisible(true);
+      setErrMsg(error);
+    }
+
+    return () => {
+      setError(null);
+    };
+  }, [error, setError]);
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setErrMsg("");
+  };
 
   return (
     <GradientBg>
       <StyledSafeArea>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
+            <Modal
+              isVisible={isModalVisible}
+              onBackdropPress={handleCloseModal}
+              animationInTiming={450}
+              animationOutTiming={400}
+              onBackButtonPress={handleCloseModal}
+            >
+              <ModalContainer>
+                <ModalContent>
+                  <ModalErrText>{errMsg}</ModalErrText>
+                  <Button title="Close" onPress={handleCloseModal} />
+                </ModalContent>
+              </ModalContainer>
+            </Modal>
+
             {isAndroid ? (
               <TouchableNativeFeedback
                 onPress={() => navigation.goBack()}
@@ -66,6 +109,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
                 console.log(values);
               }}
               validationSchema={LoginSchema}
+              validateOnMount={true}
             >
               {({
                 handleChange,
@@ -73,7 +117,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
                 values,
                 touched,
                 errors,
-                // isValid,
+                isValid,
               }) => (
                 <KeyboardAvoidingView
                   behavior={!isAndroid ? "padding" : "height"}
@@ -135,13 +179,17 @@ const Login: React.FC<Props> = ({ navigation }) => {
                   </View>
                   <View style={styles.btnBox}>
                     <TouchableOpacity
-                      style={styles.loginBtn}
+                      style={isValid ? styles.loginBtnDone : styles.loginBtn}
                       activeOpacity={0.8}
                       onPress={() => {
-                        console.log(values);
+                        login(values);
                       }}
                     >
-                      <Text style={styles.loginBtnText}>Log In</Text>
+                      {isLoggingIn ? (
+                        <ActivityIndicator size="small" color="#FFFFFF" />
+                      ) : (
+                        <Text style={styles.loginBtnText}>Log In</Text>
+                      )}
                     </TouchableOpacity>
                   </View>
                 </KeyboardAvoidingView>
@@ -173,106 +221,5 @@ const Login: React.FC<Props> = ({ navigation }) => {
     </GradientBg>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  arrowBack: {
-    marginLeft: "10%",
-    marginTop: 10,
-  },
-  title: {
-    textAlign: "center",
-    color: "#FFFFFF",
-    fontSize: 26,
-    fontFamily: "Lato_700Bold",
-    marginBottom: 40,
-  },
-  inputContainer: {
-    marginTop: 30,
-  },
-  forgotPassword: {
-    fontSize: 16,
-    color: "#FFFFFF",
-    marginTop: 20,
-    fontFamily: "Lato_700Bold",
-  },
-  inputGroup: {
-    paddingHorizontal: 20,
-  },
-  inputLabel: {
-    color: "#FFFFFF",
-    fontFamily: "Lato_400Regular",
-    fontSize: 18,
-  },
-  input: {
-    height: 50,
-    backgroundColor: "#E3D2FC",
-    marginTop: 10,
-    borderRadius: 11,
-    paddingHorizontal: 20,
-    fontFamily: "Lato_400Regular",
-    color: "#000",
-    fontSize: 18,
-  },
-  btnBox: {
-    alignItems: "center",
-    marginTop: 30,
-  },
-  loginBtn: {
-    marginTop: 50,
-    width: "40%",
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 30,
-    borderColor: "#FFFFFF",
-    borderWidth: 2,
-    alignItems: "center",
-  },
-  loginBtnText: {
-    fontFamily: "Lato_700Bold",
-    color: "#FFFFFF",
-    fontSize: 20,
-    textTransform: "uppercase",
-  },
-  socialBtnBox: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  socialBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#4267B2",
-    width: "85%",
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 30,
-  },
-  socialBtnText: {
-    marginLeft: "16%",
-    color: "#FFFFFF",
-    fontFamily: "Lato_700Bold",
-    fontSize: 18,
-  },
-  socialBtnTextGoogle: {
-    marginLeft: "16%",
-    color: "#303033",
-    fontFamily: "Lato_700Bold",
-    fontSize: 18,
-  },
-  socialBtnGoogle: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#ffffff",
-    width: "85%",
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 30,
-  },
-  socials: {
-    marginTop: "30%",
-  },
-});
 
 export default Login;

@@ -86,6 +86,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 65,
     paddingVertical: 15,
     borderRadius: 30,
+    minWidth: 180,
+    alignItems: "center",
   },
   createAcctDone: {
     backgroundColor: "#6A42F2",
@@ -93,6 +95,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 65,
     paddingVertical: 15,
     borderRadius: 30,
+    minWidth: 180,
+    alignItems: "center",
   },
   creatAcctText: {
     color: "#FFFFFF",
