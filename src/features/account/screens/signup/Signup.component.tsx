@@ -4,7 +4,6 @@ import {
   Text,
   Platform,
   TouchableOpacity,
-  TouchableNativeFeedback,
   KeyboardAvoidingView,
   TextInput,
   ScrollView,
@@ -149,21 +148,12 @@ const Signup: React.FC<Props> = ({ navigation }) => {
                     </ModalContent>
                   </ModalContainer>
                 </Modal>
-                {isAndroid ? (
-                  <TouchableNativeFeedback
-                    onPress={() => navigation.goBack()}
-                    style={styles.arrowBack}
-                  >
-                    <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
-                  </TouchableNativeFeedback>
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => navigation.goBack()}
-                    style={styles.arrowBack}
-                  >
-                    <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
+                  style={styles.arrowBack}
+                >
+                  <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
+                </TouchableOpacity>
                 <Text style={styles.title}>Create Account</Text>
                 <Formik
                   initialValues={{

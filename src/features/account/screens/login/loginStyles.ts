@@ -8,6 +8,10 @@ export const styles = StyleSheet.create({
     marginLeft: "10%",
     marginTop: 10,
   },
+  arrowBackAndroid: {
+    marginLeft: 400,
+    marginTop: 15,
+  },
   title: {
     textAlign: "center",
     color: "#FFFFFF",
@@ -44,7 +48,7 @@ export const styles = StyleSheet.create({
   },
   btnBox: {
     alignItems: "center",
-    marginTop: 80,
+    marginTop: 30,
   },
   loginBtn: {
     width: "40%",
@@ -109,6 +113,6 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
   },
   socials: {
-    marginTop: "30%",
+    marginTop: "27%",
   },
 });

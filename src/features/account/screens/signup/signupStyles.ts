@@ -77,8 +77,9 @@ export const styles = StyleSheet.create({
     fontSize: 18,
   },
   btnContainer: {
-    marginTop: 25,
+    marginTop: 8,
     alignItems: "center",
+    marginBottom: 30,
   },
   creatAcctBtn: {
     borderColor: "#FFFFFF",

@@ -4,13 +4,13 @@ import {
   Text,
   Platform,
   TouchableOpacity,
-  TouchableNativeFeedback,
   TextInput,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   ActivityIndicator,
   Button,
+  ScrollView,
 } from "react-native";
 import Modal from "react-native-modal";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
@@ -67,7 +67,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
     <GradientBg>
       <StyledSafeArea>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
+          <ScrollView>
             <Modal
               isVisible={isModalVisible}
               onBackdropPress={handleCloseModal}
@@ -83,21 +83,13 @@ const Login: React.FC<Props> = ({ navigation }) => {
               </ModalContainer>
             </Modal>
 
-            {isAndroid ? (
-              <TouchableNativeFeedback
-                onPress={() => navigation.goBack()}
-                style={styles.arrowBack}
-              >
-                <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
-              </TouchableNativeFeedback>
-            ) : (
-              <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={styles.arrowBack}
-              >
-                <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.arrowBack}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="arrow-back" size={29} color="#FFFFFF" />
+            </TouchableOpacity>
 
             <Text style={styles.title}>Log In</Text>
             <Formik
@@ -213,7 +205,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
             </View>
-          </View>
+          </ScrollView>
         </TouchableWithoutFeedback>
       </StyledSafeArea>
     </GradientBg>
