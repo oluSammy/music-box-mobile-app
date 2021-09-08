@@ -12,7 +12,7 @@ const DrawerNavigator = () => {
     <NavigationContainer>
       <Navigator>
         <Screen
-          name="Home"
+          name="Main"
           component={HomeTabNavigator}
           options={{ headerShown: false }}
         />

@@ -7,5 +7,11 @@ export type accountNavigatorParamsList = {
 };
 
 export type drawerNavigationParamsList = {
+  Main: undefined;
+};
+
+export type tabParamsList = {
   Home: undefined;
+  Library: undefined;
+  Browse: undefined;
 };
