@@ -58,19 +58,6 @@ interface Props {
   children: React.ReactNode;
 }
 
-const loadUser = async () => {
-  try {
-    const loggedInUser = await AsyncStorage.getItem("music-box-user");
-    if (loggedInUser) {
-      return JSON.parse(loggedInUser);
-    } else {
-      return null;
-    }
-  } catch (err) {
-    return null;
-  }
-};
-
 export const AuthContext = createContext({} as AuthProp);
 
 const AuthProvider = (props: Props) => {
@@ -80,6 +67,18 @@ const AuthProvider = (props: Props) => {
   const [error, setError] = useState<any>(null);
   const [signupError, setSignupError] = useState<any>(null);
 
+  const loadUser = async () => {
+    try {
+      const loggedInUser = await AsyncStorage.getItem("music-box-user");
+      if (loggedInUser) {
+        return JSON.parse(loggedInUser);
+      } else {
+        return null;
+      }
+    } catch (err) {
+      return null;
+    }
+  };
   useEffect(() => {
     const loadPrevUser = async () => {
       const prevUser = await loadUser();

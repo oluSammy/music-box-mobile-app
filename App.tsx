@@ -6,7 +6,6 @@ import {
   Lato_900Black,
 } from "@expo-google-fonts/lato";
 import AppLoading from "expo-app-loading";
-import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import AuthProvider from "./src/services/authentication/auth.service";
 
 import Navigation from "./src/navigation";
@@ -27,7 +26,6 @@ export default function App() {
       <AuthProvider>
         <Navigation />
       </AuthProvider>
-      <ExpoStatusBar style="auto" />
     </>
   );
 }

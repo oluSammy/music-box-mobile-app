@@ -1,13 +1,23 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
+import SafeAreaComp from "../components/SafeArea/SafeAreaComp";
 
 const Homepage = () => {
   return (
-    <View>
-      <Text>Home Page</Text>
-      <Text>Home Pagess</Text>
-    </View>
+    <SafeAreaComp>
+      <View>
+        <Text>Hello world</Text>
+      </View>
+    </SafeAreaComp>
   );
 };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     backgroundColor: "#161A1A",
+//     flex: 1,
+//     // paddingTop: 100,
+//   },
+// });
 
 export default Homepage;
