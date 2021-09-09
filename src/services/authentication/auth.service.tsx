@@ -67,7 +67,7 @@ const AuthProvider = (props: Props) => {
   const [error, setError] = useState<any>(null);
   const [signupError, setSignupError] = useState<any>(null);
 
-  const loadUser = async () => {
+  const loadUser = React.useCallback(async () => {
     try {
       const loggedInUser = await AsyncStorage.getItem("music-box-user");
       if (loggedInUser) {
@@ -78,7 +78,8 @@ const AuthProvider = (props: Props) => {
     } catch (err) {
       return null;
     }
-  };
+  }, []);
+
   useEffect(() => {
     const loadPrevUser = async () => {
       const prevUser = await loadUser();
@@ -86,7 +87,7 @@ const AuthProvider = (props: Props) => {
     };
 
     loadPrevUser();
-  }, [setUser]);
+  }, [loadUser, setUser]);
 
   const signUp = async ({
     email,
