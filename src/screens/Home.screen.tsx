@@ -1,40 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import SafeAreaComp from "../components/SafeArea/SafeAreaComp";
 import SearchBar from "../components/SearchBar/SearchBar";
 import ControlFlow from "../components/FlowCards/Control";
 import CreatePlaylistCardFlow from "../components/FlowCards/CreatePlaylist";
 import PopularFlowCard from "../components/FlowCards/Popular";
+import RecentlyPlayed from "../components/RecentlyPlayed/RecentlyPlayed";
 
 const Homepage = () => {
   return (
     <SafeAreaComp>
       <SearchBar />
       <View style={styles.screen}>
-        <View style={styles.flowContainer}>
-          <Text style={styles.flowText}>Flow</Text>
-        </View>
-        <ScrollView horizontal={true}>
+        <Text style={styles.flowText}>Flow</Text>
+        <ScrollView horizontal={true} style={styles.sectionContainer}>
           <ControlFlow />
           <CreatePlaylistCardFlow />
           <PopularFlowCard />
         </ScrollView>
+        <Text style={styles.flowText}>Recently Played</Text>
+        <RecentlyPlayed />
+        <Text style={styles.flowText}>Browse Gernres</Text>
       </View>
     </SafeAreaComp>
   );
 };
 
 const styles = StyleSheet.create({
-  flowContainer: {
-    marginVertical: 10,
-  },
   screen: {
     paddingHorizontal: 15,
   },
   flowText: {
+    marginVertical: 7,
     color: "#FFFFFF",
-    fontSize: 26,
+    fontSize: 18,
     fontFamily: "Lato_700Bold",
+  },
+  sectionContainer: {
+    marginBottom: 15,
   },
 });
 
