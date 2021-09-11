@@ -6,18 +6,21 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
+import SearchBar from "../SearchBar/SearchBar";
 
 type Props = {
   children: React.ReactNode;
+  showSearchBar: boolean;
 };
 
 const SafeAreaComp: React.FC<Props> = (props) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
-      <ScrollView style={styles.flex}>
-        <SafeAreaView>{props.children}</SafeAreaView>
-      </ScrollView>
+      <SafeAreaView style={styles.flex}>
+        {props.showSearchBar && <SearchBar />}
+        <ScrollView style={styles.flex}>{props.children}</ScrollView>
+      </SafeAreaView>
     </View>
   );
 };

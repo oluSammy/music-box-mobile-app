@@ -19,6 +19,7 @@ interface IUser {
   provider: string;
   token?: string;
   last_login?: string;
+  data: any;
 }
 interface IloginParam {
   email: string;
@@ -67,9 +68,9 @@ const AuthProvider = (props: Props) => {
   const [error, setError] = useState<any>(null);
   const [signupError, setSignupError] = useState<any>(null);
 
-  const loadUser = async () => {
+  const loadUser = React.useCallback(async () => {
     try {
-      const loggedInUser = await AsyncStorage.getItem("music-box-user");
+      const loggedInUser = await AsyncStorage.getItem("music-box");
       if (loggedInUser) {
         return JSON.parse(loggedInUser);
       } else {
@@ -78,7 +79,8 @@ const AuthProvider = (props: Props) => {
     } catch (err) {
       return null;
     }
-  };
+  }, []);
+
   useEffect(() => {
     const loadPrevUser = async () => {
       const prevUser = await loadUser();
@@ -86,7 +88,7 @@ const AuthProvider = (props: Props) => {
     };
 
     loadPrevUser();
-  }, [setUser]);
+  }, [loadUser, setUser]);
 
   const signUp = async ({
     email,
@@ -114,7 +116,7 @@ const AuthProvider = (props: Props) => {
       );
       setIsSigningUp(false);
       setUser(data);
-      await AsyncStorage.setItem("music-box-user", JSON.stringify(data));
+      await AsyncStorage.setItem("music-box", JSON.stringify(data));
     } catch (err) {
       setIsSigningUp(false);
       setSignupError(err.response.data.message);
@@ -136,7 +138,7 @@ const AuthProvider = (props: Props) => {
       setIsLoggingIn(false);
       setUser(data);
 
-      await AsyncStorage.setItem("music-box-user", JSON.stringify(data));
+      await AsyncStorage.setItem("music-box", JSON.stringify(data));
     } catch (err) {
       setIsLoggingIn(false);
       setError(err.response.data.message);
