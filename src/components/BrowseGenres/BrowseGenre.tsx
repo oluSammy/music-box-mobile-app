@@ -29,7 +29,9 @@ const BrowseGenre = () => {
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {},
+  sectionContainer: {
+    marginBottom: 15,
+  },
 });
 
 export default BrowseGenre;

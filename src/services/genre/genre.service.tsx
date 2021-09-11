@@ -8,6 +8,7 @@ import React, {
 import axios from "axios";
 import { API_URL } from "../../constants/url";
 import { AuthContext } from "../authentication/auth.service";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Prop {
   genres: Record<string, any>[] | null;
@@ -25,17 +26,26 @@ const GenreProvider = (props: GenreProps) => {
   const { user } = useContext(AuthContext);
   const [genres, setGenres] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
 
   const fetchGenres = useCallback(async () => {
     const config = { headers: { Authorization: `Bearer ${user?.token}` } };
     const url = `${API_URL}/genres`;
     try {
       setIsLoading(true);
-      const { data } = await axios.get(url, config);
-      setIsLoading(false);
-      console.log(data.data);
-      setGenres(data.data);
+      const prevGenres = await AsyncStorage.getItem("music-box-genres");
+      if (prevGenres) {
+        setGenres(JSON.parse(prevGenres));
+        setIsLoading(false);
+      } else {
+        const { data } = await axios.get(url, config);
+        setIsLoading(false);
+        setGenres(data.data);
+        await AsyncStorage.setItem(
+          "music-box-genres",
+          JSON.stringify(data.data)
+        );
+      }
     } catch (err) {
       setIsLoading(false);
       setError(err);

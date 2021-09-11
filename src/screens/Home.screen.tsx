@@ -1,17 +1,16 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 import SafeAreaComp from "../components/SafeArea/SafeAreaComp";
-import SearchBar from "../components/SearchBar/SearchBar";
 import ControlFlow from "../components/FlowCards/Control";
 import CreatePlaylistCardFlow from "../components/FlowCards/CreatePlaylist";
 import PopularFlowCard from "../components/FlowCards/Popular";
 import RecentlyPlayed from "../components/RecentlyPlayed/RecentlyPlayed";
 import BrowseGenre from "../components/BrowseGenres/BrowseGenre";
+import MostPlayed from "../features/artists/components/MostPlayed";
 
 const Homepage = () => {
   return (
-    <SafeAreaComp>
-      <SearchBar />
+    <SafeAreaComp showSearchBar>
       <View style={styles.screen}>
         <Text style={styles.flowText}>Flow</Text>
         <ScrollView horizontal={true} style={styles.sectionContainer}>
@@ -23,6 +22,8 @@ const Homepage = () => {
         <RecentlyPlayed />
         <Text style={styles.flowText}>Browse Gernres</Text>
         <BrowseGenre />
+        <Text style={styles.flowText}>Artist You may Like</Text>
+        <MostPlayed />
       </View>
     </SafeAreaComp>
   );
