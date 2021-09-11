@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
   root: {
     marginRight: 15,
     height: 90,
-    width: 130,
-    flex: 1,
+    width: 100,
+    marginBottom: 10,
   },
   roundedImg: {
     borderRadius: 9,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   genreText: {
     color: "#FFFFFF",
     fontFamily: "Lato_900Black",
-    fontSize: 16,
+    fontSize: 14,
   },
 });
 

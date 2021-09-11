@@ -1,9 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Homepage from "../screens/Home.screen";
+import HomeScreen from "../screens/Home.screen";
 import { tabParamsList } from "./@types/navigation";
 import Library from "../features/library/sreens/Library.screen";
-import Browse from "../features/Browse/screens/Browse.screen";
+import Browse from "../screens/Browse.screen";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -22,7 +22,7 @@ const HomeTabNavigator = () => {
     >
       <Screen
         name="Home"
-        component={Homepage}
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ size, color }) => (
             <Feather name="music" size={size} color={color} />

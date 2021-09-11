@@ -9,7 +9,7 @@ const MostPlayed = () => {
   if (isLoadingMostPlayed) {
     return (
       <View style={styles.indicatorContainer}>
-        {true && <ActivityIndicator size="small" color="#FFFFFF" />}
+        <ActivityIndicator size="small" color="#FFFFFF" />
       </View>
     );
   }
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   indicatorContainer: {
     justifyContent: "center",
     flex: 1,
-    // width: 100,
   },
 });
 
