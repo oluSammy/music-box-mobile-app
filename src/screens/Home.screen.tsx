@@ -14,7 +14,11 @@ const HomeScreen = () => {
     <SafeAreaComp showSearchBar>
       <View style={styles.screen}>
         <SectionTitle>Flow</SectionTitle>
-        <ScrollView horizontal={true} style={styles.sectionContainer}>
+        <ScrollView
+          horizontal={true}
+          style={styles.sectionContainer}
+          showsHorizontalScrollIndicator={false}
+        >
           <ControlFlow />
           <CreatePlaylistCardFlow />
           <PopularFlowCard />

@@ -9,7 +9,11 @@ const BrowseGenre = () => {
   return (
     <View>
       {isLoading && <ActivityIndicator size="small" color="#FFFFFF" />}
-      <ScrollView horizontal={true} style={styles.sectionContainer}>
+      <ScrollView
+        horizontal={true}
+        style={styles.sectionContainer}
+        showsHorizontalScrollIndicator={false}
+      >
         {genres
           ? genres.map((genre: Record<string, any>) => {
               return (
