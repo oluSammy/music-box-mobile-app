@@ -2,11 +2,11 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/Home.screen";
 import { tabParamsList } from "./@types/navigation";
-import Library from "../features/library/sreens/Library.screen";
 import Browse from "../screens/Browse.screen";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import LibraryNavigator from "./LibraryNavigation";
 
 const { Screen, Navigator } = createBottomTabNavigator<tabParamsList>();
 
@@ -31,7 +31,7 @@ const HomeTabNavigator = () => {
       />
       <Screen
         name="Library"
-        component={Library}
+        component={LibraryNavigator}
         options={{
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="library-outline" size={size} color={color} />

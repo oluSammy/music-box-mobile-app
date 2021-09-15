@@ -15,3 +15,9 @@ export type tabParamsList = {
   Library: undefined;
   Browse: undefined;
 };
+
+export type libraryParamList = {
+  LibraryHome: undefined;
+  AllPlayList: undefined;
+  PlayListScreen: undefined;
+};

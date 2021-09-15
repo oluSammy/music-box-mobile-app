@@ -30,3 +30,5 @@ export const StyledFacebookEmail = styled(View)`
   justify-content: center;
   margin-top: 15%;
 `;
+
+export const TransparentBtn = styled.TouchableOpacity``;

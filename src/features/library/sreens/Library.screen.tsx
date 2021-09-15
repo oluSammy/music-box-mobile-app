@@ -16,6 +16,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import RecentlyPlayed from "../components/RecentlyPlayed";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { libraryParamList } from "../../../navigation/@types/navigation";
 
 const isAndroid = Platform.OS === "android";
 
@@ -23,7 +25,9 @@ const TouchableComp: any = isAndroid
   ? TouchableNativeFeedback
   : TouchableOpacity;
 
-const Library = () => {
+type Props = NativeStackScreenProps<libraryParamList, "LibraryHome">;
+
+const Library: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
@@ -35,7 +39,13 @@ const Library = () => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.libraryList}>
-            <TouchableComp activeOpacity={0.7} style={styles.touchableList}>
+            <TouchableComp
+              activeOpacity={0.7}
+              style={styles.touchableList}
+              onPress={() => {
+                navigation.navigate("AllPlayList");
+              }}
+            >
               <MaterialCommunityIcons
                 name="playlist-music-outline"
                 size={28}
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
   touchableList: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 25,
   },
   listIcon: {
     marginRight: 10,
