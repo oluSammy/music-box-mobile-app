@@ -1,17 +1,14 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "../styles/albumSongList";
 
-const PlaylistList = () => {
+const AlbumSongsList = () => {
   return (
     <View style={styles.root}>
       <View style={styles.playlistItem}>
         <View style={styles.play}>
-          <Image
-            source={require("../../../../assets/images/playlist-img.jpeg")}
-            style={styles.playlistImg}
-          />
+          <Text style={styles.textNum}> 1 </Text>
           <View style={styles.playlistDetail}>
             <Text style={styles.songTitle}>Bicycle Race</Text>
             <Text style={styles.songDuration}>Queen / 3:15</Text>
@@ -23,10 +20,7 @@ const PlaylistList = () => {
       </View>
       <View style={styles.playlistItem}>
         <View style={styles.play}>
-          <Image
-            source={require("../../../../assets/images/playlist-img.jpeg")}
-            style={styles.playlistImg}
-          />
+          <Text style={styles.textNum}> 1 </Text>
           <View style={styles.playlistDetail}>
             <Text style={styles.songTitle}>Bicycle Race</Text>
             <Text style={styles.songDuration}>Queen / 3:15</Text>
@@ -36,10 +30,7 @@ const PlaylistList = () => {
       </View>
       <View style={styles.playlistItem}>
         <View style={styles.play}>
-          <Image
-            source={require("../../../../assets/images/playlist-img.jpeg")}
-            style={styles.playlistImg}
-          />
+          <Text style={styles.textNum}> 1 </Text>
           <View style={styles.playlistDetail}>
             <Text style={styles.songTitle}>Bicycle Race</Text>
             <Text style={styles.songDuration}>Queen / 3:15</Text>
@@ -49,10 +40,7 @@ const PlaylistList = () => {
       </View>
       <View style={styles.playlistItem}>
         <View style={styles.play}>
-          <Image
-            source={require("../../../../assets/images/playlist-img.jpeg")}
-            style={styles.playlistImg}
-          />
+          <Text style={styles.textNum}> 1 </Text>
           <View style={styles.playlistDetail}>
             <Text style={styles.songTitle}>Bicycle Race</Text>
             <Text style={styles.songDuration}>Queen / 3:15</Text>
@@ -62,10 +50,7 @@ const PlaylistList = () => {
       </View>
       <View style={styles.playlistItem}>
         <View style={styles.play}>
-          <Image
-            source={require("../../../../assets/images/playlist-img.jpeg")}
-            style={styles.playlistImg}
-          />
+          <Text style={styles.textNum}> 1 </Text>
           <View style={styles.playlistDetail}>
             <Text style={styles.songTitle}>Bicycle Race</Text>
             <Text style={styles.songDuration}>Queen / 3:15</Text>
@@ -75,10 +60,7 @@ const PlaylistList = () => {
       </View>
       <View style={styles.playlistItem}>
         <View style={styles.play}>
-          <Image
-            source={require("../../../../assets/images/playlist-img.jpeg")}
-            style={styles.playlistImg}
-          />
+          <Text style={styles.textNum}> 1 </Text>
           <View style={styles.playlistDetail}>
             <Text style={styles.songTitle}>Bicycle Race</Text>
             <Text style={styles.songDuration}>Queen / 3:15</Text>
@@ -90,4 +72,4 @@ const PlaylistList = () => {
   );
 };
 
-export default PlaylistList;
+export default AlbumSongsList;

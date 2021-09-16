@@ -20,4 +20,8 @@ export type libraryParamList = {
   LibraryHome: undefined;
   AllPlayList: undefined;
   PlayListScreen: undefined;
+  AllAlbum: undefined;
+  AlbumScreen: undefined;
+  AllArtists: undefined;
+  ArtistScreen: undefined;
 };

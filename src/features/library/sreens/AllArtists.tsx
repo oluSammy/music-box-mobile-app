@@ -13,9 +13,9 @@ import { libraryParamList } from "../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "../styles/playlist.styles";
 
-type Props = NativeStackScreenProps<libraryParamList, "AllPlayList">;
+type Props = NativeStackScreenProps<libraryParamList, "AllArtists">;
 
-const AllPlaylists: FC<Props> = ({ navigation }) => {
+const AllArtists: FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
@@ -31,79 +31,75 @@ const AllPlaylists: FC<Props> = ({ navigation }) => {
               <Text style={styles.backBtnText}>Back</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.headerTitle}>PLAYLISTS</Text>
+          <Text style={styles.headerTitle}>ARTISTS</Text>
         </View>
         <ScrollView>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.playlistItem}
             onPress={() => {
-              navigation.navigate("PlayListScreen");
+              navigation.navigate("ArtistScreen");
             }}
           >
             <Image
               source={{
                 uri: "https://cdns-images.dzcdn.net/images/cover/da2ab992d744dfd7811f223cc0708856/120x120-000000-80-0-0.jpg",
               }}
-              style={styles.playlistImg}
+              style={styles.playlistImgRound}
             />
             <View style={styles.playlistText}>
-              <Text style={styles.mainTxt}>Liked From Radio</Text>
-              <Text style={styles.subTxt}>222 songs, 26 hr 49 min</Text>
+              <Text style={styles.mainTxt}>Led Zeppelin</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.playlistItem}
             onPress={() => {
-              navigation.navigate("PlayListScreen");
+              navigation.navigate("ArtistScreen");
             }}
           >
             <Image
               source={{
                 uri: "https://cdns-images.dzcdn.net/images/cover/da2ab992d744dfd7811f223cc0708856/120x120-000000-80-0-0.jpg",
               }}
-              style={styles.playlistImg}
+              style={styles.playlistImgRound}
             />
             <View style={styles.playlistText}>
-              <Text style={styles.mainTxt}>Liked From Radio</Text>
-              <Text style={styles.subTxt}>222 songs, 26 hr 49 min</Text>
+              <Text style={styles.mainTxt}>Led Zeppelin</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.playlistItem}
             onPress={() => {
-              navigation.navigate("PlayListScreen");
+              navigation.navigate("ArtistScreen");
             }}
           >
             <Image
               source={{
                 uri: "https://cdns-images.dzcdn.net/images/cover/da2ab992d744dfd7811f223cc0708856/120x120-000000-80-0-0.jpg",
               }}
-              style={styles.playlistImg}
+              style={styles.playlistImgRound}
             />
             <View style={styles.playlistText}>
-              <Text style={styles.mainTxt}>Liked From Radio</Text>
-              <Text style={styles.subTxt}>222 songs, 26 hr 49 min</Text>
+              <Text style={styles.mainTxt}>Led Zeppelin</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.playlistItem}
             onPress={() => {
-              navigation.navigate("PlayListScreen");
+              navigation.navigate("ArtistScreen");
             }}
           >
             <Image
               source={{
                 uri: "https://cdns-images.dzcdn.net/images/cover/da2ab992d744dfd7811f223cc0708856/120x120-000000-80-0-0.jpg",
               }}
-              style={styles.playlistImg}
+              style={styles.playlistImgRound}
             />
             <View style={styles.playlistText}>
-              <Text style={styles.mainTxt}>Liked From Radio</Text>
-              <Text style={styles.subTxt}>222 songs, 26 hr 49 min</Text>
+              <Text style={styles.mainTxt}>Led Zeppelin</Text>
             </View>
           </TouchableOpacity>
         </ScrollView>
@@ -112,4 +108,4 @@ const AllPlaylists: FC<Props> = ({ navigation }) => {
   );
 };
 
-export default AllPlaylists;
+export default AllArtists;

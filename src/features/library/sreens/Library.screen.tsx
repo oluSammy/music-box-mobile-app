@@ -63,7 +63,13 @@ const Library: React.FC<Props> = ({ navigation }) => {
               />
               <Text style={styles.listItem}>Favorite Songs</Text>
             </TouchableComp>
-            <TouchableComp activeOpacity={0.7} style={styles.touchableList}>
+            <TouchableComp
+              activeOpacity={0.7}
+              style={styles.touchableList}
+              onPress={() => {
+                navigation.navigate("AllAlbum");
+              }}
+            >
               <MaterialCommunityIcons
                 name="record-circle-outline"
                 size={28}
@@ -72,7 +78,13 @@ const Library: React.FC<Props> = ({ navigation }) => {
               />
               <Text style={styles.listItem}>Albums</Text>
             </TouchableComp>
-            <TouchableComp activeOpacity={0.7} style={styles.touchableList}>
+            <TouchableComp
+              activeOpacity={0.7}
+              style={styles.touchableList}
+              onPress={() => {
+                navigation.navigate("AllArtists");
+              }}
+            >
               <SimpleLineIcons
                 name="star"
                 size={28}
