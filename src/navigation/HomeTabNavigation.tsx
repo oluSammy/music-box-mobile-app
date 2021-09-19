@@ -6,7 +6,9 @@ import Browse from "../screens/Browse.screen";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import LibraryNavigator from "./LibraryNavigation";
+import SearchNavigator from "./SearchNavigation";
 
 const { Screen, Navigator } = createBottomTabNavigator<tabParamsList>();
 
@@ -26,6 +28,15 @@ const HomeTabNavigator = () => {
         options={{
           tabBarIcon: ({ size, color }) => (
             <Feather name="music" size={size} color={color} />
+          ),
+        }}
+      />
+      <Screen
+        name="Search"
+        component={SearchNavigator}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <AntDesign name="search1" size={size} color={color} />
           ),
         }}
       />
