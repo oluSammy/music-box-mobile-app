@@ -8,6 +8,7 @@ import AllALbums from "../features/library/sreens/AllAlbum";
 import AlbumScreen from "../features/library/sreens/AlbumScreen";
 import AllArtists from "../features/library/sreens/AllArtists";
 import ArtistScreen from "../features/library/sreens/ArtistScreen";
+import ListeningHistory from "../features/library/sreens/ListeningHistory";
 
 const { Navigator, Screen } = createNativeStackNavigator<libraryParamList>();
 
@@ -21,6 +22,7 @@ const LibraryNavigator = () => {
       <Screen name="AlbumScreen" component={AlbumScreen} />
       <Screen name="AllArtists" component={AllArtists} />
       <Screen name="ArtistScreen" component={ArtistScreen} />
+      <Screen name="ListeningHistoryScreen" component={ListeningHistory} />
     </Navigator>
   );
 };

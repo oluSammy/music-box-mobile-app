@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { libraryParamList } from "../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "../styles/playlist.styles";
+import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = NativeStackScreenProps<libraryParamList, "AllPlayList">;
 
@@ -20,8 +21,8 @@ const AllPlaylists: FC<Props> = ({ navigation }) => {
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
       <SafeAreaView style={styles.flex}>
-        <View style={styles.header}>
-          <View style={styles.backBox}>
+        <View style={{ ...styles.header, ...styles.sb }}>
+          <View>
             <TouchableOpacity
               style={styles.backBtn}
               activeOpacity={0.8}
@@ -32,6 +33,10 @@ const AllPlaylists: FC<Props> = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <Text style={styles.headerTitle}>PLAYLISTS</Text>
+          <TouchableOpacity activeOpacity={0.7} style={styles.newPlay}>
+            <Text style={styles.newTxt}>New</Text>
+            <MaterialIcons name="playlist-add" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
         </View>
         <ScrollView>
           <TouchableOpacity

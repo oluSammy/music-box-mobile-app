@@ -15,7 +15,7 @@ const HomeTabNavigator = () => {
     <Navigator
       screenOptions={{
         tabBarStyle: { backgroundColor: "#161A1A", borderTopColor: "#161A1A" },
-        tabBarActiveTintColor: "#FFFFFF",
+        tabBarActiveTintColor: "#2DCEEF",
         tabBarInactiveTintColor: "grey",
         headerShown: false,
       }}

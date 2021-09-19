@@ -93,7 +93,13 @@ const Library: React.FC<Props> = ({ navigation }) => {
               />
               <Text style={styles.listItem}>Artists</Text>
             </TouchableComp>
-            <TouchableComp activeOpacity={0.7} style={styles.touchableList}>
+            <TouchableComp
+              activeOpacity={0.7}
+              style={styles.touchableList}
+              onPress={() => {
+                navigation.navigate("ListeningHistoryScreen");
+              }}
+            >
               <MaterialCommunityIcons
                 name="history"
                 size={28}

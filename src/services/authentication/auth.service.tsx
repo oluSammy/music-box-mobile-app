@@ -117,7 +117,7 @@ const AuthProvider = (props: Props) => {
       setIsSigningUp(false);
       setUser(data);
       await AsyncStorage.setItem("music-box", JSON.stringify(data));
-    } catch (err) {
+    } catch (err: any) {
       setIsSigningUp(false);
       setSignupError(err.response.data.message);
     }
@@ -139,7 +139,7 @@ const AuthProvider = (props: Props) => {
       setUser(data);
 
       await AsyncStorage.setItem("music-box", JSON.stringify(data));
-    } catch (err) {
+    } catch (err: any) {
       setIsLoggingIn(false);
       setError(err.response.data.message);
     }

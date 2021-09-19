@@ -16,6 +16,9 @@ export const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 40,
   },
+  sb: {
+    justifyContent: "space-between",
+  },
   backBox: {
     flex: 0.5,
   },
@@ -27,6 +30,15 @@ export const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 9,
     width: 75,
+  },
+  newPlay: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  newTxt: {
+    color: "#FFFFFF",
+    fontFamily: "Lato_900Black",
+    marginRight: 4,
   },
   backBtnText: {
     color: "#FFFFFF",

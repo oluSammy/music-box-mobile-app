@@ -24,4 +24,5 @@ export type libraryParamList = {
   AlbumScreen: undefined;
   AllArtists: undefined;
   ArtistScreen: undefined;
+  ListeningHistoryScreen: undefined;
 };
