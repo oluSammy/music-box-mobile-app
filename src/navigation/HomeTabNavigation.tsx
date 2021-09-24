@@ -2,13 +2,13 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/Home.screen";
 import { tabParamsList } from "./@types/navigation";
-import Browse from "../screens/Browse.screen";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import LibraryNavigator from "./LibraryNavigation";
 import SearchNavigator from "./SearchNavigation";
+import GenreNavigation from "./GenreNavigation";
 
 const { Screen, Navigator } = createBottomTabNavigator<tabParamsList>();
 
@@ -51,7 +51,7 @@ const HomeTabNavigator = () => {
       />
       <Screen
         name="Browse"
-        component={Browse}
+        component={GenreNavigation}
         options={{
           tabBarIcon: ({ size, color }) => (
             <Entypo name="folder-music" size={size} color={color} />

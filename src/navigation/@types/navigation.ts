@@ -31,3 +31,10 @@ export type libraryParamList = {
 export type searchParamsList = {
   SearchScreen: undefined;
 };
+
+export type genreParamList = {
+  BrowseGenre: undefined;
+  GenreTabs: undefined;
+  ArtistScreen: undefined;
+  PlaylistScreen: undefined;
+};
