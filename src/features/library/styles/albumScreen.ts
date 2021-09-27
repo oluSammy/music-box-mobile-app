@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
   },
   transparentBtn: {
     flexDirection: "row",
-    width: 170,
+    // width: 170,
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#FFFFFF",
@@ -62,12 +62,11 @@ export const styles = StyleSheet.create({
   },
   gradientBtn: {
     flexDirection: "row",
-    width: 170,
     backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 10,
-    borderRadius: 20,
+    borderRadius: 18,
   },
   btnText: {
     color: "#FFFFFF",

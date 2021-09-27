@@ -1,5 +1,8 @@
 import styled from "styled-components/native";
 import { Entypo } from "@expo/vector-icons";
+// import { Dimensions } from "react-native";
+
+// const windowWidth = Dimensions.get("window").width;
 
 export const StyledBox = styled.View`
   margin-right: 15px;
@@ -7,14 +10,15 @@ export const StyledBox = styled.View`
 `;
 
 export const StyledBoxVar = styled.View`
-  max-width: 100px;
   margin-bottom: 20px;
-  margin-right: 20px;
+  margin-right: 3%;
+  width: 30%;
 `;
 
 export const StyledTouchBox = styled.TouchableOpacity`
   height: 100px;
   width: 100px;
+  /* flex-basis: 32%; */
 `;
 
 export const RoundedImgBg = styled.ImageBackground`

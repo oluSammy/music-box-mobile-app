@@ -6,8 +6,6 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,100 +17,101 @@ import RecentlyPlayed from "../components/RecentlyPlayed";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { libraryParamList } from "../../../navigation/@types/navigation";
 
-const isAndroid = Platform.OS === "android";
-
-const TouchableComp: any = isAndroid
-  ? TouchableNativeFeedback
-  : TouchableOpacity;
-
 type Props = NativeStackScreenProps<libraryParamList, "LibraryHome">;
 
 const Library: React.FC<Props> = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
-      <SafeAreaView style={styles.flex}>
-        <View style={styles.header}>
-          <Ionicons name="menu-outline" size={24} color="#FFFFFF" />
-          <Text style={styles.headerTitle}>Library</Text>
-          <FontAwesome5 name="user-circle" size={24} color="#FFFFFF" />
-        </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.libraryList}>
-            <TouchableComp
-              activeOpacity={0.7}
-              style={styles.touchableList}
-              onPress={() => {
-                navigation.navigate("AllPlayList");
-              }}
-            >
-              <MaterialCommunityIcons
-                name="playlist-music-outline"
-                size={28}
-                color="#2DCEEF"
-                style={styles.listIcon}
-              />
-              <Text style={styles.listItem}>Playlists</Text>
-            </TouchableComp>
-            <TouchableComp activeOpacity={0.7} style={styles.touchableList}>
-              <AntDesign
-                name="hearto"
-                size={26}
-                color="#2DCEEF"
-                style={styles.listIcon}
-              />
-              <Text style={styles.listItem}>Favorite Songs</Text>
-            </TouchableComp>
-            <TouchableComp
-              activeOpacity={0.7}
-              style={styles.touchableList}
-              onPress={() => {
-                navigation.navigate("AllAlbum");
-              }}
-            >
-              <MaterialCommunityIcons
-                name="record-circle-outline"
-                size={28}
-                color="#2DCEEF"
-                style={styles.listIcon}
-              />
-              <Text style={styles.listItem}>Albums</Text>
-            </TouchableComp>
-            <TouchableComp
-              activeOpacity={0.7}
-              style={styles.touchableList}
-              onPress={() => {
-                navigation.navigate("AllArtists");
-              }}
-            >
-              <SimpleLineIcons
-                name="star"
-                size={28}
-                color="#2DCEEF"
-                style={styles.listIcon}
-              />
-              <Text style={styles.listItem}>Artists</Text>
-            </TouchableComp>
-            <TouchableComp
-              activeOpacity={0.7}
-              style={styles.touchableList}
-              onPress={() => {
-                navigation.navigate("ListeningHistoryScreen");
-              }}
-            >
-              <MaterialCommunityIcons
-                name="history"
-                size={28}
-                color="#2DCEEF"
-                style={styles.listIcon}
-              />
-              <Text style={styles.listItem}>Listening History</Text>
-            </TouchableComp>
+    <React.Fragment>
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
+        <SafeAreaView style={styles.flex}>
+          <View>
+            <View style={styles.header}>
+              <Ionicons name="menu-outline" size={24} color="#FFFFFF" />
+              <Text style={styles.headerTitle}>Library</Text>
+              <FontAwesome5 name="user-circle" size={24} color="#FFFFFF" />
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={styles.libraryList}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={styles.touchableList}
+                  onPress={() => {
+                    navigation.navigate("AllPlayList");
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="playlist-music-outline"
+                    size={28}
+                    color="#2DCEEF"
+                    style={styles.listIcon}
+                  />
+                  <Text style={styles.listItem}>Playlists</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={styles.touchableList}
+                >
+                  <AntDesign
+                    name="hearto"
+                    size={26}
+                    color="#2DCEEF"
+                    style={styles.listIcon}
+                  />
+                  <Text style={styles.listItem}>Favorite Songs</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={styles.touchableList}
+                  onPress={() => {
+                    navigation.navigate("AllAlbum");
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="record-circle-outline"
+                    size={28}
+                    color="#2DCEEF"
+                    style={styles.listIcon}
+                  />
+                  <Text style={styles.listItem}>Albums</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={styles.touchableList}
+                  onPress={() => {
+                    navigation.navigate("AllArtists");
+                  }}
+                >
+                  <SimpleLineIcons
+                    name="star"
+                    size={28}
+                    color="#2DCEEF"
+                    style={styles.listIcon}
+                  />
+                  <Text style={styles.listItem}>Artists</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={styles.touchableList}
+                  onPress={() => {
+                    navigation.navigate("ListeningHistoryScreen");
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="history"
+                    size={28}
+                    color="#2DCEEF"
+                    style={styles.listIcon}
+                  />
+                  <Text style={styles.listItem}>Listening History</Text>
+                </TouchableOpacity>
+              </View>
+              <RecentlyPlayed />
+            </ScrollView>
           </View>
-          <RecentlyPlayed />
-        </ScrollView>
-      </SafeAreaView>
-    </View>
+        </SafeAreaView>
+      </View>
+    </React.Fragment>
   );
 };
 

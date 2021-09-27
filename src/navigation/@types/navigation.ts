@@ -17,6 +17,13 @@ export type tabParamsList = {
   Search: undefined;
 };
 
+export type homeParamList = {
+  HomeScreen: undefined;
+  GenreHomeTabs: undefined;
+  ArtistHomeScreen: undefined;
+  PlaylistHomeScreen: undefined;
+};
+
 export type libraryParamList = {
   LibraryHome: undefined;
   AllPlayList: undefined;

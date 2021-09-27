@@ -1,6 +1,5 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/Home.screen";
 import { tabParamsList } from "./@types/navigation";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,22 +8,32 @@ import { AntDesign } from "@expo/vector-icons";
 import LibraryNavigator from "./LibraryNavigation";
 import SearchNavigator from "./SearchNavigation";
 import GenreNavigation from "./GenreNavigation";
+import { Platform } from "react-native";
+import HomeNavigation from "./HomeStackNavigation";
 
 const { Screen, Navigator } = createBottomTabNavigator<tabParamsList>();
+
+const isAndroid = Platform.OS === "android";
 
 const HomeTabNavigator = () => {
   return (
     <Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: "#161A1A", borderTopColor: "#161A1A" },
+        tabBarStyle: {
+          backgroundColor: "#161A1A",
+          borderTopColor: "grey",
+          // paddingBottom: 40,
+          height: isAndroid ? 70 : 100,
+        },
         tabBarActiveTintColor: "#2DCEEF",
         tabBarInactiveTintColor: "grey",
         headerShown: false,
+        tabBarLabelStyle: { marginBottom: 15 },
       }}
     >
       <Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeNavigation}
         options={{
           tabBarIcon: ({ size, color }) => (
             <Feather name="music" size={size} color={color} />

@@ -8,8 +8,12 @@ import RecentlyPlayed from "../components/RecentlyPlayed/RecentlyPlayed";
 import BrowseGenre from "../components/BrowseGenres/BrowseGenre";
 import MostPlayed from "../features/artists/components/MostPlayed";
 import { SectionTitle } from "../components/Text/SectionTitle";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { homeParamList } from "../navigation/@types/navigation";
 
-const HomeScreen = () => {
+type Props = NativeStackScreenProps<homeParamList, "HomeScreen">;
+
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaComp showSearchBar>
       <View style={styles.screen}>
@@ -23,10 +27,10 @@ const HomeScreen = () => {
           <CreatePlaylistCardFlow />
           <PopularFlowCard />
         </ScrollView>
-        <SectionTitle>Recently Played</SectionTitle>
+        <SectionTitle>Recently Playeds</SectionTitle>
         <RecentlyPlayed />
         <SectionTitle>Browse Gernres</SectionTitle>
-        <BrowseGenre />
+        <BrowseGenre navigation={navigation} />
         <SectionTitle>Artist You may Like</SectionTitle>
         <MostPlayed />
       </View>
@@ -37,6 +41,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   screen: {
     paddingHorizontal: 15,
+    paddingBottom: 40,
   },
 
   sectionContainer: {

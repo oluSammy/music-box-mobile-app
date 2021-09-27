@@ -1,26 +1,12 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
-const isAndroid = Platform.OS === "android";
-
-const TouchableComp: any = isAndroid
-  ? TouchableNativeFeedback
-  : TouchableOpacity;
 
 const RecentlyPlayed = () => {
   return (
     <View style={styles.root}>
       <Text style={styles.title}>Recently Played</Text>
-      <TouchableComp style={styles.recentListItem} activeOpacity={0.8}>
+      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
         <View style={styles.imgTextBox}>
           <Image
             source={require("../../../../assets/images/recently-cover.png")}
@@ -32,8 +18,8 @@ const RecentlyPlayed = () => {
           </View>
         </View>
         <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableComp>
-      <TouchableComp style={styles.recentListItem} activeOpacity={0.8}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
         <View style={styles.imgTextBox}>
           <Image
             source={require("../../../../assets/images/recently-cover.png")}
@@ -45,8 +31,8 @@ const RecentlyPlayed = () => {
           </View>
         </View>
         <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableComp>
-      <TouchableComp style={styles.recentListItem} activeOpacity={0.8}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
         <View style={styles.imgTextBox}>
           <Image
             source={require("../../../../assets/images/recently-cover.png")}
@@ -58,8 +44,8 @@ const RecentlyPlayed = () => {
           </View>
         </View>
         <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableComp>
-      <TouchableComp style={styles.recentListItem} activeOpacity={0.8}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
         <View style={styles.imgTextBox}>
           <Image
             source={require("../../../../assets/images/recently-cover.png")}
@@ -71,8 +57,8 @@ const RecentlyPlayed = () => {
           </View>
         </View>
         <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableComp>
-      <TouchableComp style={styles.recentListItem} activeOpacity={0.8}>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
         <View style={styles.imgTextBox}>
           <Image
             source={require("../../../../assets/images/recently-cover.png")}
@@ -84,7 +70,7 @@ const RecentlyPlayed = () => {
           </View>
         </View>
         <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableComp>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -93,6 +79,7 @@ const styles = StyleSheet.create({
   root: {
     marginTop: 40,
     flex: 1,
+    paddingBottom: 80,
   },
   title: {
     color: "#FFFFFF",

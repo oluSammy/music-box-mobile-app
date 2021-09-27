@@ -41,6 +41,5 @@ export const styles = StyleSheet.create({
   boxContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    // justifyContent: "space-between",
   },
 });

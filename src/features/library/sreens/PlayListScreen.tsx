@@ -10,6 +10,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -25,6 +26,7 @@ const isAndroid = Platform.OS === "android";
 
 const PlayListScreen: React.FC<Props> = ({ navigation }) => {
   const [text, setText] = useState("");
+  const { width } = useWindowDimensions();
   return (
     <LinearGradient
       style={styles.root}
@@ -58,7 +60,10 @@ const PlayListScreen: React.FC<Props> = ({ navigation }) => {
             <Text style={styles.songDetail}>13 Song, 1 hr 13 min</Text>
           </View>
           <View style={styles.btnBox}>
-            <TouchableOpacity activeOpacity={0.7} style={styles.transparentBtn}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={{ ...styles.transparentBtn, width: width / 2.5 }}
+            >
               <MaterialIcons name="edit" size={20} color="#FFFFFF" />
               <Text style={styles.btnText}>Edit</Text>
             </TouchableOpacity>
@@ -67,7 +72,7 @@ const PlayListScreen: React.FC<Props> = ({ navigation }) => {
                 colors={["#4294F2", "#6A42F2"]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0.99, y: 0.9 }}
-                style={styles.gradientBtn}
+                style={{ ...styles.gradientBtn, width: width / 2.5 }}
               >
                 <Ionicons name="shuffle" size={20} color="#FFFFFF" />
                 <Text style={styles.btnText}>Shuffle play</Text>

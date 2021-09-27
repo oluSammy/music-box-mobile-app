@@ -9,6 +9,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  useWindowDimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -25,6 +26,8 @@ type Props = NativeStackScreenProps<libraryParamList, "ArtistScreen">;
 const isAndroid = Platform.OS === "android";
 
 const ArtistScreen: React.FC<Props> = ({ navigation }) => {
+  const { width } = useWindowDimensions();
+
   return (
     <LinearGradient
       style={styles.root}
@@ -73,7 +76,7 @@ const ArtistScreen: React.FC<Props> = ({ navigation }) => {
                 colors={["#4294F2", "#6A42F2"]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0.99, y: 0.9 }}
-                style={styles.gradientBtn}
+                style={{ ...styles.gradientBtn, width: width / 2.5 }}
               >
                 <Entypo name="controller-play" size={24} color="white" />
                 <Text style={styles.btnText}>play</Text>
