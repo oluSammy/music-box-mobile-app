@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Button,
   ScrollView,
+  StatusBar,
 } from "react-native";
 import Modal from "react-native-modal";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
@@ -65,6 +66,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
   return (
     <GradientBg>
+      <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
       <StyledSafeArea>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView>

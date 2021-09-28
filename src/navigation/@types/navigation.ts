@@ -14,6 +14,14 @@ export type tabParamsList = {
   Home: undefined;
   Library: undefined;
   Browse: undefined;
+  Search: undefined;
+};
+
+export type homeParamList = {
+  HomeScreen: undefined;
+  GenreHomeTabs: undefined;
+  ArtistHomeScreen: undefined;
+  PlaylistHomeScreen: undefined;
 };
 
 export type libraryParamList = {
@@ -25,4 +33,15 @@ export type libraryParamList = {
   AllArtists: undefined;
   ArtistScreen: undefined;
   ListeningHistoryScreen: undefined;
+};
+
+export type searchParamsList = {
+  SearchScreen: undefined;
+};
+
+export type genreParamList = {
+  BrowseGenre: undefined;
+  GenreTabs: undefined;
+  ArtistScreen: undefined;
+  PlaylistScreen: undefined;
 };

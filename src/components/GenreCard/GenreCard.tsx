@@ -1,26 +1,40 @@
 import React from "react";
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 
 type Props = {
   bgImage: string;
   genreId: string;
   genreTitle: string;
   id: string;
+  navigation: any;
 };
 
-const GenreCard: React.FC<Props> = ({ genreTitle, bgImage }) => {
+const GenreCard: React.FC<Props> = ({ genreTitle, bgImage, navigation }) => {
   return (
-    <ImageBackground
-      source={{
-        uri: `${bgImage}`,
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => {
+        navigation.navigate("GenreTabs");
       }}
-      style={styles.root}
-      imageStyle={styles.roundedImg}
     >
-      <View style={styles.purple}>
-        <Text style={styles.genreText}>{genreTitle}</Text>
-      </View>
-    </ImageBackground>
+      <ImageBackground
+        source={{
+          uri: `${bgImage}`,
+        }}
+        style={styles.root}
+        imageStyle={styles.roundedImg}
+      >
+        <View style={styles.purple}>
+          <Text style={styles.genreText}>{genreTitle}</Text>
+        </View>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 };
 

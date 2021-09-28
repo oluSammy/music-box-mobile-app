@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   Button,
+  StatusBar,
 } from "react-native";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -129,6 +130,7 @@ const Signup: React.FC<Props> = ({ navigation }) => {
 
   return (
     <GradientBg>
+      <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
       <StyledSafeArea>
         <KeyboardAvoidingView behavior={!isAndroid ? "padding" : "height"}>
           <ScrollView>

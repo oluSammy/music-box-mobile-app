@@ -3,7 +3,11 @@ import { View, ScrollView, StyleSheet, ActivityIndicator } from "react-native";
 import GenreCard from "../GenreCard/GenreCard";
 import { GenreContext } from "../../services/genre/genre.service";
 
-const BrowseGenre = () => {
+type Props = {
+  navigation: any;
+};
+
+const BrowseGenre: React.FC<Props> = ({ navigation }) => {
   const { isLoading, genres } = useContext(GenreContext);
 
   return (
@@ -23,6 +27,7 @@ const BrowseGenre = () => {
                   genreId={genre._id}
                   genreTitle={genre.name}
                   id={genre.id}
+                  navigation={navigation}
                 />
               );
             })

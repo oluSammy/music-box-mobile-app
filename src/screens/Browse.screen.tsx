@@ -4,8 +4,12 @@ import GenreCard from "../components/GenreCard/GenreCard";
 import SafeAreaComp from "../components/SafeArea/SafeAreaComp";
 import { SectionTitle } from "../components/Text/SectionTitle";
 import { GenreContext } from "../services/genre/genre.service";
+import { genreParamList } from "../navigation/@types/navigation";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-const Brows = () => {
+type Props = NativeStackScreenProps<genreParamList, "BrowseGenre">;
+
+const Browse: React.FC<Props> = ({ navigation }) => {
   const { isLoading, genres } = useContext(GenreContext);
 
   if (isLoading) {
@@ -32,6 +36,7 @@ const Brows = () => {
                     genreId={genre._id}
                     genreTitle={genre.name}
                     id={genre.id}
+                    navigation={navigation}
                   />
                 );
               })
@@ -59,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Brows;
+export default Browse;

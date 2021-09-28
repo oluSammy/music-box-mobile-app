@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 import { accountNavigatorParamsList } from "../../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FontAwesome } from "@expo/vector-icons";
@@ -15,6 +22,7 @@ type Props = NativeStackScreenProps<accountNavigatorParamsList, "StartScreen">;
 const StartScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
       <ImageBg
         image={require("../../../../../assets/images/start-screen-bg.png")}
       >
