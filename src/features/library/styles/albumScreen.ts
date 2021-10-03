@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
   root: {
     flex: 1,
     paddingHorizontal: 20,
+    paddingBottom: 100,
   },
   header: {
     marginTop: 10,
@@ -21,6 +22,7 @@ export const styles = StyleSheet.create({
   playlistImg: {
     width: 160,
     height: 160,
+    borderRadius: 10,
   },
   playlistImgRound: {
     width: 150,
@@ -56,7 +58,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#FFFFFF",
-    paddingVertical: 10,
+    paddingVertical: 7,
     borderRadius: 20,
     borderWidth: 2,
   },
@@ -65,8 +67,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 10,
-    borderRadius: 18,
+    paddingVertical: 8,
+    borderRadius: 20,
   },
   btnText: {
     color: "#FFFFFF",
@@ -97,11 +99,17 @@ export const styles = StyleSheet.create({
   },
   playlistAjasa: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  playlistAjasa1: {
+    flexDirection: "row",
     alignItems: "center",
   },
   txt: {
     color: "#FFFFFF",
     fontFamily: "Lato_700Bold",
+    // marginRight: 100,
   },
   btnBoxAlbum: {
     marginTop: 30,
@@ -112,6 +120,14 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   likes: {
-    marginRight: 4,
+    marginRight: 8,
+  },
+  loader: {
+    marginTop: 30,
+  },
+  errText: {
+    color: "#FFFFFF",
+    fontSize: 20,
+    marginTop: 40,
   },
 });

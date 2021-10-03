@@ -2,72 +2,35 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "../styles/albumSongList";
+import { secondsToHms, limitSentence } from "../../../utils/utils";
 
-const AlbumSongsList = () => {
+type Props = {
+  tracks: any;
+  img: string;
+  album: string;
+  albumId: string;
+  artistName: string;
+};
+
+const AlbumSongsList: React.FC<Props> = ({ tracks, artistName }) => {
   return (
     <View style={styles.root}>
-      <View style={styles.playlistItem}>
-        <View style={styles.play}>
-          <Text style={styles.textNum}> 1 </Text>
-          <View style={styles.playlistDetail}>
-            <Text style={styles.songTitle}>Bicycle Race</Text>
-            <Text style={styles.songDuration}>Queen / 3:15</Text>
+      {tracks.map((track: Record<string, any>, idx: number) => (
+        <View style={styles.playlistItem} key={idx}>
+          <View style={styles.play}>
+            <Text style={styles.textNum}> {idx + 1} </Text>
+            <View style={styles.playlistDetail}>
+              <Text style={styles.songTitle}>{limitSentence(track.title)}</Text>
+              <Text style={styles.songDuration}>
+                {artistName} / {secondsToHms(+track.duration)}
+              </Text>
+            </View>
           </View>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Ionicons name="add" size={24} color="white" />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity activeOpacity={0.7}>
-          <Ionicons name="add" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.playlistItem}>
-        <View style={styles.play}>
-          <Text style={styles.textNum}> 1 </Text>
-          <View style={styles.playlistDetail}>
-            <Text style={styles.songTitle}>Bicycle Race</Text>
-            <Text style={styles.songDuration}>Queen / 3:15</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="white" />
-      </View>
-      <View style={styles.playlistItem}>
-        <View style={styles.play}>
-          <Text style={styles.textNum}> 1 </Text>
-          <View style={styles.playlistDetail}>
-            <Text style={styles.songTitle}>Bicycle Race</Text>
-            <Text style={styles.songDuration}>Queen / 3:15</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="white" />
-      </View>
-      <View style={styles.playlistItem}>
-        <View style={styles.play}>
-          <Text style={styles.textNum}> 1 </Text>
-          <View style={styles.playlistDetail}>
-            <Text style={styles.songTitle}>Bicycle Race</Text>
-            <Text style={styles.songDuration}>Queen / 3:15</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="white" />
-      </View>
-      <View style={styles.playlistItem}>
-        <View style={styles.play}>
-          <Text style={styles.textNum}> 1 </Text>
-          <View style={styles.playlistDetail}>
-            <Text style={styles.songTitle}>Bicycle Race</Text>
-            <Text style={styles.songDuration}>Queen / 3:15</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="white" />
-      </View>
-      <View style={styles.playlistItem}>
-        <View style={styles.play}>
-          <Text style={styles.textNum}> 1 </Text>
-          <View style={styles.playlistDetail}>
-            <Text style={styles.songTitle}>Bicycle Race</Text>
-            <Text style={styles.songDuration}>Queen / 3:15</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="white" />
-      </View>
+      ))}
     </View>
   );
 };

@@ -3,6 +3,8 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   root: {
     marginTop: 30,
+    paddingBottom: 40,
+    flex: 1,
   },
   playlistItem: {
     flexDirection: "row",
@@ -16,7 +18,9 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 20,
   },
-  playlistDetail: {},
+  playlistDetail: {
+    width: "55%",
+  },
   songTitle: {
     color: "#FFFFFF",
     fontFamily: "Lato_700Bold",

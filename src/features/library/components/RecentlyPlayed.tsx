@@ -1,75 +1,64 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { RecentlyPlayedContext } from "../../../services/recentlyPlayed/RecentlyPlayed.services";
 
 const RecentlyPlayed = () => {
+  const { recentMusic } = useContext(RecentlyPlayedContext);
+
+  if (!recentMusic) {
+    return null;
+  }
+
+  const { album, artist, playlist } = recentMusic;
+
   return (
     <View style={styles.root}>
       <Text style={styles.title}>Recently Played</Text>
-      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
+      {artist && (
+        <TouchableOpacity style={styles.recentListItem} activeOpacity={0.7}>
+          <View style={styles.imgTextBox}>
+            <Image
+              source={{
+                uri: `${artist.img}`,
+              }}
+              style={styles.recentImgVar}
+            />
+            <View>
+              <Text style={styles.songTitle}>{artist.title}</Text>
+              <Text style={styles.songArtist}>Artist</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      )}
+      {playlist && (
+        <TouchableOpacity style={styles.recentListItem} activeOpacity={0.7}>
+          <View style={styles.imgTextBox}>
+            <Image
+              source={{
+                uri: `${playlist.img}`,
+              }}
+              style={styles.recentImg}
+            />
+            <View>
+              <Text style={styles.songTitle}>{playlist.title}</Text>
+              <Text style={styles.songArtist}>Playlist</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      )}
+      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.7}>
         <View style={styles.imgTextBox}>
           <Image
-            source={require("../../../../assets/images/recently-cover.png")}
+            source={{
+              uri: `${album.img}`,
+            }}
             style={styles.recentImg}
           />
           <View>
-            <Text style={styles.songTitle}>Queen</Text>
-            <Text style={styles.songArtist}>Artist</Text>
+            <Text style={styles.songTitle}>{album.title}</Text>
+            <Text style={styles.songArtist}>Album</Text>
           </View>
         </View>
-        <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
-        <View style={styles.imgTextBox}>
-          <Image
-            source={require("../../../../assets/images/recently-cover.png")}
-            style={styles.recentImg}
-          />
-          <View>
-            <Text style={styles.songTitle}>Queen</Text>
-            <Text style={styles.songArtist}>Artist</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
-        <View style={styles.imgTextBox}>
-          <Image
-            source={require("../../../../assets/images/recently-cover.png")}
-            style={styles.recentImg}
-          />
-          <View>
-            <Text style={styles.songTitle}>Queen</Text>
-            <Text style={styles.songArtist}>Artist</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
-        <View style={styles.imgTextBox}>
-          <Image
-            source={require("../../../../assets/images/recently-cover.png")}
-            style={styles.recentImg}
-          />
-          <View>
-            <Text style={styles.songTitle}>Queen</Text>
-            <Text style={styles.songArtist}>Artist</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="#FFFFFF" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.8}>
-        <View style={styles.imgTextBox}>
-          <Image
-            source={require("../../../../assets/images/recently-cover.png")}
-            style={styles.recentImg}
-          />
-          <View>
-            <Text style={styles.songTitle}>Queen</Text>
-            <Text style={styles.songArtist}>Artist</Text>
-          </View>
-        </View>
-        <Ionicons name="add" size={24} color="#FFFFFF" />
       </TouchableOpacity>
     </View>
   );
@@ -91,6 +80,13 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
     marginRight: 20,
+    borderRadius: 6,
+  },
+  recentImgVar: {
+    height: 60,
+    width: 60,
+    marginRight: 20,
+    borderRadius: 50,
   },
   recentListItem: {
     flexDirection: "row",

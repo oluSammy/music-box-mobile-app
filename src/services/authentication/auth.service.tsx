@@ -71,6 +71,7 @@ const AuthProvider = (props: Props) => {
   const loadUser = React.useCallback(async () => {
     try {
       const loggedInUser = await AsyncStorage.getItem("music-box");
+      // console.log(loggedInUser);
       if (loggedInUser) {
         return JSON.parse(loggedInUser);
       } else {
