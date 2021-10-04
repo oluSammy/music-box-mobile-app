@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "../styles/albumSongList";
-import { secondsToHms } from "../../../utils/utils";
+import { limitSentence, secondsToHms } from "../../../utils/utils";
 
 type Prop = {
   songs: Record<string, any>[] | null;
@@ -38,7 +38,7 @@ const PlaylistList: React.FC<Prop> = ({ songs, filterText }) => {
           style={styles.playlistImg}
         />
         <View style={styles.playlistDetail}>
-          <Text style={styles.songTitle}>{item.title}</Text>
+          <Text style={styles.songTitle}>{limitSentence(item.title)}</Text>
           <Text style={styles.songDuration}>
             {item.artist} / {secondsToHms(item.duration)}
           </Text>

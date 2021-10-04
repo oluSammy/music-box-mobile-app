@@ -42,8 +42,6 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
   const { incrementArtistLikes } = useContext(ArtistContext);
   const [numOfLikes, setNumOfLikes] = useState(0);
 
-  // console.log(recentMusic?.artist.id === route.params?.id);
-
   const userId = user?.data.data._id;
 
   const fetchArtist = useCallback(async () => {
@@ -59,7 +57,6 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
       setArtist(data);
       const hasBeenLiked = data.artist.likedBy.includes(userId);
       setNumOfLikes(data.artist.likedCount);
-      // console.log(data.songs);
       if (hasBeenLiked) {
         setIsLiked(true);
       }
@@ -67,7 +64,6 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
     } catch (err: any) {
       setIsLoading(false);
       setError(err.response);
-      // console.log(err.response);
     }
   }, [route.params?.id, user?.data.token, userId]);
 
@@ -81,6 +77,13 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const handleLike = async () => {
     setIsLiked(!isLiked);
+    if (isLiked) {
+      incrementArtistLikes(route.params?.id, "dec");
+      setNumOfLikes(numOfLikes - 1);
+    } else {
+      incrementArtistLikes(route.params?.id, "inc");
+      setNumOfLikes(numOfLikes + 1);
+    }
     try {
       await axios.put(
         `${API_URL}artist/like/${route.params?.id}`,
@@ -91,13 +94,6 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
           },
         }
       );
-      if (isLiked) {
-        incrementArtistLikes(route.params?.id, "dec");
-        setNumOfLikes(numOfLikes - 1);
-      } else {
-        incrementArtistLikes(route.params?.id, "inc");
-        setNumOfLikes(numOfLikes + 1);
-      }
 
       if (recentMusic?.artist.id === route.params?.id) {
         const updatedRecentArtist = {
@@ -106,11 +102,11 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
             ? recentMusic.artist.likesCount - 1
             : recentMusic.artist.likesCount + 1,
         };
-        // console.log(updatedRecentartist);
+
         updateRecentMusic("artist", updatedRecentArtist);
       }
     } catch (e: any) {
-      console.log(e.response);
+      // console.log(e.response);
     }
   };
 

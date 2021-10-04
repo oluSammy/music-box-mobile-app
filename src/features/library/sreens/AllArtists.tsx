@@ -1,21 +1,78 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState, useCallback, useContext } from "react";
 import {
   View,
   Text,
   StatusBar,
   SafeAreaView,
-  ScrollView,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
+  FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { libraryParamList } from "../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "../styles/playlist.styles";
+import axios from "axios";
+import { API_URL } from "../../../constants/url";
+import { AuthContext } from "../../../services/authentication/auth.service";
 
 type Props = NativeStackScreenProps<libraryParamList, "AllArtists">;
 
 const AllArtists: FC<Props> = ({ navigation }) => {
+  const [artists, setArtists] = useState<Record<string, any>[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
+  const { user } = useContext(AuthContext);
+
+  const fetchArtists = useCallback(async () => {
+    const config = {
+      headers: { Authorization: `Bearer ${user?.data.token}` },
+    };
+    try {
+      setIsLoading(true);
+      const {
+        data: {
+          data: { payload },
+        },
+      } = await axios.get(`${API_URL}artist/likes`, config);
+      setArtists(payload);
+      setIsLoading(false);
+    } catch (e: any) {
+      setIsLoading(false);
+      setError(e.response);
+    }
+  }, [user?.data.token]);
+
+  useEffect(() => {
+    const getArtists = async () => {
+      await fetchArtists();
+    };
+    getArtists();
+  }, [fetchArtists]);
+
+  const RenderItem = ({ item }: any) => (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.playlistItem}
+      onPress={() => {
+        navigation.navigate("ArtistScreen", {
+          id: item.id,
+        });
+      }}
+    >
+      <Image
+        source={{
+          uri: `${item.picture}`,
+        }}
+        style={styles.playlistImgRound}
+      />
+      <View style={styles.playlistText}>
+        <Text style={styles.mainTxt}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
@@ -33,76 +90,24 @@ const AllArtists: FC<Props> = ({ navigation }) => {
           </View>
           <Text style={styles.headerTitle}>ARTISTS</Text>
         </View>
-        <ScrollView>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.playlistItem}
-            onPress={() => {
-              navigation.navigate("ArtistScreen");
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/cover/da2ab992d744dfd7811f223cc0708856/120x120-000000-80-0-0.jpg",
-              }}
-              style={styles.playlistImgRound}
-            />
-            <View style={styles.playlistText}>
-              <Text style={styles.mainTxt}>Led Zeppelin</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.playlistItem}
-            onPress={() => {
-              navigation.navigate("ArtistScreen");
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/cover/da2ab992d744dfd7811f223cc0708856/120x120-000000-80-0-0.jpg",
-              }}
-              style={styles.playlistImgRound}
-            />
-            <View style={styles.playlistText}>
-              <Text style={styles.mainTxt}>Led Zeppelin</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.playlistItem}
-            onPress={() => {
-              navigation.navigate("ArtistScreen");
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/cover/da2ab992d744dfd7811f223cc0708856/120x120-000000-80-0-0.jpg",
-              }}
-              style={styles.playlistImgRound}
-            />
-            <View style={styles.playlistText}>
-              <Text style={styles.mainTxt}>Led Zeppelin</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.playlistItem}
-            onPress={() => {
-              navigation.navigate("ArtistScreen");
-            }}
-          >
-            <Image
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/cover/da2ab992d744dfd7811f223cc0708856/120x120-000000-80-0-0.jpg",
-              }}
-              style={styles.playlistImgRound}
-            />
-            <View style={styles.playlistText}>
-              <Text style={styles.mainTxt}>Led Zeppelin</Text>
-            </View>
-          </TouchableOpacity>
-        </ScrollView>
+        {error && (
+          <View style={styles.loader}>
+            <Text style={styles.errText}>An Error Ocurred!</Text>
+          </View>
+        )}
+        {isLoading && (
+          <View style={styles.loader}>
+            <ActivityIndicator size="large" color="#FFFFFF" />
+          </View>
+        )}
+        {artists && (
+          <FlatList
+            data={artists}
+            renderItem={RenderItem}
+            keyExtractor={(item) => `${item._id}`}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
       </SafeAreaView>
     </View>
   );

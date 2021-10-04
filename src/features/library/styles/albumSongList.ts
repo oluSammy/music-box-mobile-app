@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
   },
   play: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
   },
   textNum: {
     color: "#FFF",

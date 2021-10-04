@@ -63,7 +63,6 @@ const AlbumScreen: React.FC<Props> = ({ navigation, route }) => {
     } catch (err: any) {
       setIsLoading(false);
       setError(err.response);
-      // console.log(err.response);
     }
   }, [route.params?.id, user?.data.token, userId]);
 
@@ -92,7 +91,7 @@ const AlbumScreen: React.FC<Props> = ({ navigation, route }) => {
             ? recentMusic.album.likesCount - 1
             : recentMusic.album.likesCount + 1,
         };
-        // console.log(updatedRecentAlbum);
+
         updateRecentMusic("album", updatedRecentAlbum);
       }
     } catch (e: any) {

@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
   },
   btnBox: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     marginTop: 25,
     alignItems: "center",
   },

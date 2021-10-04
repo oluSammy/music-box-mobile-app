@@ -22,7 +22,7 @@ const RecentlyPlayed: React.FC<Props> = ({ navigation }) => {
   }
 
   const { album, artist, playlist } = recentMusic;
-  // console.log(playlist.id);
+
   return (
     <View style={styles.container}>
       {artist && (

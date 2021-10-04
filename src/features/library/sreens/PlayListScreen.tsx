@@ -43,7 +43,7 @@ const PlayListScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const userId = user?.data.data._id;
 
-  // console.log(recentMusic?.playlist.id === route.params?.id);
+
 
   const fetchPlaylist = useCallback(async () => {
     const config = {
@@ -56,18 +56,17 @@ const PlayListScreen: React.FC<Props> = ({ navigation, route }) => {
         data: { data },
       } = await axios.get(url, config);
       setPlaylist(data.payload);
+
       setTracks(data.payload.tracks);
       const hasBeenLiked = data.payload.likes.includes(userId);
       if (hasBeenLiked) {
         setIsLiked(true);
       }
-      // console.log(data.payload);
-      // console.log("HELLO@@");
+
       setIsLoading(false);
     } catch (err: any) {
       setIsLoading(false);
       setError(err.response);
-      // console.log(err.response);
     }
   }, [route.params?.id, user?.data.token, userId]);
 
@@ -162,14 +161,23 @@ const PlayListScreen: React.FC<Props> = ({ navigation, route }) => {
                 )}
               </Text>
             </View>
-            <View style={styles.btnBox}>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                style={{ ...styles.transparentBtn, width: width / 2.5 }}
-              >
-                <MaterialIcons name="edit" size={20} color="#FFFFFF" />
-                <Text style={styles.btnText}>Edit</Text>
-              </TouchableOpacity>
+            <View
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                ...styles.btnBox,
+                justifyContent:
+                  userId === playlist.ownerId ? "space-between" : "center",
+              }}
+            >
+              {userId === playlist.ownerId && (
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={{ ...styles.transparentBtn, width: width / 2.5 }}
+                >
+                  <MaterialIcons name="edit" size={20} color="#FFFFFF" />
+                  <Text style={styles.btnText}>Edit</Text>
+                </TouchableOpacity>
+              )}
               <TouchableOpacity activeOpacity={0.7}>
                 <LinearGradient
                   colors={["#4294F2", "#6A42F2"]}

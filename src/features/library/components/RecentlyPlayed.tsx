@@ -2,7 +2,11 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { RecentlyPlayedContext } from "../../../services/recentlyPlayed/RecentlyPlayed.services";
 
-const RecentlyPlayed = () => {
+type Props = {
+  navigation: any;
+};
+
+const RecentlyPlayed: React.FC<Props> = ({ navigation }) => {
   const { recentMusic } = useContext(RecentlyPlayedContext);
 
   if (!recentMusic) {
@@ -15,7 +19,15 @@ const RecentlyPlayed = () => {
     <View style={styles.root}>
       <Text style={styles.title}>Recently Played</Text>
       {artist && (
-        <TouchableOpacity style={styles.recentListItem} activeOpacity={0.7}>
+        <TouchableOpacity
+          style={styles.recentListItem}
+          activeOpacity={0.7}
+          onPress={() =>
+            navigation.navigate("ArtistScreen", {
+              id: artist.id,
+            })
+          }
+        >
           <View style={styles.imgTextBox}>
             <Image
               source={{
@@ -31,7 +43,15 @@ const RecentlyPlayed = () => {
         </TouchableOpacity>
       )}
       {playlist && (
-        <TouchableOpacity style={styles.recentListItem} activeOpacity={0.7}>
+        <TouchableOpacity
+          style={styles.recentListItem}
+          activeOpacity={0.7}
+          onPress={() => {
+            navigation.navigate("PlayListScreen", {
+              id: playlist.id,
+            });
+          }}
+        >
           <View style={styles.imgTextBox}>
             <Image
               source={{
@@ -46,7 +66,15 @@ const RecentlyPlayed = () => {
           </View>
         </TouchableOpacity>
       )}
-      <TouchableOpacity style={styles.recentListItem} activeOpacity={0.7}>
+      <TouchableOpacity
+        style={styles.recentListItem}
+        activeOpacity={0.7}
+        onPress={() => {
+          navigation.navigate("AlbumScreen", {
+            id: album.id,
+          });
+        }}
+      >
         <View style={styles.imgTextBox}>
           <Image
             source={{

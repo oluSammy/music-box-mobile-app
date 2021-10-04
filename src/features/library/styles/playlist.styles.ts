@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#161A1A",
     flex: 1,
     minHeight: "100%",
+    paddingBottom: 150,
   },
   flex: {
     flex: 1,
@@ -76,5 +77,13 @@ export const styles = StyleSheet.create({
   subTxt: {
     color: "#FFFFFF",
     opacity: 0.7,
+  },
+  loader: {
+    marginTop: 30,
+  },
+  errText: {
+    color: "#FFFFFF",
+    fontSize: 20,
+    marginTop: 40,
   },
 });

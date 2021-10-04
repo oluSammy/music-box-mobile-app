@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     borderTopColor: "transparent",
   },
   inputContainerStyle: {
-    borderRadius: 20,
+    borderRadius: 25,
+    height: 35,
   },
 });
 
