@@ -3,7 +3,11 @@ import { ScrollView, StyleSheet, ActivityIndicator, View } from "react-native";
 import Artist from "./Artist";
 import { ArtistContext } from "../../../services/artists/artist.service";
 
-const MostPlayed = () => {
+type Props = {
+  navigation: any;
+};
+
+const MostPlayed: React.FC<Props> = ({ navigation }) => {
   const { isLoadingMostPlayed, mostPlayed } = useContext(ArtistContext);
 
   if (isLoadingMostPlayed) {
@@ -18,13 +22,15 @@ const MostPlayed = () => {
     <ScrollView horizontal={true} style={styles.container}>
       {mostPlayed &&
         mostPlayed
-          .slice(1, 9)
+          .slice(0, 9)
           .map((artist) => (
             <Artist
               likes={artist.likedCount}
               artistName={artist.name}
               img={artist.picture}
               key={artist._id}
+              navigation={navigation}
+              id={artist.id}
             />
           ))}
     </ScrollView>

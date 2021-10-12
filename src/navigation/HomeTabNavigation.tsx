@@ -24,11 +24,13 @@ const HomeTabNavigator = () => {
           borderTopColor: "grey",
           // paddingBottom: 40,
           height: isAndroid ? 70 : 100,
+          position: "absolute",
         },
         tabBarActiveTintColor: "#2DCEEF",
         tabBarInactiveTintColor: "grey",
         headerShown: false,
         tabBarLabelStyle: { marginBottom: 15 },
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Screen

@@ -9,71 +9,42 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-const ArtistAlbums = () => {
+type Props = {
+  album: Record<string, any>;
+  navigation: any;
+};
+
+const ArtistAlbums: React.FC<Props> = ({ album, navigation }) => {
   return (
     <View style={styles.root}>
       <Text style={styles.title}>Albums</Text>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <View style={styles.album}>
-          <ImageBackground
-            source={{
-              uri: "https://cdns-images.dzcdn.net/images/cover/65f63c1898ec4e3458f5985b22f2392f/120x120-000000-80-0-0.jpg",
+        {album.map((el: Record<string, any>) => (
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.album}
+            key={el.id}
+            onPress={() => {
+              navigation.navigate("AlbumHomeScreen", {
+                id: el.id,
+              });
             }}
-            style={styles.img}
-            imageStyle={styles.roundedImg}
           >
-            <TouchableOpacity activeOpacity={0.5} style={styles.playBox}>
-              <Entypo name="controller-play" size={13} color="white" />
-            </TouchableOpacity>
-          </ImageBackground>
-          <Text style={styles.songTitle}>Dance</Text>
-          <Text style={styles.songDate}>Released: 15/02/19</Text>
-        </View>
-        <View style={styles.album}>
-          <ImageBackground
-            source={{
-              uri: "https://cdns-images.dzcdn.net/images/cover/65f63c1898ec4e3458f5985b22f2392f/120x120-000000-80-0-0.jpg",
-            }}
-            style={styles.img}
-            imageStyle={styles.roundedImg}
-          >
-            <TouchableOpacity activeOpacity={0.5} style={styles.playBox}>
-              <Entypo name="controller-play" size={13} color="white" />
-            </TouchableOpacity>
-          </ImageBackground>
-          <Text style={styles.songTitle}>Dance</Text>
-          <Text style={styles.songDate}>Released: 15/02/19</Text>
-        </View>
-        <View style={styles.album}>
-          <ImageBackground
-            source={{
-              uri: "https://cdns-images.dzcdn.net/images/cover/65f63c1898ec4e3458f5985b22f2392f/120x120-000000-80-0-0.jpg",
-            }}
-            style={styles.img}
-            imageStyle={styles.roundedImg}
-          >
-            <TouchableOpacity activeOpacity={0.5} style={styles.playBox}>
-              <Entypo name="controller-play" size={13} color="white" />
-            </TouchableOpacity>
-          </ImageBackground>
-          <Text style={styles.songTitle}>Dance</Text>
-          <Text style={styles.songDate}>Released: 15/02/19</Text>
-        </View>
-        <View style={styles.album}>
-          <ImageBackground
-            source={{
-              uri: "https://cdns-images.dzcdn.net/images/cover/65f63c1898ec4e3458f5985b22f2392f/120x120-000000-80-0-0.jpg",
-            }}
-            style={styles.img}
-            imageStyle={styles.roundedImg}
-          >
-            <TouchableOpacity activeOpacity={0.5} style={styles.playBox}>
-              <Entypo name="controller-play" size={13} color="white" />
-            </TouchableOpacity>
-          </ImageBackground>
-          <Text style={styles.songTitle}>Dance</Text>
-          <Text style={styles.songDate}>Released: 15/02/19</Text>
-        </View>
+            <ImageBackground
+              source={{
+                uri: `${el.cover_medium}`,
+              }}
+              style={styles.img}
+              imageStyle={styles.roundedImg}
+            >
+              <TouchableOpacity activeOpacity={0.5} style={styles.playBox}>
+                <Entypo name="controller-play" size={13} color="white" />
+              </TouchableOpacity>
+            </ImageBackground>
+            <Text style={styles.songTitle}>{el.title}</Text>
+            <Text style={styles.songDate}>{el.release_date}</Text>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
     </View>
   );
@@ -116,6 +87,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: "Lato_700Bold",
     fontSize: 16,
+    maxWidth: 120,
   },
   songDate: {
     color: "#FFFFFF",

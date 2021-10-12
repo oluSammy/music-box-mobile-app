@@ -50,6 +50,7 @@ const Browse: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     paddingLeft: 15,
+    paddingBottom: 120,
   },
   genreContainer: {
     flexDirection: "row",

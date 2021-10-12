@@ -1,16 +1,26 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 type Prop = {
   img: string;
   artistName: string;
   likes: number;
+  navigation: any;
+  id: string;
 };
 
-const Artist: React.FC<Prop> = ({ img, artistName, likes }) => {
+const Artist: React.FC<Prop> = ({ img, artistName, likes, navigation, id }) => {
   return (
-    <View style={styles.root}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() =>
+        navigation.navigate("ArtistHomeScreen", {
+          id,
+        })
+      }
+      style={styles.root}
+    >
       <Image
         source={{
           uri: `${img}`,
@@ -22,7 +32,7 @@ const Artist: React.FC<Prop> = ({ img, artistName, likes }) => {
         <AntDesign name="heart" size={15} color="white" />
         <Text style={styles.likeCount}>{likes}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

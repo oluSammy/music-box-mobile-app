@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import SafeAreaComp from "../components/SafeArea/SafeAreaComp";
 import ControlFlow from "../components/FlowCards/Control";
 import CreatePlaylistCardFlow from "../components/FlowCards/CreatePlaylist";
 import PopularFlowCard from "../components/FlowCards/Popular";
 import RecentlyPlayed from "../components/RecentlyPlayed/RecentlyPlayed";
-import BrowseGenre from "../components/BrowseGenres/BrowseGenre";
 import MostPlayed from "../features/artists/components/MostPlayed";
 import { SectionTitle } from "../components/Text/SectionTitle";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { homeParamList } from "../navigation/@types/navigation";
+import { RecentlyPlayedContext } from "../services/recentlyPlayed/RecentlyPlayed.services";
 
 type Props = NativeStackScreenProps<homeParamList, "HomeScreen">;
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
+  const { isLoading, recentMusic } = useContext(RecentlyPlayedContext);
+
   return (
     <SafeAreaComp showSearchBar>
       <View style={styles.screen}>
@@ -27,12 +29,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           <CreatePlaylistCardFlow />
           <PopularFlowCard />
         </ScrollView>
-        <SectionTitle>Recently Playeds</SectionTitle>
-        <RecentlyPlayed />
-        <SectionTitle>Browse Gernres</SectionTitle>
-        <BrowseGenre navigation={navigation} />
+        {!isLoading && recentMusic && (
+          <SectionTitle>Recently Played</SectionTitle>
+        )}
+        <RecentlyPlayed navigation={navigation} />
+        {/* <SectionTitle>Browse Gernres</SectionTitle>
+        <BrowseGenre navigation={navigation} /> */}
         <SectionTitle>Artist You may Like</SectionTitle>
-        <MostPlayed />
+        <MostPlayed navigation={navigation} />
       </View>
     </SafeAreaComp>
   );
@@ -41,11 +45,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   screen: {
     paddingHorizontal: 15,
-    paddingBottom: 40,
+    paddingBottom: 100,
   },
 
   sectionContainer: {
-    marginBottom: 15,
+    marginBottom: 25,
   },
 });
 

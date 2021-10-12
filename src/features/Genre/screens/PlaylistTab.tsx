@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { styles } from "../styles/genre.styles";
 import {
   StyledTouchBox,
@@ -10,96 +10,51 @@ import {
   LikeTitle,
   StyledBoxVar,
 } from "../../../components/playlistBox/PlaylistBox";
+import { Ionicons } from "@expo/vector-icons";
 
-const PlaylistTab: React.FC<any> = ({ navigation }) => {
+type Props = {
+  navigation: any;
+  playlist: Record<string, any>[] | null;
+  error: any;
+};
+
+const PlaylistTab: React.FC<Props> = ({ navigation, playlist, error }) => {
   return (
     <ScrollView style={styles.root}>
       <View style={styles.boxContainer}>
-        <StyledBoxVar>
-          <StyledTouchBox
-            activeOpacity={0.9}
-            onPress={() => {
-              navigation.navigate("PlaylistScreen");
-            }}
-          >
-            <RoundedImgBg
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/120x120-000000-80-0-0.jpg",
-              }}
-              resizeMode="cover"
-              imageStyle={styles.imageStyle}
-            />
-          </StyledTouchBox>
-          <LikeTitle>Workout Rock</LikeTitle>
-          <LikeBox>
-            <LikeIcon name="heart" size={15} color="white" />
-            <LikeText>414,228</LikeText>
-          </LikeBox>
-        </StyledBoxVar>
-        <StyledBoxVar>
-          <StyledTouchBox activeOpacity={0.9}>
-            <RoundedImgBg
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/120x120-000000-80-0-0.jpg",
-              }}
-              resizeMode="cover"
-              imageStyle={styles.imageStyle}
-            />
-          </StyledTouchBox>
-          <LikeTitle>Workout Rock</LikeTitle>
-          <LikeBox>
-            <LikeIcon name="heart" size={15} color="white" />
-            <LikeText>414,228</LikeText>
-          </LikeBox>
-        </StyledBoxVar>
-        <StyledBoxVar>
-          <StyledTouchBox activeOpacity={0.9}>
-            <RoundedImgBg
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/120x120-000000-80-0-0.jpg",
-              }}
-              resizeMode="cover"
-              imageStyle={styles.imageStyle}
-            />
-          </StyledTouchBox>
-          <LikeTitle>Workout Rock</LikeTitle>
-          <LikeBox>
-            <LikeIcon name="heart" size={15} color="white" />
-            <LikeText>414,228</LikeText>
-          </LikeBox>
-        </StyledBoxVar>
-        <StyledBoxVar>
-          <StyledTouchBox activeOpacity={0.9}>
-            <RoundedImgBg
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/120x120-000000-80-0-0.jpg",
-              }}
-              resizeMode="cover"
-              imageStyle={styles.imageStyle}
-            />
-          </StyledTouchBox>
-          <LikeTitle>Workout Rock</LikeTitle>
-          <LikeBox>
-            <LikeIcon name="heart" size={15} color="white" />
-            <LikeText>414,228</LikeText>
-          </LikeBox>
-        </StyledBoxVar>
-        <StyledBoxVar>
-          <StyledTouchBox activeOpacity={0.9}>
-            <RoundedImgBg
-              source={{
-                uri: "https://cdns-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/120x120-000000-80-0-0.jpg",
-              }}
-              resizeMode="cover"
-              imageStyle={styles.imageStyle}
-            />
-          </StyledTouchBox>
-          <LikeTitle>Workout Rock</LikeTitle>
-          <LikeBox>
-            <LikeIcon name="heart" size={15} color="white" />
-            <LikeText>414,228</LikeText>
-          </LikeBox>
-        </StyledBoxVar>
+        {error && <Text style={styles.errorTxt}>An Error Occurred</Text>}
+        {playlist && playlist.length === 0 && (
+          <View style={styles.createPlaylist}>
+            <Ionicons name="add-circle" size={24} color="#5CCFEF" />
+            <Text style={styles.addTxt}>Create</Text>
+          </View>
+        )}
+        {playlist &&
+          playlist.map((item) => (
+            <StyledBoxVar key={item._id}>
+              <StyledTouchBox
+                activeOpacity={0.9}
+                onPress={() => {
+                  navigation.navigate("PlaylistScreen", {
+                    id: item._id,
+                  });
+                }}
+              >
+                <RoundedImgBg
+                  source={{
+                    uri: `${item.imgURL}`,
+                  }}
+                  resizeMode="cover"
+                  imageStyle={styles.imageStyle}
+                />
+              </StyledTouchBox>
+              <LikeTitle>{item.name}</LikeTitle>
+              <LikeBox>
+                <LikeIcon name="heart" size={15} color="white" />
+                <LikeText>{item.likesCount} </LikeText>
+              </LikeBox>
+            </StyledBoxVar>
+          ))}
       </View>
     </ScrollView>
   );

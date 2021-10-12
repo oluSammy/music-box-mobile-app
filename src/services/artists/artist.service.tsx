@@ -13,6 +13,8 @@ interface Prop {
   mostPlayed: Record<string, any>[] | null;
   isLoadingMostPlayed: boolean;
   mostPlayedError: any;
+  incrementArtistLikes: (id: string, mode: "inc" | "dec") => void;
+  // decrementArtistLikes: (id: number) => void;
 }
 
 interface ArtistProps {
@@ -23,7 +25,9 @@ export const ArtistContext = createContext({} as Prop);
 
 const ArtistProvider = (props: ArtistProps) => {
   const { user } = useContext(AuthContext);
-  const [mostPlayed, setMostPlayed] = useState(null);
+  const [mostPlayed, setMostPlayed] = useState<Record<string, any>[] | null>(
+    null
+  );
   const [isLoadingMostPlayed, setIsLoadingMostPlayed] = useState(false);
   const [mostPlayedError, setMostPlayedError] = useState(null);
 
@@ -37,11 +41,9 @@ const ArtistProvider = (props: ArtistProps) => {
       setIsLoadingMostPlayed(true);
       const { data } = await axios.get(url, config);
       setIsLoadingMostPlayed(false);
-      //   console.log(data);
       setMostPlayed(data.data.payload);
-    } catch (err) {
+    } catch (err: any) {
       setIsLoadingMostPlayed(false);
-      //   console.log(err.response);
       setMostPlayedError(err.response);
     }
   }, [user]);
@@ -54,9 +56,42 @@ const ArtistProvider = (props: ArtistProps) => {
     getMostPlayed();
   }, [fetchMostPlayedArtist]);
 
+  const incrementArtistLikes = (id: string, mode: "inc" | "dec") => {
+    if (mostPlayed) {
+      const newMostPlayed = [...mostPlayed];
+      let idx: number | null = null;
+      const artistInc = mostPlayed!.find(
+        (art: Record<string, any>, index: number) => {
+          if (art.id === id) {
+            idx = index;
+          }
+          return art.id === id;
+        }
+      );
+      if (mode === "inc") {
+        if (artistInc) {
+          artistInc.likedCount = artistInc.likedCount + 1;
+        }
+      } else {
+        if (artistInc) {
+          artistInc.likedCount = artistInc.likedCount - 1;
+        }
+      }
+      if (idx !== null && artistInc) {
+        newMostPlayed.splice(idx, 1, artistInc);
+        setMostPlayed(newMostPlayed);
+      }
+    }
+  };
+
   return (
     <ArtistContext.Provider
-      value={{ mostPlayed, isLoadingMostPlayed, mostPlayedError }}
+      value={{
+        mostPlayed,
+        isLoadingMostPlayed,
+        mostPlayedError,
+        incrementArtistLikes,
+      }}
     >
       {props.children}
     </ArtistContext.Provider>

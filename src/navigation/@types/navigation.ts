@@ -20,18 +20,19 @@ export type tabParamsList = {
 export type homeParamList = {
   HomeScreen: undefined;
   GenreHomeTabs: undefined;
-  ArtistHomeScreen: undefined;
-  PlaylistHomeScreen: undefined;
+  ArtistHomeScreen: { id: string };
+  PlaylistHomeScreen: { id: string };
+  AlbumHomeScreen: { id: string };
 };
 
 export type libraryParamList = {
   LibraryHome: undefined;
   AllPlayList: undefined;
-  PlayListScreen: undefined;
+  PlayListScreen: { id: string };
   AllAlbum: undefined;
-  AlbumScreen: undefined;
+  AlbumScreen: { id: string };
   AllArtists: undefined;
-  ArtistScreen: undefined;
+  ArtistScreen: { id: string };
   ListeningHistoryScreen: undefined;
 };
 
@@ -41,7 +42,7 @@ export type searchParamsList = {
 
 export type genreParamList = {
   BrowseGenre: undefined;
-  GenreTabs: undefined;
-  ArtistScreen: undefined;
-  PlaylistScreen: undefined;
+  GenreTabs: { title: string; id: string; genreId: string } | undefined;
+  ArtistScreen: { id: string };
+  PlaylistScreen: { id: string };
 };

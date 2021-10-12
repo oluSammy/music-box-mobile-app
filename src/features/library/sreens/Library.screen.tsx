@@ -106,7 +106,7 @@ const Library: React.FC<Props> = ({ navigation }) => {
                   <Text style={styles.listItem}>Listening History</Text>
                 </TouchableOpacity>
               </View>
-              <RecentlyPlayed />
+              <RecentlyPlayed navigation={navigation} />
             </ScrollView>
           </View>
         </SafeAreaView>

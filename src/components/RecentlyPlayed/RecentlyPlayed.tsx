@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -8,97 +8,149 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { RecentlyPlayedContext } from "../../services/recentlyPlayed/RecentlyPlayed.services";
 
-const RecentlyPlayed = () => {
+type Props = {
+  navigation: any;
+};
+
+const RecentlyPlayed: React.FC<Props> = ({ navigation }) => {
+  const { recentMusic } = useContext(RecentlyPlayedContext);
+
+  if (!recentMusic) {
+    return null;
+  }
+
+  const { album, artist, playlist } = recentMusic;
+
   return (
     <View style={styles.container}>
-      <View style={{ ...styles.recentlyItem, ...styles.mr }}>
-        <View style={styles.roundedBG}>
-          <ImageBackground
-            source={{
-              uri: "https://cdns-images.dzcdn.net/images/artist/96f95f0659720ec5bda8ffd4f5317b2f/250x250-000000-80-0-0.jpg",
-            }}
-            style={styles.img}
-            resizeMode="cover"
-            imageStyle={styles.imageStyle}
-          >
-            <TouchableOpacity activeOpacity={0.5} style={styles.iconBox}>
-              <Entypo
-                name="controller-play"
-                size={18}
-                color="white"
-                style={styles.loveIcon}
-              />
-            </TouchableOpacity>
-          </ImageBackground>
-        </View>
-        <View style={styles.textBox}>
-          <Text style={styles.recentlyName}>Adam West</Text>
-          <Text style={styles.recentlyArtist}>Adam Wessst</Text>
-          <View style={styles.likesBox}>
-            <AntDesign name="heart" size={15} color="white" />
-            <Text style={styles.recentlyLiked}>3</Text>
+      {artist && (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{ ...styles.recentlyItem, ...styles.mr }}
+          onPress={() =>
+            navigation.navigate("ArtistHomeScreen", {
+              id: artist.id,
+            })
+          }
+        >
+          <View style={styles.roundedBG}>
+            <ImageBackground
+              source={{
+                uri: `${artist.img}`,
+              }}
+              style={styles.img}
+              resizeMode="cover"
+              imageStyle={styles.imageStyle}
+            >
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.iconBox}
+                onPress={() =>
+                  navigation.navigate("ArtistHomeScreen", {
+                    id: artist.id,
+                  })
+                }
+              >
+                <Entypo
+                  name="controller-play"
+                  size={18}
+                  color="white"
+                  style={styles.loveIcon}
+                />
+              </TouchableOpacity>
+            </ImageBackground>
           </View>
-        </View>
-      </View>
-      <View style={{ ...styles.recentlyItem, ...styles.mr }}>
-        <View style={styles.roundedBG}>
-          <ImageBackground
-            source={{
-              uri: "https://cdns-images.dzcdn.net/images/misc/db7a604d9e7634a67d45cfc86b48370a/120x120-000000-80-0-0.jpg",
-            }}
-            style={styles.imgVariant}
-            resizeMode="cover"
-            // imageStyle={styles.imageStyle}
-          >
-            <View style={styles.iconBox}>
-              <Entypo
-                name="controller-play"
-                size={18}
-                color="white"
-                style={styles.loveIcon}
-              />
+          <View style={styles.textBox}>
+            <Text style={styles.recentlyName}>{artist.title}</Text>
+            <Text style={styles.recentlyArtist}>Artist</Text>
+            <View style={styles.likesBox}>
+              <AntDesign name="heart" size={10} color="white" />
+              <Text style={styles.recentlyLiked}>{artist.likesCount}</Text>
             </View>
-          </ImageBackground>
-        </View>
-        <View style={styles.textBox}>
-          <Text style={styles.recentlyName}>Adam West</Text>
-          <Text style={styles.recentlyArtist}>Adam Wessst</Text>
-          <View style={styles.likesBox}>
-            <AntDesign name="heart" size={15} color="white" />
-            <Text style={styles.recentlyLiked}>3</Text>
           </View>
-        </View>
-      </View>
-      <View style={styles.recentlyItem}>
-        <View style={styles.roundedBG}>
-          <ImageBackground
-            source={{
-              uri: "https://cdns-images.dzcdn.net/images/cover/d0f5b22e23e1e300dc1476274495a1f1/250x250-000000-80-0-0.jpg",
-            }}
-            style={styles.imgVariant}
-            resizeMode="cover"
-            // imageStyle={styles.imageStyle}
-          >
-            <View style={styles.iconBox}>
-              <Entypo
-                name="controller-play"
-                size={18}
-                color="white"
-                style={styles.loveIcon}
-              />
+        </TouchableOpacity>
+      )}
+      {playlist && (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{ ...styles.recentlyItem, ...styles.mr }}
+          onPress={() => {
+            navigation.navigate("PlaylistHomeScreen", {
+              id: playlist.id,
+            });
+          }}
+        >
+          <View style={styles.roundedBG}>
+            <ImageBackground
+              source={{
+                uri: `${playlist.img}`,
+              }}
+              style={styles.imgVariant}
+              resizeMode="cover"
+              imageStyle={styles.imageStyleVar}
+            >
+              <View style={styles.iconBox}>
+                <Entypo
+                  name="controller-play"
+                  size={18}
+                  color="white"
+                  style={styles.loveIcon}
+                />
+              </View>
+            </ImageBackground>
+          </View>
+          <View style={styles.textBox}>
+            <Text style={styles.recentlyName}>{playlist.title}</Text>
+            <Text style={styles.recentlyArtist}>Playlist</Text>
+            <View style={styles.likesBox}>
+              <AntDesign name="heart" size={10} color="white" />
+              <Text style={styles.recentlyLiked}>{playlist.likesCount}</Text>
             </View>
-          </ImageBackground>
-        </View>
-        <View style={styles.textBox}>
-          <Text style={styles.recentlyName}>Adam West</Text>
-          <Text style={styles.recentlyArtist}>Adam Wessst</Text>
-          <View style={styles.likesBox}>
-            <AntDesign name="heart" size={15} color="white" />
-            <Text style={styles.recentlyLiked}>3</Text>
           </View>
-        </View>
-      </View>
+        </TouchableOpacity>
+      )}
+
+      {album && (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.recentlyItem}
+          onPress={() => {
+            navigation.navigate("AlbumHomeScreen", {
+              id: album.id,
+            });
+          }}
+        >
+          <View style={styles.roundedBG}>
+            <ImageBackground
+              source={{
+                uri: `${album.img}`,
+              }}
+              style={styles.imgVariant}
+              resizeMode="cover"
+              imageStyle={styles.imageStyleVar}
+            >
+              <View style={styles.iconBox}>
+                <Entypo
+                  name="controller-play"
+                  size={18}
+                  color="white"
+                  style={styles.loveIcon}
+                />
+              </View>
+            </ImageBackground>
+          </View>
+          <View style={styles.textBox}>
+            <Text style={styles.recentlyName}>{album.title}</Text>
+            <Text style={styles.recentlyArtist}>Album</Text>
+            <View style={styles.likesBox}>
+              <AntDesign name="heart" size={10} color="white" />
+              <Text style={styles.recentlyLiked}>{album.likesCount}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -107,15 +159,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    marginBottom: 10,
+    marginBottom: 30,
+    marginTop: 15,
   },
   mr: {
     marginRight: 20,
   },
   recentlyBox: {},
   roundedBG: {
-    height: 100,
-    width: 100,
+    height: 85,
+    width: 85,
     borderRadius: 50,
   },
   img: {
@@ -128,7 +181,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     padding: 10,
-    // alignItems: "center",
   },
   imageStyle: {
     borderRadius: 50,
@@ -151,13 +203,14 @@ const styles = StyleSheet.create({
   recentlyName: {
     color: "#ffffff",
     fontFamily: "Lato_700Bold",
-    fontSize: 17,
+    fontSize: 13,
     marginVertical: 5,
   },
   recentlyArtist: {
     color: "#FFFFFF",
     opacity: 0.8,
     marginBottom: 7,
+    fontSize: 12,
   },
   loveIcon: {
     opacity: 0.8,
@@ -165,10 +218,15 @@ const styles = StyleSheet.create({
   likesBox: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   },
   recentlyLiked: {
     color: "#FFFFFF",
     marginLeft: 5,
+    fontSize: 10,
+  },
+  imageStyleVar: {
+    borderRadius: 5,
   },
 });
 
