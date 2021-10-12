@@ -42,7 +42,7 @@ export type searchParamsList = {
 
 export type genreParamList = {
   BrowseGenre: undefined;
-  GenreTabs: undefined;
+  GenreTabs: { title: string; id: string; genreId: string } | undefined;
   ArtistScreen: { id: string };
   PlaylistScreen: { id: string };
 };

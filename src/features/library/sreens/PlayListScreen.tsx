@@ -43,8 +43,6 @@ const PlayListScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const userId = user?.data.data._id;
 
-
-
   const fetchPlaylist = useCallback(async () => {
     const config = {
       headers: { Authorization: `Bearer ${user?.data.token}` },

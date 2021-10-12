@@ -41,5 +41,30 @@ export const styles = StyleSheet.create({
   boxContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
+    paddingBottom: 150,
+  },
+  contd: {
+    marginTop: 20,
+  },
+  createPlaylist: {
+    width: 110,
+    height: 110,
+    borderWidth: 1,
+    borderColor: "#FFFFFF",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  addTxt: {
+    color: "#FFFFFF",
+    fontFamily: "Lato_700Bold",
+    marginTop: 10,
+    fontSize: 17,
+  },
+  errorTxt: {
+    color: "#FFFFFF",
+    fontFamily: "Lato_700Bold",
+    marginTop: 10,
+    fontSize: 17,
   },
 });

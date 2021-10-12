@@ -15,12 +15,18 @@ type Props = {
   navigation: any;
 };
 
-const GenreCard: React.FC<Props> = ({ genreTitle, bgImage, navigation }) => {
+const GenreCard: React.FC<Props> = ({
+  genreTitle,
+  bgImage,
+  navigation,
+  id,
+  genreId,
+}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={() => {
-        navigation.navigate("GenreTabs");
+        navigation.navigate("GenreTabs", { title: genreTitle, id, genreId });
       }}
     >
       <ImageBackground
