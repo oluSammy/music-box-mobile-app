@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { useState, useCallback, useContext, FC, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,10 +14,40 @@ import { libraryParamList } from "../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Accordion from "../../../components/Accordion/Accordion";
 import { styles as songStyles } from "../styles/albumSongList";
+import axios from "axios";
+import { AuthContext } from "../../../services/authentication/auth.service";
+import { API_URL } from "../../../constants/url";
 
 type Props = NativeStackScreenProps<libraryParamList, "AllArtists">;
 
 const ListeningHistory: FC<Props> = ({ navigation }) => {
+  const [today, setToday] = useState(null);
+  const [yesterday, setYesterday] = useState(null);
+  const [previous, setPrevious] = useState(null);
+  const [error, setError] = useState(null);
+
+  const { user } = useContext(AuthContext);
+
+  const fetchHistory = useCallback(async () => {
+    const config = {
+      headers: { Authorization: `Bearer ${user?.data.token}` },
+    };
+    const { data } = await axios.get(`${API_URL}history/getHistory`, config);
+    console.log(data);
+    try {
+    } catch (err: any) {
+      setError(err.response);
+      console.log(err.response);
+    }
+  }, [user?.data.token]);
+
+  useEffect(() => {
+    const getHistory = async () => {
+      await fetchHistory();
+    };
+    getHistory();
+  }, [fetchHistory]);
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
