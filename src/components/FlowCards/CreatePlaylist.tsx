@@ -12,7 +12,11 @@ import CardGradient from "../Ui/CardGradient";
 import FlowText from "./FlowText";
 import { Ionicons } from "@expo/vector-icons";
 
-const CreatePlaylistCardFlow = () => {
+type Props = {
+  navigation: any;
+};
+
+const CreatePlaylistCardFlow: React.FC<Props> = ({ navigation }) => {
   return (
     <CardContent>
       <CardGradient firstColor="#65B1F2" secondColor="#527CA0">
@@ -20,7 +24,10 @@ const CreatePlaylistCardFlow = () => {
           <CardImg
             source={require("../../../assets/images/create-paylist-img.png")}
           />
-          <CardControlIcon activeOpacity={0.6}>
+          <CardControlIcon
+            activeOpacity={0.6}
+            onPress={() => navigation.navigate("CreatePlaylist")}
+          >
             <Ionicons name="add-outline" size={24} color="white" />
           </CardControlIcon>
         </CardImageIcon>

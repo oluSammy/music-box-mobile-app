@@ -23,6 +23,7 @@ export type homeParamList = {
   ArtistHomeScreen: { id: string };
   PlaylistHomeScreen: { id: string };
   AlbumHomeScreen: { id: string };
+  CreatePlaylist: undefined;
 };
 
 export type libraryParamList = {

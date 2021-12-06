@@ -6,6 +6,7 @@ import GenreTabView from "../features/Genre/components/GenreTabView";
 import ArtistScreen from "../features/library/sreens/ArtistScreen";
 import PlayListScreen from "../features/library/sreens/PlayListScreen";
 import AlbumScreen from "../features/library/sreens/AlbumScreen";
+import CreatePlaylistScreen from "../features/playlist/screens/CreatePlaylist/CreatePlaylist.screen";
 
 const { Navigator, Screen } = createNativeStackNavigator<homeParamList>();
 
@@ -17,6 +18,7 @@ const HomeNavigation = () => {
       <Screen name="ArtistHomeScreen" component={ArtistScreen} />
       <Screen name="PlaylistHomeScreen" component={PlayListScreen} />
       <Screen name="AlbumHomeScreen" component={AlbumScreen} />
+      <Screen name="CreatePlaylist" component={CreatePlaylistScreen} />
     </Navigator>
   );
 };

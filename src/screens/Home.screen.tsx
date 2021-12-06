@@ -26,7 +26,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
         >
           <ControlFlow />
-          <CreatePlaylistCardFlow />
+          <CreatePlaylistCardFlow navigation={navigation} />
           <PopularFlowCard />
         </ScrollView>
         {!isLoading && recentMusic && (

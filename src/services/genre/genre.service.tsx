@@ -6,8 +6,8 @@ import React, {
   useContext,
 } from "react";
 import axios from "axios";
-import { API_URL } from "../../constants/url";
 import { AuthContext } from "../authentication/auth.service";
+import { API_URL } from "../../constants/url";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Prop {
