@@ -35,6 +35,7 @@ export type libraryParamList = {
   AllArtists: undefined;
   ArtistScreen: { id: string };
   ListeningHistoryScreen: undefined;
+  newPlaylistScreen: undefined;
 };
 
 export type searchParamsList = {

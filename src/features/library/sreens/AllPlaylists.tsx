@@ -107,7 +107,11 @@ const AllPlaylists: FC<Props> = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <Text style={styles.headerTitle}>PLAYLISTS</Text>
-          <TouchableOpacity activeOpacity={0.7} style={styles.newPlay}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.newPlay}
+            onPress={() => navigation.navigate("newPlaylistScreen")}
+          >
             <Text style={styles.newTxt}>New</Text>
             <MaterialIcons name="playlist-add" size={24} color="#FFFFFF" />
           </TouchableOpacity>
