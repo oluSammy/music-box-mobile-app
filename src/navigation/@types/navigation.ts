@@ -6,8 +6,21 @@ export type accountNavigatorParamsList = {
   ResetPassword: undefined;
 };
 
+interface IPlaylist {
+  album: string;
+  albumImgUrl: string;
+  artist: string;
+  id: string;
+  preview: string;
+  title: string;
+}
+
+type playlistRouteType = {
+  data: IPlaylist;
+};
+
 export type drawerNavigationParamsList = {
-  Main: undefined;
+  Main: tabParamsList;
 };
 
 export type tabParamsList = {
@@ -15,6 +28,7 @@ export type tabParamsList = {
   Library: undefined;
   Browse: undefined;
   Search: undefined;
+  AddToPlaylist: undefined;
 };
 
 export type homeParamList = {
@@ -24,6 +38,7 @@ export type homeParamList = {
   PlaylistHomeScreen: { id: string };
   AlbumHomeScreen: { id: string };
   CreatePlaylist: undefined;
+  AddToPlaylist: playlistRouteType;
 };
 
 export type libraryParamList = {
@@ -36,6 +51,7 @@ export type libraryParamList = {
   ArtistScreen: { id: string };
   ListeningHistoryScreen: undefined;
   newPlaylistScreen: undefined;
+  AddToPlaylist: playlistRouteType;
 };
 
 export type searchParamsList = {
@@ -47,4 +63,5 @@ export type genreParamList = {
   GenreTabs: { title: string; id: string; genreId: string } | undefined;
   ArtistScreen: { id: string };
   PlaylistScreen: { id: string };
+  AddToPlaylist: playlistRouteType;
 };

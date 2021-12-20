@@ -59,6 +59,7 @@ const AlbumScreen: React.FC<Props> = ({ navigation, route }) => {
       }
       setLikeId(data.result._id);
       setAlbum(data.result);
+
       setIsLoading(false);
     } catch (err: any) {
       setIsLoading(false);
@@ -186,6 +187,9 @@ const AlbumScreen: React.FC<Props> = ({ navigation, route }) => {
                 img={album.cover_medium}
                 album={album.title}
                 artistName={album.artist.name}
+                cover={album.cover_medium}
+                title={album.title}
+                navigation={navigation}
               />
             </ScrollView>
           </>

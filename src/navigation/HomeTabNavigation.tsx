@@ -10,6 +10,7 @@ import SearchNavigator from "./SearchNavigation";
 import GenreNavigation from "./GenreNavigation";
 import { Platform } from "react-native";
 import HomeNavigation from "./HomeStackNavigation";
+import AddToPlaylist from "../features/playlist/screens/AddToPlaylist/AddToPlaylist";
 
 const { Screen, Navigator } = createBottomTabNavigator<tabParamsList>();
 
@@ -18,19 +19,30 @@ const isAndroid = Platform.OS === "android";
 const HomeTabNavigator = () => {
   return (
     <Navigator
-      screenOptions={{
-        tabBarStyle: {
-          backgroundColor: "#161A1A",
-          borderTopColor: "grey",
-          // paddingBottom: 40,
-          height: isAndroid ? 70 : 100,
-          position: "absolute",
-        },
-        tabBarActiveTintColor: "#2DCEEF",
-        tabBarInactiveTintColor: "grey",
-        headerShown: false,
-        tabBarLabelStyle: { marginBottom: 15 },
-        tabBarHideOnKeyboard: true,
+      screenOptions={({ route }) => {
+        // console.log(route);
+        return {
+          tabBarButton: ["AddToPlaylist"].includes(route.name)
+            ? () => {
+                return null;
+              }
+            : undefined,
+          tabBarStyle: {
+            backgroundColor: "#161A1A",
+            borderTopColor: "grey",
+            // paddingBottom: 40,
+            height: route.name === "AddToPlaylist" ? 0 : isAndroid ? 70 : 100,
+            position: "absolute",
+          },
+          tabBarActiveTintColor: "#2DCEEF",
+          tabBarInactiveTintColor:
+            route.name === "AddToPlaylist" ? "#454848" : "grey",
+          headerShown: false,
+          tabBarLabelStyle: {
+            marginBottom: 15,
+          },
+          tabBarHideOnKeyboard: true,
+        };
       }}
     >
       <Screen
@@ -69,6 +81,7 @@ const HomeTabNavigator = () => {
           ),
         }}
       />
+      <Screen name="AddToPlaylist" component={AddToPlaylist} />
     </Navigator>
   );
 };

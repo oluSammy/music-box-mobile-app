@@ -12,7 +12,9 @@ import {
 import CardGradient from "../Ui/CardGradient";
 import { Entypo } from "@expo/vector-icons";
 
-const ControlFlow = () => {
+type Props = {};
+
+const ControlFlow: React.FC<Props> = () => {
   return (
     <CardContent>
       <CardGradient firstColor="#B3BBC8" secondColor="#7B8089">

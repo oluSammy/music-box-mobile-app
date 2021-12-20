@@ -196,7 +196,10 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
                 </View>
               </View>
             </KeyboardAvoidingView>
-            <ArtistPopularSongs popular={artist.songs} />
+            <ArtistPopularSongs
+              popular={artist.songs}
+              navigation={navigation}
+            />
             <ArtistAlbums album={artist.albums} navigation={navigation} />
           </ScrollView>
         )}

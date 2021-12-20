@@ -35,7 +35,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         <RecentlyPlayed navigation={navigation} />
         {/* <SectionTitle>Browse Gernres</SectionTitle>
         <BrowseGenre navigation={navigation} /> */}
-        <SectionTitle>Artist You may Like</SectionTitle>
+        <SectionTitle>Artist You may Liked</SectionTitle>
         <MostPlayed navigation={navigation} />
       </View>
     </SafeAreaComp>

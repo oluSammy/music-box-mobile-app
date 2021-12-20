@@ -6,9 +6,10 @@ import { getTimeFormat } from "../../../utils/utils";
 
 type Props = {
   popular: Record<string, any>[];
+  navigation: any;
 };
 
-const ArtistPopularSongs: React.FC<Props> = ({ popular }) => {
+const ArtistPopularSongs: React.FC<Props> = ({ popular, navigation }) => {
   return (
     <View style={styles.root}>
       {popular.map((track) => (
@@ -27,7 +28,21 @@ const ArtistPopularSongs: React.FC<Props> = ({ popular }) => {
               </Text>
             </View>
           </View>
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() =>
+              navigation.navigate("AddToPlaylist", {
+                data: {
+                  id: track.id,
+                  title: track.title,
+                  preview: track.preview,
+                  artist: track.artist.name,
+                  album: track.album.title,
+                  albumImgUrl: track.album.cover_medium,
+                },
+              })
+            }
+          >
             <Ionicons name="add" size={24} color="white" />
           </TouchableOpacity>
         </View>

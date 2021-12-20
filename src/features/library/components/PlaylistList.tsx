@@ -7,9 +7,10 @@ import { limitSentence, secondsToHms } from "../../../utils/utils";
 type Prop = {
   songs: Record<string, any>[] | null;
   filterText: string;
+  navigation: any;
 };
 
-const PlaylistList: React.FC<Prop> = ({ songs, filterText }) => {
+const PlaylistList: React.FC<Prop> = ({ songs, filterText, navigation }) => {
   const [tracks, setTracks] = useState<Record<string, any>[] | null>(null);
 
   useEffect(() => {
@@ -44,7 +45,22 @@ const PlaylistList: React.FC<Prop> = ({ songs, filterText }) => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() =>
+          navigation.navigate("AddToPlaylist", {
+            data: {
+              id: item.id,
+              title: item.title,
+              preview: item.preview,
+              artist: item.artist,
+              album: item.album,
+              albumImgUrl: item.albumImgUrl,
+              duration: item.duration,
+            },
+          })
+        }
+      >
         <Ionicons name="add" size={24} color="white" />
       </TouchableOpacity>
     </View>

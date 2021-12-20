@@ -10,9 +10,18 @@ type Props = {
   album: string;
   albumId: string;
   artistName: string;
+  cover: string;
+  title: string;
+  navigation: any;
 };
 
-const AlbumSongsList: React.FC<Props> = ({ tracks, artistName }) => {
+const AlbumSongsList: React.FC<Props> = ({
+  tracks,
+  artistName,
+  cover,
+  title,
+  navigation,
+}) => {
   return (
     <View style={styles.root}>
       {tracks.map((track: Record<string, any>, idx: number) => (
@@ -26,7 +35,22 @@ const AlbumSongsList: React.FC<Props> = ({ tracks, artistName }) => {
               </Text>
             </View>
           </View>
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              navigation.navigate("AddToPlaylist", {
+                data: {
+                  id: track.id,
+                  title: track.title,
+                  preview: track.preview,
+                  artist: track.artist.name,
+                  album: title,
+                  albumImgUrl: cover,
+                  duration: track.duration,
+                },
+              });
+            }}
+          >
             <Ionicons name="add" size={24} color="white" />
           </TouchableOpacity>
         </View>

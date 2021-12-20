@@ -207,7 +207,11 @@ const PlayListScreen: React.FC<Props> = ({ navigation, route }) => {
                 </View>
               </View>
             </KeyboardAvoidingView>
-            <PlaylistList songs={tracks} filterText={text} />
+            <PlaylistList
+              navigation={navigation}
+              songs={tracks}
+              filterText={text}
+            />
           </ScrollView>
         )}
       </SafeAreaView>
