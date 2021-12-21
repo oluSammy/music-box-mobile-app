@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useCallback, useContext } from "react";
+import React, { FC, useContext } from "react";
 import {
   View,
   Text,
@@ -14,45 +14,14 @@ import { libraryParamList } from "../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "../styles/playlist.styles";
 import { MaterialIcons } from "@expo/vector-icons";
-import axios from "axios";
-import { API_URL } from "../../../constants/url";
-import { AuthContext } from "../../../services/authentication/auth.service";
 import { secondsToHms } from "../../../utils/utils";
+import { PlaylistContext } from "../../../services/playlists/playlist.service";
 
 type Props = NativeStackScreenProps<libraryParamList, "AllPlayList">;
 
 const AllPlaylists: FC<Props> = ({ navigation }) => {
-  const [playlists, setPlaylists] = useState<Record<string, any>[] | null>(
-    null
-  );
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<any>(null);
-  const { user } = useContext(AuthContext);
-
-  const userId = user?.data.data._id;
-
-  const fetchPlaylists = useCallback(async () => {
-    const config = {
-      headers: { Authorization: `Bearer ${user?.data.token}` },
-    };
-    try {
-      setIsLoading(true);
-      const {
-        data: {
-          data: { payload },
-        },
-      } = await axios.get(`${API_URL}/playlist`, config);
-      const myPlaylists = payload.filter(
-        (list: any) =>
-          list.ownerId._id === userId || list.likes.includes(userId)
-      );
-      setPlaylists(myPlaylists);
-      setIsLoading(false);
-    } catch (e: any) {
-      setIsLoading(false);
-      setError(e.response);
-    }
-  }, [user?.data.token, userId]);
+  const { isFetchingPlaylist, myPlaylists, fetchPlaylistError } =
+    useContext(PlaylistContext);
 
   const RenderItem = ({ item }: any) => (
     <TouchableOpacity
@@ -84,13 +53,6 @@ const AllPlaylists: FC<Props> = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-  useEffect(() => {
-    const getPlaylists = async () => {
-      await fetchPlaylists();
-    };
-    getPlaylists();
-  }, [fetchPlaylists]);
-
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
@@ -116,19 +78,19 @@ const AllPlaylists: FC<Props> = ({ navigation }) => {
             <MaterialIcons name="playlist-add" size={24} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
-        {error && (
+        {fetchPlaylistError && (
           <View style={styles.loader}>
             <Text style={styles.errText}>An Error Ocurred!</Text>
           </View>
         )}
-        {isLoading && (
+        {isFetchingPlaylist && (
           <View style={styles.loader}>
             <ActivityIndicator size="large" color="#FFFFFF" />
           </View>
         )}
-        {playlists && (
+        {myPlaylists && (
           <FlatList
-            data={playlists}
+            data={myPlaylists}
             renderItem={RenderItem}
             keyExtractor={(item) => `${item._id}`}
             showsVerticalScrollIndicator={false}

@@ -16,8 +16,6 @@ import { Ionicons } from "@expo/vector-icons";
 type Props = NativeStackScreenProps<homeParamList, "AddToPlaylist">;
 
 const AddToPlaylist: React.FC<Props> = ({ navigation, route }) => {
-  // console.log(route.params.data);
-
   useEffect(() => {
     if (!route.params.data) {
       navigation.goBack();

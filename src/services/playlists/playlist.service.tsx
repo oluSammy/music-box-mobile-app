@@ -2,7 +2,9 @@ import React, {
   useContext,
   useCallback,
   createContext,
-  // useEffect,
+  useState,
+  useEffect,
+  useMemo,
 } from "react";
 import axios from "axios";
 import { AuthContext } from "../authentication/auth.service";
@@ -15,6 +17,9 @@ interface Prop {
   isProcessing: boolean;
   error: any;
   createPlayList: (data: IPlaylist) => void;
+  myPlaylists: Record<string, any>[] | null;
+  fetchPlaylistError: any;
+  isFetchingPlaylist: boolean;
 }
 
 interface PlaylistProps {
@@ -33,17 +38,59 @@ export const PlaylistContext = createContext<Prop>({} as Prop);
 
 const PlaylistProvider = (props: PlaylistProps) => {
   const { user } = useContext(AuthContext);
-  const [newPlaylist, setNewPlaylist] = React.useState<Record<string, any>[]>(
-    []
+  const [newPlaylist, setNewPlaylist] = useState<Record<string, any>[]>([]);
+  const [isProcessing, setIsLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
+  const [myPlaylists, setMyPlaylists] = useState<null | Record<string, any>[]>(
+    null
   );
-  const [isProcessing, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState<any>(null);
+  const [isFetchingPlaylist, setIsFetchingPlaylist] = useState(false);
+  const [fetchPlaylistError, setFetchPlaylistError] = useState<any>(null);
+
+  const config = useMemo(() => {
+    return {
+      headers: { Authorization: `Bearer ${user?.data.token}` },
+    };
+  }, [user?.data.token]);
+
+  const fetchPlaylist = useCallback(async () => {
+    try {
+      setIsFetchingPlaylist(true);
+      const publicPlaylists = await axios.get(`${API_URL}/playlist`, config);
+      const createdPlaylists = await axios.get(
+        `${API_URL}/playlist/created`,
+        config
+      );
+
+      createdPlaylists.data.data.payload.forEach((playlist: any) => {
+        const doc = publicPlaylists.data.data.payload.findIndex(
+          (list: any) => list._id === playlist._id
+        );
+
+        if (doc < 0) {
+          publicPlaylists.data.data.payload.push(playlist);
+        }
+
+        // console.log(publicPlaylists.data.data.payload.length, "LENGTH");
+        setMyPlaylists(publicPlaylists.data.data.payload);
+      });
+      setIsFetchingPlaylist(false);
+    } catch (e) {
+      setIsFetchingPlaylist(false);
+      setFetchPlaylistError(e);
+    }
+  }, [config]);
+
+  useEffect(() => {
+    const getPlaylist = async () => {
+      await fetchPlaylist();
+    };
+
+    getPlaylist();
+  }, [fetchPlaylist]);
 
   const createPlayList = useCallback(
     async (data: IPlaylist) => {
-      const config = {
-        headers: { Authorization: `Bearer ${user?.data.token}` },
-      };
       const url = `${API_URL}/playlist`;
 
       console.log(data, "DATA");
@@ -61,7 +108,7 @@ const PlaylistProvider = (props: PlaylistProps) => {
         setIsLoading(false);
       }
     },
-    [user?.data.token]
+    [config]
   );
 
   return (
@@ -71,6 +118,9 @@ const PlaylistProvider = (props: PlaylistProps) => {
         isProcessing,
         error,
         createPlayList,
+        myPlaylists,
+        isFetchingPlaylist,
+        fetchPlaylistError,
       }}
     >
       {props.children}
