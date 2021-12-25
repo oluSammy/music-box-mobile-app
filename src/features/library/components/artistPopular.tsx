@@ -39,6 +39,7 @@ const ArtistPopularSongs: React.FC<Props> = ({ popular, navigation }) => {
                   artist: track.artist.name,
                   album: track.album.title,
                   albumImgUrl: track.album.cover_medium,
+                  duration: track.duration,
                 },
               })
             }

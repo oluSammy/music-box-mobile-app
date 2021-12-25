@@ -11,6 +11,7 @@ import { AuthContext } from "../authentication/auth.service";
 import { API_URL } from "../../constants/url";
 // import { NativeStackScreenProps } from "@react-navigation/native-stack";
 // import { homeParamList } from "../../navigation/@types/navigation";
+import { Alert } from "react-native";
 
 interface Prop {
   playlist: Record<string, any>[] | null;
@@ -20,6 +21,10 @@ interface Prop {
   myPlaylists: Record<string, any>[] | null;
   fetchPlaylistError: any;
   isFetchingPlaylist: boolean;
+  myUserPlaylist: Record<string, any>[] | null;
+  addSongToPlaylist: (song: ISong, playlistId: string) => void;
+  isAddingSongs: boolean;
+  addSongError: any;
 }
 
 interface PlaylistProps {
@@ -34,6 +39,16 @@ interface IPlaylist {
   navigation: any;
 }
 
+interface ISong {
+  album: string;
+  albumImgUrl: string;
+  preview: string;
+  duration: number;
+  title: string;
+  id: string;
+  artist: string;
+}
+
 export const PlaylistContext = createContext<Prop>({} as Prop);
 
 const PlaylistProvider = (props: PlaylistProps) => {
@@ -44,8 +59,13 @@ const PlaylistProvider = (props: PlaylistProps) => {
   const [myPlaylists, setMyPlaylists] = useState<null | Record<string, any>[]>(
     null
   );
+  const [myUserPlaylist, setUserPlaylist] = useState<
+    null | Record<string, any>[]
+  >(null);
   const [isFetchingPlaylist, setIsFetchingPlaylist] = useState(false);
   const [fetchPlaylistError, setFetchPlaylistError] = useState<any>(null);
+  const [isAddingSongs, setIsAddingSongs] = useState(false);
+  const [addSongError, setAddSongError] = useState<any>(null);
 
   const config = useMemo(() => {
     return {
@@ -70,16 +90,29 @@ const PlaylistProvider = (props: PlaylistProps) => {
         if (doc < 0) {
           publicPlaylists.data.data.payload.push(playlist);
         }
-
-        // console.log(publicPlaylists.data.data.payload.length, "LENGTH");
+        // console.log(user?.data.data._id);
+        // console.log(publicPlaylists.data.data.payload[5].ownerId._id, "LENGTH");
         setMyPlaylists(publicPlaylists.data.data.payload);
       });
+
+      // get user playlist
+      const userPlaylist: any[] = [];
+      publicPlaylists.data.data.payload.forEach((playlist: any) => {
+        if (playlist.ownerId._id === user?.data.data._id) {
+          userPlaylist.push(playlist);
+        }
+      });
+
+      setUserPlaylist(userPlaylist);
+
+      // console.log(userPlaylist.length, "MY USER PLAYLIST");
       setIsFetchingPlaylist(false);
     } catch (e) {
+      // console.log(e);
       setIsFetchingPlaylist(false);
       setFetchPlaylistError(e);
     }
-  }, [config]);
+  }, [config, user?.data.data._id]);
 
   useEffect(() => {
     const getPlaylist = async () => {
@@ -93,23 +126,69 @@ const PlaylistProvider = (props: PlaylistProps) => {
     async (data: IPlaylist) => {
       const url = `${API_URL}/playlist`;
 
-      console.log(data, "DATA");
+      // console.log(data, "DATA");
 
       setIsLoading(true);
       try {
         const response = await axios.post(url, data, config);
-        console.log(response.data);
+        // console.log(response.data);
         setNewPlaylist(response.data);
+        await fetchPlaylist();
         setIsLoading(false);
         // navigation.goBack()
       } catch (e: any) {
         console.log(e.response.data, "((**");
+        console.log(e, "((**");
         setError("Error creating playlist");
         setIsLoading(false);
       }
     },
-    [config]
+    [config, fetchPlaylist]
   );
+
+  const addSongToPlaylist = async (song: ISong, playlistId: string) => {
+    console.log("called", song, playlistId);
+    try {
+      setIsAddingSongs(true);
+
+      const response = await axios.put(
+        `${API_URL}/playlist/${playlistId}`,
+        song,
+        config
+      );
+
+      console.log("response.data");
+      console.log(response.data);
+
+      const addedToPlaylist =
+        myPlaylists &&
+        myPlaylists.find((el: any) => {
+          if (el._id === playlistId) {
+            return el;
+          }
+          return false;
+        });
+
+      if (addedToPlaylist) {
+        addedToPlaylist.tracks.push(song);
+      }
+
+      setMyPlaylists(myPlaylists);
+
+      setIsAddingSongs(false);
+      Alert.alert("Done!", "Song added to playlist");
+    } catch (e: any) {
+      setIsAddingSongs(false);
+      setAddSongError(e);
+      if (e.response) {
+        e.response.data.message === "Track already exists"
+          ? Alert.alert("Error!", "Track already exist in playlist")
+          : Alert.alert("Error!", "An error occurred");
+      } else {
+        Alert.alert("Error!", "Track already exist in playlist");
+      }
+    }
+  };
 
   return (
     <PlaylistContext.Provider
@@ -121,6 +200,10 @@ const PlaylistProvider = (props: PlaylistProps) => {
         myPlaylists,
         isFetchingPlaylist,
         fetchPlaylistError,
+        myUserPlaylist,
+        isAddingSongs,
+        addSongError,
+        addSongToPlaylist,
       }}
     >
       {props.children}

@@ -43,6 +43,10 @@ export const styles = StyleSheet.create({
   },
   titleBox: {
     marginBottom: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // flex: 1,
+    width: "100%",
   },
   textTitle: {
     color: "#FFFFFF",
@@ -61,17 +65,29 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
   },
+
+  selectedPlaylist: {
+    borderWidth: 4,
+    borderColor: "#FFFFFF",
+    width: "100%",
+    height: 100,
+    marginBottom: 10,
+    borderRadius: 10,
+  },
+
   playlistCover: {
     width: windowWidth * 0.3 - 15,
-
-    marginRight: windowWidth * 0.03333,
+    marginRight: windowWidth * 0.02,
+    marginLeft: windowWidth * 0.02,
     marginBottom: 18,
+    // flex: 1 / 3,
   },
   playlistContainer: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     // justifyContent: "space-between",
+    backgroundColor: "red",
   },
   playlistTitle: {
     color: "#FFFFFF",
@@ -82,5 +98,43 @@ export const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 13,
     fontFamily: "Lato_700Bold",
+  },
+  loader: {
+    marginTop: 30,
+  },
+  errText: {
+    color: "#FFFFFF",
+    fontSize: 20,
+    marginTop: 40,
+  },
+  gradientBtn: {
+    flexDirection: "row",
+    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 8,
+    borderRadius: 20,
+    width: 150,
+  },
+  selectedGradientBtn: {
+    flexDirection: "row",
+    backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 8,
+    borderRadius: 20,
+    width: 150,
+    borderWidth: 1,
+    borderColor: "#FFFFFF",
+  },
+  btnText: {
+    color: "#FFFFFF",
+    marginLeft: 4,
+    fontFamily: "Lato_700Bold",
+    textTransform: "uppercase",
+    fontSize: 15,
+  },
+  upperTxt: {
+    flex: 0.8,
   },
 });

@@ -6,13 +6,14 @@ export type accountNavigatorParamsList = {
   ResetPassword: undefined;
 };
 
-interface IPlaylist {
+export interface IPlaylist {
   album: string;
   albumImgUrl: string;
   artist: string;
   id: string;
   preview: string;
   title: string;
+  duration: number;
 }
 
 type playlistRouteType = {

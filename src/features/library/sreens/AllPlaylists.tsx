@@ -90,7 +90,9 @@ const AllPlaylists: FC<Props> = ({ navigation }) => {
         )}
         {myPlaylists && (
           <FlatList
-            data={myPlaylists}
+            data={myPlaylists?.sort(
+              (a, b) => b.tracks.length - a.tracks.length
+            )}
             renderItem={RenderItem}
             keyExtractor={(item) => `${item._id}`}
             showsVerticalScrollIndicator={false}
