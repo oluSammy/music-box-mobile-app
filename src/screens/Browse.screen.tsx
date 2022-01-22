@@ -14,7 +14,7 @@ const Browse: React.FC<Props> = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <SafeAreaComp showSearchBar>
+      <SafeAreaComp showSearchBar={false}>
         <View style={styles.indicatorContainer}>
           <ActivityIndicator size="small" color="#FFFFFF" />
         </View>
@@ -23,7 +23,7 @@ const Browse: React.FC<Props> = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaComp showSearchBar>
+    <SafeAreaComp showSearchBar={false}>
       <ScrollView style={styles.screen}>
         <SectionTitle>Genres</SectionTitle>
         <View style={styles.genreContainer}>
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+    marginTop: 20,
   },
   indicatorContainer: {
     justifyContent: "center",

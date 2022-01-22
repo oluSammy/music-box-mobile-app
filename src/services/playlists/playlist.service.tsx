@@ -137,8 +137,8 @@ const PlaylistProvider = (props: PlaylistProps) => {
         setIsLoading(false);
         // navigation.goBack()
       } catch (e: any) {
-        console.log(e.response.data, "((**");
-        console.log(e, "((**");
+        // console.log(e.response.data, "((**");
+        // console.log(e, "((**");
         setError("Error creating playlist");
         setIsLoading(false);
       }
@@ -147,7 +147,7 @@ const PlaylistProvider = (props: PlaylistProps) => {
   );
 
   const addSongToPlaylist = async (song: ISong, playlistId: string) => {
-    console.log("called", song, playlistId);
+    // console.log("called", song, playlistId);
     try {
       setIsAddingSongs(true);
 
@@ -157,7 +157,7 @@ const PlaylistProvider = (props: PlaylistProps) => {
         config
       );
 
-      console.log("response.data");
+      // console.log("response.data");
       console.log(response.data);
 
       const addedToPlaylist =

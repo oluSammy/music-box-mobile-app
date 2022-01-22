@@ -33,11 +33,11 @@ const ListeningHistory: FC<Props> = ({ navigation }) => {
       headers: { Authorization: `Bearer ${user?.data.token}` },
     };
     const { data } = await axios.get(`${API_URL}history/getHistory`, config);
-    console.log(data);
+    // console.log(data);
     try {
     } catch (err: any) {
       setError(err.response);
-      console.log(err.response);
+      // console.log(err.response);
     }
   }, [user?.data.token]);
 

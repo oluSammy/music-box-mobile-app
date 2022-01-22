@@ -70,7 +70,7 @@ const AuthProvider = (props: Props) => {
 
   const loadUser = React.useCallback(async () => {
     try {
-      const loggedInUser = await AsyncStorage.getItem("@music-box-us");
+      const loggedInUser = await AsyncStorage.getItem("@music-box-ap");
 
       if (loggedInUser) {
         return JSON.parse(loggedInUser);
@@ -117,7 +117,7 @@ const AuthProvider = (props: Props) => {
       );
       setIsSigningUp(false);
       setUser(data);
-      await AsyncStorage.setItem("@music-box-us", JSON.stringify(data));
+      await AsyncStorage.setItem("@music-box-ap", JSON.stringify(data));
     } catch (err: any) {
       setIsSigningUp(false);
       setSignupError(err.response.data.message);
@@ -139,7 +139,7 @@ const AuthProvider = (props: Props) => {
       setIsLoggingIn(false);
       setUser(data);
 
-      await AsyncStorage.setItem("@music-box-us", JSON.stringify(data));
+      await AsyncStorage.setItem("@music-box-ap", JSON.stringify(data));
     } catch (err: any) {
       setIsLoggingIn(false);
       setError(err.response.data.message);

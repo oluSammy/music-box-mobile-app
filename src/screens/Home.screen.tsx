@@ -17,7 +17,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { isLoading, recentMusic } = useContext(RecentlyPlayedContext);
 
   return (
-    <SafeAreaComp showSearchBar>
+    <SafeAreaComp showSearchBar={false}>
       <View style={styles.screen}>
         <SectionTitle>Flow</SectionTitle>
         <ScrollView

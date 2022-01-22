@@ -50,6 +50,11 @@ export const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 18,
   },
+
+  playlistIcon_: {
+    marginRight: 20,
+  },
+
   playlistImg: {
     height: 50,
     width: 50,

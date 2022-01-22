@@ -39,7 +39,7 @@ const HomeTabNavigator = () => {
             route.name === "AddToPlaylist" ? "#454848" : "grey",
           headerShown: false,
           tabBarLabelStyle: {
-            marginBottom:   15,
+            marginBottom: 15,
           },
           tabBarHideOnKeyboard: true,
         };

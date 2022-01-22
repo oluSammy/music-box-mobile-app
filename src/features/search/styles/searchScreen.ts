@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
   content: {
     marginHorizontal: 20,
     marginTop: 25,
+    marginBottom: 100,
   },
   recentHeader: {
     flexDirection: "row",
@@ -66,5 +67,16 @@ export const styles = StyleSheet.create({
     width: 50,
     borderRadius: 25,
     marginRight: 20,
+  },
+  overlay: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black",
+    opacity: 0.6,
   },
 });

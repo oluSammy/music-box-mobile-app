@@ -13,13 +13,13 @@ type Props = {
   showSearchBar: boolean;
 };
 
-const SafeAreaComp: React.FC<Props> = (props) => {
+const SafeAreaComp: React.FC<Props> = ({ children, showSearchBar }) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
       <SafeAreaView style={styles.flex}>
-        {props.showSearchBar && <SearchBar />}
-        <ScrollView style={styles.flex}>{props.children}</ScrollView>
+        {showSearchBar && <SearchBar />}
+        <ScrollView style={styles.flex}>{children}</ScrollView>
       </SafeAreaView>
     </View>
   );
