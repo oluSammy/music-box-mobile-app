@@ -38,7 +38,6 @@ const Search: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     const fetchPrevSearch = async () => {
       const prevSearch = await AsyncStorage.getItem("@music-box-search");
-      // console.log("prevSearch", prevSearch);
 
       if (prevSearch) {
         setPrevSearches(JSON.parse(prevSearch));
@@ -97,7 +96,7 @@ const Search: React.FC<Props> = ({ navigation }) => {
           setAlbum(searchAlbum);
           setArtist(searchArtist);
 
-          console.log(searchPlaylist[0]);
+          // console.log(searchArtist[0]);
           setPlaylist(searchPlaylist);
           setPrevSearches([
             ...new Set([searchQuery, ...prevSearches.slice(-4)]),
@@ -176,7 +175,12 @@ const Search: React.FC<Props> = ({ navigation }) => {
               {artist.length > 0 && (
                 <View style={styles.resultsHeader}>
                   <Text style={styles.resultsTitle}>Artists</Text>
-                  <TouchableOpacity activeOpacity={0.8}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      navigation.navigate("SearchArtist", { artist })
+                    }
+                  >
                     <Text style={styles.clear}>View All</Text>
                   </TouchableOpacity>
                 </View>
@@ -188,7 +192,9 @@ const Search: React.FC<Props> = ({ navigation }) => {
                     activeOpacity={0.8}
                     style={recentStyles.playlistItem}
                     onPress={() => {
-                      // navigation.navigate("AlbumScreen");
+                      navigation.navigate("SearchArtistScreen", {
+                        id: artist_.id,
+                      });
                     }}
                     key={artist_.id}
                   >
@@ -208,7 +214,12 @@ const Search: React.FC<Props> = ({ navigation }) => {
               {album.length > 0 && (
                 <View style={styles.resultsHeader}>
                   <Text style={styles.resultsTitle}>Albums</Text>
-                  <TouchableOpacity activeOpacity={0.8}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      navigation.navigate("SearchAlbum", { album })
+                    }
+                  >
                     <Text style={styles.clear}>View All</Text>
                   </TouchableOpacity>
                 </View>
@@ -220,7 +231,9 @@ const Search: React.FC<Props> = ({ navigation }) => {
                     activeOpacity={0.8}
                     style={recentStyles.playlistItem}
                     onPress={() => {
-                      // navigation.navigate("AlbumScreen");
+                      navigation.navigate("SearchAlbumScreen", {
+                        id: album_.id,
+                      });
                     }}
                     key={album_.id}
                   >
@@ -240,7 +253,12 @@ const Search: React.FC<Props> = ({ navigation }) => {
               {playlist.length > 0 && (
                 <View style={styles.resultsHeader}>
                   <Text style={styles.resultsTitle}>Playlists</Text>
-                  <TouchableOpacity activeOpacity={0.8}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      navigation.navigate("SearchPlaylist", { playlist })
+                    }
+                  >
                     <Text style={styles.clear}>View All</Text>
                   </TouchableOpacity>
                 </View>
@@ -252,7 +270,9 @@ const Search: React.FC<Props> = ({ navigation }) => {
                     activeOpacity={0.8}
                     style={recentStyles.playlistItem}
                     onPress={() => {
-                      // navigation.navigate("AlbumScreen");
+                      navigation.navigate("SearchPlaylistScreen", {
+                        id: playlist_._id,
+                      });
                     }}
                     key={playlist_._id}
                   >

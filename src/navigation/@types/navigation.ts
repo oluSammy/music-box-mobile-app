@@ -57,6 +57,12 @@ export type libraryParamList = {
 
 export type searchParamsList = {
   SearchScreen: undefined;
+  SearchArtist: { artist: Record<string, any>[] };
+  SearchAlbum: { album: Record<string, any>[] };
+  SearchArtistScreen: { id: string };
+  SearchAlbumScreen: { id: string };
+  SearchPlaylist: { playlist: Record<string, any>[] };
+  SearchPlaylistScreen: { id: string };
 };
 
 export type genreParamList = {
