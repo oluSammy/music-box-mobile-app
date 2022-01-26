@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import SafeAreaComp from "../components/SafeArea/SafeAreaComp";
 import ControlFlow from "../components/FlowCards/Control";
 import CreatePlaylistCardFlow from "../components/FlowCards/CreatePlaylist";
@@ -7,11 +7,12 @@ import PopularFlowCard from "../components/FlowCards/Popular";
 import RecentlyPlayed from "../components/RecentlyPlayed/RecentlyPlayed";
 import MostPlayed from "../features/artists/components/MostPlayed";
 import { SectionTitle } from "../components/Text/SectionTitle";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { homeParamList } from "../navigation/@types/navigation";
+// import { NativeStackScreenProps } from "@react-navigation/native-stack";
+// import { homeParamList } from "../navigation/@types/navigation";
 import { RecentlyPlayedContext } from "../services/recentlyPlayed/RecentlyPlayed.services";
+import { Ionicons } from "@expo/vector-icons";
 
-type Props = NativeStackScreenProps<homeParamList, "HomeScreen">;
+type Props = any;
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { isLoading, recentMusic } = useContext(RecentlyPlayedContext);
@@ -19,7 +20,12 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaComp showSearchBar={false}>
       <View style={styles.screen}>
-        <SectionTitle>Flow</SectionTitle>
+        <View style={styles.header}>
+          <SectionTitle>Flow</SectionTitle>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Ionicons name="menu-outline" size={24} color="#2DCEEF" />
+          </TouchableOpacity>
+        </View>
         <ScrollView
           horizontal={true}
           style={styles.sectionContainer}
@@ -47,7 +53,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 100,
   },
-
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginRight: 20,
+    marginVertical: 10,
+  },
   sectionContainer: {
     marginBottom: 25,
   },

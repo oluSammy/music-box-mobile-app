@@ -14,10 +14,11 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import RecentlyPlayed from "../components/RecentlyPlayed";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { libraryParamList } from "../../../navigation/@types/navigation";
+// import { NativeStackScreenProps } from "@react-navigation/native-stack";
+// import { libraryParamList } from "../../../navigation/@types/navigation";
 
-type Props = NativeStackScreenProps<libraryParamList, "LibraryHome">;
+// type Props = NativeStackScreenProps<libraryParamList, "LibraryHome">;
+type Props = any;
 
 const Library: React.FC<Props> = ({ navigation }) => {
   return (
@@ -27,7 +28,12 @@ const Library: React.FC<Props> = ({ navigation }) => {
         <SafeAreaView style={styles.flex}>
           <View>
             <View style={styles.header}>
-              <Ionicons name="menu-outline" size={24} color="#FFFFFF" />
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => navigation.openDrawer()}
+              >
+                <Ionicons name="menu-outline" size={24} color="#FFFFFF" />
+              </TouchableOpacity>
               <Text style={styles.headerTitle}>Library</Text>
               <FontAwesome5 name="user-circle" size={24} color="#FFFFFF" />
             </View>

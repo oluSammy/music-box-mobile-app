@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import SafeAreaComp from "../SafeArea/SafeAreaComp";
 // import { DrawerItemList, DrawerItem } from "@react-navigation/drawer";
@@ -13,6 +13,8 @@ import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 // import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import { AuthContext } from "../../services/authentication/auth.service";
 
 // import { Octicons } from "@expo/vector-icons";
 
@@ -23,6 +25,7 @@ type Props = {
 };
 
 const CustomDrawer: React.FC<Props> = ({ navigation }) => {
+  const { setUser } = useContext(AuthContext);
   return (
     <SafeAreaComp showSearchBar={false}>
       <View style={styles.root}>
@@ -70,6 +73,21 @@ const CustomDrawer: React.FC<Props> = ({ navigation }) => {
               style={styles.navIcon}
             />
             <Text style={styles.navItemText}>Create Playlist</Text>
+            {/* <FontAwesome name="dot-circle-o" size={18} color="#2DCEEF" /> */}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.navItem}
+            activeOpacity={0.8}
+            onPress={() => setUser(null)}
+          >
+            <SimpleLineIcons
+              name="logout"
+              size={24}
+              color="#2DCEEF"
+              style={styles.navIcon}
+            />
+
+            <Text style={styles.navItemText}>Log Out</Text>
             {/* <FontAwesome name="dot-circle-o" size={18} color="#2DCEEF" /> */}
           </TouchableOpacity>
         </View>

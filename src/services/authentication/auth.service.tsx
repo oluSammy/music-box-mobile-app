@@ -53,6 +53,7 @@ interface AuthProp {
   signupError: any;
   setError: Dispatch<SetStateAction<any>>;
   setSignupError: Dispatch<SetStateAction<any>>;
+  setUser: Dispatch<SetStateAction<any>>;
 }
 
 interface Props {
@@ -68,12 +69,44 @@ const AuthProvider = (props: Props) => {
   const [error, setError] = useState<any>(null);
   const [signupError, setSignupError] = useState<any>(null);
 
+  let timer: ReturnType<typeof setTimeout>;
+
+  const clearLogOutTimer = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+  };
+
+  const setLogOutTimer = (expirationTime: number) => {
+    timer = setTimeout(() => {
+      signOut();
+    }, expirationTime);
+  };
+
+  const signOut = () => {
+    clearLogOutTimer();
+    AsyncStorage.removeItem("@music-box-ap");
+    setUser(null);
+  };
+
   const loadUser = React.useCallback(async () => {
     try {
       const loggedInUser = await AsyncStorage.getItem("@music-box-ap");
 
       if (loggedInUser) {
-        return JSON.parse(loggedInUser);
+        const parsedUser = JSON.parse(loggedInUser);
+        console.log(parsedUser);
+        const secondsRemaining =
+          new Date(parsedUser.data.tokenExpiresIn).getTime() / 1000;
+        new Date().getTime() / 1000;
+
+        if (secondsRemaining < 0) {
+          return null;
+        }
+
+        console.log(secondsRemaining);
+        // setLogOutTimer(secondsRemaining);
+        return parsedUser;
       } else {
         return null;
       }
@@ -111,14 +144,18 @@ const AuthProvider = (props: Props) => {
     setIsSigningUp(true);
     setSignupError(null);
     try {
+      console.log("console.log(err.response.data)");
       const { data } = await axios.post(
         "https://music-box-b.herokuapp.com/api/v1/music-box-api/users/register",
         registerData
       );
       setIsSigningUp(false);
       setUser(data);
+      setLogOutTimer(9000);
+      // setLogOutTimer(secondsRemaining);
       await AsyncStorage.setItem("@music-box-ap", JSON.stringify(data));
     } catch (err: any) {
+      console.log(err.response.data);
       setIsSigningUp(false);
       setSignupError(err.response.data.message);
     }
@@ -138,6 +175,12 @@ const AuthProvider = (props: Props) => {
       );
       setIsLoggingIn(false);
       setUser(data);
+      console.log(data.data.tokenExpiresIn);
+      const secondsRemaining =
+        new Date(data.data.tokenExpiresIn).getTime() / 1000;
+      console.log(secondsRemaining);
+
+      setLogOutTimer(secondsRemaining);
 
       await AsyncStorage.setItem("@music-box-ap", JSON.stringify(data));
     } catch (err: any) {
@@ -156,6 +199,7 @@ const AuthProvider = (props: Props) => {
     signUp,
     setError,
     setSignupError,
+    setUser,
   };
 
   return (
