@@ -10,6 +10,11 @@ export const styles = StyleSheet.create({
     fontFamily: "Lato_700Bold",
     marginBottom: 40,
   },
+  header: {
+    flexDirection: "row",
+    // alignItems: "center",
+    justifyContent: "space-between",
+  },
   inputLabel: {
     color: "#fff",
     fontFamily: "Lato_700Bold",

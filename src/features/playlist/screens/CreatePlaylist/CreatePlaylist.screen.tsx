@@ -16,8 +16,9 @@ import RNPickerSelect from "react-native-picker-select";
 import { GenreContext } from "../../../../services/genre/genre.service";
 import { PlaylistContext } from "../../../../services/playlists/playlist.service";
 import { Ionicons } from "@expo/vector-icons";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { homeParamList } from "../../../../navigation/@types/navigation";
+// import { NativeStackScreenProps } from "@react-navigation/native-stack";
+// import { homeParamList } from "../../../../navigation/@types/navigation";
+import { EvilIcons } from "@expo/vector-icons";
 
 interface ISelectedGenre {
   name: string;
@@ -25,7 +26,7 @@ interface ISelectedGenre {
   id: string;
 }
 
-type Props = NativeStackScreenProps<homeParamList, "CreatePlaylist">;
+type Props = any;
 
 const CreatePlaylistScreen: React.FC<Props> = ({ navigation }) => {
   const isAndroid = Platform.OS === "android";
@@ -60,14 +61,19 @@ const CreatePlaylistScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaComp showSearchBar={false}>
       <View style={styles.root}>
-        <TouchableOpacity
-          style={styles.backBtn}
-          activeOpacity={0.8}
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons name="arrow-back" size={18} color="#FFFFFF" />
-          <Text style={styles.backBtnText}>Back</Text>
-        </TouchableOpacity>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.backBtn}
+            activeOpacity={0.8}
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons name="arrow-back" size={18} color="#FFFFFF" />
+            <Text style={styles.backBtnText}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <EvilIcons name="navicon" size={34} color="#2DCEEF" />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.title}>Create New Playlist</Text>
         <KeyboardAvoidingView behavior={!isAndroid ? "padding" : "height"}>
           <View style={styles.inputBox}>
