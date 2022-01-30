@@ -5,6 +5,7 @@ import { drawerNavigationParamsList } from "./@types/navigation";
 import HomeTabNavigator from "./HomeTabNavigation";
 import CustomDrawer from "../components/Drawer/Drawer.component";
 import CreatePlaylistScreen from "../features/playlist/screens/CreatePlaylist/CreatePlaylist.screen";
+import { ProfileScreen } from "../screens/Profile.screen";
 
 // import AddToPlaylist from "../features/playlist/screens/AddToPlaylist/AddToPlaylist";
 // import {
@@ -29,6 +30,11 @@ const DrawerNavigator = () => {
           name="CreatePlaylist"
           component={CreatePlaylistScreen}
           options={{ headerShown: false }}
+        />
+        <Screen
+          name="ProfileScreen"
+          options={{ headerShown: false }}
+          component={ProfileScreen}
         />
       </Navigator>
     </NavigationContainer>

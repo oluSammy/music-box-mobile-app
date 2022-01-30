@@ -10,10 +10,10 @@ import {
   FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { libraryParamList } from "../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "../styles/playlist.styles";
-import { MaterialIcons } from "@expo/vector-icons";
 import { secondsToHms } from "../../../utils/utils";
 import { PlaylistContext } from "../../../services/playlists/playlist.service";
 

@@ -9,12 +9,13 @@ import {
 } from "@react-navigation/drawer/lib/typescript/src/types";
 import { styles } from "./drawer.styles";
 // import { Ionicons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+// import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 // import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { AuthContext } from "../../services/authentication/auth.service";
+import { EvilIcons } from "@expo/vector-icons";
 
 // import { Octicons } from "@expo/vector-icons";
 
@@ -36,12 +37,12 @@ const CustomDrawer: React.FC<Props> = ({ navigation }) => {
             }}
             style={styles.drawerImg}
           />
-          <View style={styles.drawerHeaderDetail}>
+          {/* <View style={styles.drawerHeaderDetail}>
             <TouchableOpacity activeOpacity={0.8}>
               <Entypo name="edit" size={24} color="#2DCEEF" />
               <Text style={styles.drawerHeaderText}>Edit</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
         <Text style={styles.drawerNameText}>Olumorin Samuel</Text>
         <Text style={styles.drawerEmailText}>Olumorinsammy@gmail.com</Text>
@@ -74,6 +75,19 @@ const CustomDrawer: React.FC<Props> = ({ navigation }) => {
             />
             <Text style={styles.navItemText}>Create Playlist</Text>
             {/* <FontAwesome name="dot-circle-o" size={18} color="#2DCEEF" /> */}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.navItem}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate("ProfileScreen")}
+          >
+            <EvilIcons
+              name="user"
+              size={24}
+              color="#2DCEEF"
+              style={styles.navIcon}
+            />
+            <Text style={styles.navItemText}>Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.navItem}

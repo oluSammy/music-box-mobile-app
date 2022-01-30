@@ -23,6 +23,7 @@ type playlistRouteType = {
 export type drawerNavigationParamsList = {
   Main: tabParamsList;
   CreatePlaylist: undefined;
+  ProfileScreen: undefined;
 };
 
 export type tabParamsList = {

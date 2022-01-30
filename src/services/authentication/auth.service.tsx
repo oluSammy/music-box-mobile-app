@@ -95,7 +95,7 @@ const AuthProvider = (props: Props) => {
 
       if (loggedInUser) {
         const parsedUser = JSON.parse(loggedInUser);
-        console.log(parsedUser);
+        // console.log(parsedUser);
         const secondsRemaining =
           new Date(parsedUser.data.tokenExpiresIn).getTime() / 1000;
         new Date().getTime() / 1000;
@@ -104,7 +104,7 @@ const AuthProvider = (props: Props) => {
           return null;
         }
 
-        console.log(secondsRemaining);
+        // console.log(secondsRemaining);
         // setLogOutTimer(secondsRemaining);
         return parsedUser;
       } else {
@@ -175,10 +175,10 @@ const AuthProvider = (props: Props) => {
       );
       setIsLoggingIn(false);
       setUser(data);
-      console.log(data.data.tokenExpiresIn);
+      // console.log(data.data.tokenExpiresIn);
       const secondsRemaining =
         new Date(data.data.tokenExpiresIn).getTime() / 1000;
-      console.log(secondsRemaining);
+      // console.log(secondsRemaining);
 
       setLogOutTimer(secondsRemaining);
 
