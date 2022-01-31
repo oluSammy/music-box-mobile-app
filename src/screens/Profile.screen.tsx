@@ -1,33 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   TextInput,
-  Platform,
+  ActivityIndicator,
 } from "react-native";
 import SafeAreaComp from "../components/SafeArea/SafeAreaComp";
 import { styles } from "../features/library/styles/playlist.styles";
 import { Ionicons } from "@expo/vector-icons";
 // import { MaterialIcons } from "@expo/vector-icons";
 import { profileStyles } from "../styles/profile.styles";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { drawerNavigationParamsList } from "../navigation/@types/navigation";
+// import { NativeStackScreenProps } from "@react-navigation/native-stack";
+// import { drawerNavigationParamsList } from "../navigation/@types/navigation";
 import RNPickerSelect from "react-native-picker-select";
-import { allCountries } from "../data/data";
+// import { allCountries } from "../data/data";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { AuthContext } from "../services/authentication/auth.service";
+import { Avatar } from "../components/Avatar/Avatar.component";
 
-type Props = NativeStackScreenProps<
-  drawerNavigationParamsList,
-  "ProfileScreen"
->;
-const isAndroid = Platform.OS === "android";
+type Props = any;
+
+const formatDate = (dob: Date): string => {
+  let month = `${dob.getMonth() + 1}`;
+  let day = `${dob.getDate()}`;
+  day = day.length === 1 ? `0${day}` : day;
+  month = month.length === 1 ? `0${month}` : month;
+  return `${dob.getFullYear()}/${month}/${day}`;
+};
 
 export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
-  const [date, setDate] = useState<null | string>(null);
-  const [gender, setGender] = useState("");
-  const [country, setCountry] = useState("");
+  // const [country, setCountry] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const { user, updateProfile, isUpdatingProfile } = useContext(AuthContext);
+
+  const handleUpdate = async () => {
+    await updateProfile({
+      email,
+      firstName,
+      lastName,
+      gender,
+      dateOfBirth: date,
+    });
+  };
+
+  const [gender, setGender] = useState(
+    user?.data.data.gender === "M" ? "male" : "female"
+  );
+  const [date, setDate] = useState<string>(
+    formatDate(new Date(user?.data.data.dateOfBirth))
+  );
+  const [email, setEmail] = useState(user?.data.data.email);
+  const [firstName, setFirstName] = useState(user?.data.data.firstName);
+  const [lastName, setLastName] = useState(user?.data.data.lastName);
+
+  // console.log(user?.data.data);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -38,25 +66,14 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleConfirm = (selectedDate: Date) => {
-    if (isAndroid) {
-      setDate(
-        selectedDate.toLocaleDateString("en-US", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      );
-    } else {
-      setDate(selectedDate.toLocaleString().split(",")[0]);
-    }
+    setDate(formatDate(selectedDate));
     hideDatePicker();
   };
 
   return (
     <SafeAreaComp showSearchBar={false}>
       <View style={profileStyles.root}>
-        <View style={styles.header}>
+        <View style={profileStyles.header}>
           <View style={profileStyles.backContainer}>
             <TouchableOpacity
               style={styles.backBtn}
@@ -68,30 +85,34 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <Text style={{ ...styles.headerTitle }}>Account</Text>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Ionicons name="menu-outline" size={24} color="#2DCEEF" />
+          </TouchableOpacity>
         </View>
-        <View style={profileStyles.profileHeader}>
-          <View style={profileStyles.avatarContainer}>
-            <Text style={profileStyles.initials}>OS</Text>
-            <TouchableOpacity style={profileStyles.badge} activeOpacity={0.8}>
-              <Ionicons name="add-outline" size={28} color="black" />
-            </TouchableOpacity>
-          </View>
-          <Text style={profileStyles.username}>Olumorin Samuel</Text>
-        </View>
+        <Avatar isDrawer={true} />
         <View style={profileStyles.form}>
           <View style={profileStyles.formItem}>
             <Text style={profileStyles.formLabel}>First Name</Text>
-            <TextInput style={profileStyles.input} value="Samuel" />
+            <TextInput
+              style={profileStyles.input}
+              value={firstName}
+              onChangeText={setFirstName}
+            />
           </View>
           <View style={profileStyles.formItem}>
             <Text style={profileStyles.formLabel}>Last Name</Text>
-            <TextInput style={profileStyles.input} value="Olumorin" />
+            <TextInput
+              style={profileStyles.input}
+              value={lastName}
+              onChangeText={setLastName}
+            />
           </View>
           <View style={profileStyles.formItem}>
             <Text style={profileStyles.formLabel}>Email</Text>
             <TextInput
               style={profileStyles.input}
-              value="olumorinsammy@gmail.com"
+              value={email}
+              onChangeText={setEmail}
             />
           </View>
           <View style={profileStyles.formItem}>
@@ -107,7 +128,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
               <TextInput style={profileStyles.input} value={gender} />
             </RNPickerSelect>
           </View>
-          <View style={profileStyles.formItem}>
+          {/* <View style={profileStyles.formItem}>
             <Text style={profileStyles.formLabel}>Country</Text>
             <RNPickerSelect
               onValueChange={(value) => setCountry(value)}
@@ -118,7 +139,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
             >
               <TextInput style={profileStyles.input} value={country} />
             </RNPickerSelect>
-          </View>
+          </View> */}
         </View>
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -138,11 +159,16 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={profileStyles.btnContainer}>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity activeOpacity={0.8} onPress={handleUpdate}>
             <Text style={profileStyles.btnText}>Update Profile </Text>
           </TouchableOpacity>
         </View>
       </View>
+      {isUpdatingProfile && (
+        <View style={profileStyles.overlay}>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )}
     </SafeAreaComp>
   );
 };

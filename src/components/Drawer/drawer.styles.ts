@@ -1,12 +1,11 @@
 import { StyleSheet } from "react-native";
-import { Dimensions } from "react-native";
 
 export const styles = StyleSheet.create({
   root: {
     flex: 1,
     marginHorizontal: 16,
     marginVertical: 20,
-    minHeight: Dimensions.get("window").height - 100,
+    // minHeight: Dimensions.get("window").height - 100,
   },
   drawerImg: {
     height: 80,

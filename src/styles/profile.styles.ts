@@ -6,7 +6,12 @@ export const profileStyles = StyleSheet.create({
     paddingBottom: 70,
   },
   backContainer: {
-    flex: 0.5,
+    // flex: 0.5,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
   },
 
   avatarContainer: {
@@ -22,7 +27,7 @@ export const profileStyles = StyleSheet.create({
   badge: {
     width: 30,
     height: 30,
-    backgroundColor: "#fff",
+    backgroundColor: "grey",
     position: "absolute",
     top: 0,
     right: 0,
@@ -33,6 +38,9 @@ export const profileStyles = StyleSheet.create({
   profileHeader: {
     flex: 1,
     alignItems: "center",
+  },
+  profileHeaderDrawer: {
+    flex: 1,
   },
   initials: {
     color: "#fff",
@@ -79,5 +87,16 @@ export const profileStyles = StyleSheet.create({
     paddingHorizontal: 35,
     paddingVertical: 12,
     borderRadius: 25,
+  },
+  overlay: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black",
+    opacity: 0.6,
   },
 });

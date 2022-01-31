@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_URL } from "../../constants/url";
+import { Alert } from "react-native";
 
 interface IUser {
   user: any;
@@ -36,6 +38,14 @@ export interface ISignupParam {
   gender: string | null;
 }
 
+interface IUpdateProfile {
+  firstName: string;
+  lastName: string;
+  email: string;
+  dateOfBirth: string;
+  gender: string;
+}
+
 interface AuthProp {
   user: IUser | null;
   isLoggingIn: boolean;
@@ -54,6 +64,9 @@ interface AuthProp {
   setError: Dispatch<SetStateAction<any>>;
   setSignupError: Dispatch<SetStateAction<any>>;
   setUser: Dispatch<SetStateAction<any>>;
+  updateProfile: (profile: IUpdateProfile) => void;
+  isUpdatingProfile: boolean;
+  updateProfileError: any;
 }
 
 interface Props {
@@ -68,6 +81,8 @@ const AuthProvider = (props: Props) => {
   const [isSigningUp, setIsSigningUp] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
   const [signupError, setSignupError] = useState<any>(null);
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState<boolean>(false);
+  const [updateProfileError, setUpdateProfileError] = useState<any>(null);
 
   let timer: ReturnType<typeof setTimeout>;
 
@@ -146,7 +161,7 @@ const AuthProvider = (props: Props) => {
     try {
       console.log("console.log(err.response.data)");
       const { data } = await axios.post(
-        "https://music-box-b.herokuapp.com/api/v1/music-box-api/users/register",
+        `${API_URL}users/register`,
         registerData
       );
       setIsSigningUp(false);
@@ -169,10 +184,7 @@ const AuthProvider = (props: Props) => {
       password,
     };
     try {
-      const { data } = await axios.post(
-        "https://music-box-b.herokuapp.com/api/v1/music-box-api/users/login",
-        loginUser
-      );
+      const { data } = await axios.post(`${API_URL}users/login`, loginUser);
       setIsLoggingIn(false);
       setUser(data);
       // console.log(data.data.tokenExpiresIn);
@@ -189,6 +201,68 @@ const AuthProvider = (props: Props) => {
     }
   };
 
+  // `https://music-box-b.herokuapp.com/api/v1/music-box-api/users/profile/${id}`,
+  const updateProfile = React.useCallback(
+    async (profile: IUpdateProfile) => {
+      try {
+        setIsUpdatingProfile(true);
+        const {
+          data: { data },
+        } = await axios.put(
+          `${API_URL}users/profile/${user.data.data._id}`,
+          {
+            ...profile,
+            gender: profile.gender === "male" ? "M" : "F",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.data.token}`,
+            },
+          }
+        );
+
+        const newUser = user;
+        newUser.data.data = { ...user.data.data, ...data };
+        setUser(newUser);
+        await AsyncStorage.setItem("@music-box-ap", JSON.stringify(newUser));
+
+        Alert.alert(
+          "Done",
+          "Profile Updated",
+          [
+            {
+              text: "Ok",
+              style: "default",
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+
+        setIsUpdatingProfile(false);
+      } catch (e: any) {
+        Alert.alert(
+          "error",
+          "unable to update profile",
+          [
+            {
+              text: "Ok",
+              style: "default",
+            },
+          ],
+          {
+            cancelable: true,
+          }
+        );
+        setUpdateProfileError(e.response.data);
+        setIsUpdatingProfile(false);
+      }
+    },
+
+    [user]
+  );
+
   const value = {
     user,
     isLoggingIn,
@@ -200,6 +274,9 @@ const AuthProvider = (props: Props) => {
     setError,
     setSignupError,
     setUser,
+    updateProfile,
+    isUpdatingProfile,
+    updateProfileError,
   };
 
   return (
