@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     marginTop: 50,
   },
   button: {
-    width: "50%",
+    // width: "50%",
     alignItems: "center",
     borderWidth: 1,
 
