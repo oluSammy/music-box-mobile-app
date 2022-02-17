@@ -21,7 +21,12 @@ type playlistRouteType = {
 };
 
 export type drawerNavigationParamsList = {
-  Main: tabParamsList;
+  // Main: tabParamsList;
+  Home: undefined;
+  Library: undefined;
+  Browse: undefined;
+  Search: undefined;
+  AddToPlaylist: undefined;
   CreatePlaylist: undefined;
   ProfileScreen: undefined;
 };

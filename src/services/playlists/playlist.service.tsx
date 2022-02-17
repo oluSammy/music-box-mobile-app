@@ -208,7 +208,7 @@ const PlaylistProvider = (props: PlaylistProps) => {
     >
       {props.children}
     </PlaylistContext.Provider>
-  );
+  );  
 };
 
 export default PlaylistProvider;

@@ -4,6 +4,7 @@ import { profileStyles } from "../../styles/profile.styles";
 import { AuthContext } from "../../services/authentication/auth.service";
 import { Ionicons } from "@expo/vector-icons";
 
+
 type Props = {
   isDrawer?: boolean;
 };

@@ -19,7 +19,11 @@ const MostPlayed: React.FC<Props> = ({ navigation }) => {
   }
 
   return (
-    <ScrollView horizontal={true} style={styles.container}>
+    <ScrollView
+      horizontal={true}
+      style={styles.container}
+      showsHorizontalScrollIndicator={false}
+    >
       {mostPlayed &&
         mostPlayed
           .slice(0, 9)

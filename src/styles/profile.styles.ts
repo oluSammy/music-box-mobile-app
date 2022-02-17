@@ -36,11 +36,11 @@ export const profileStyles = StyleSheet.create({
     justifyContent: "center",
   },
   profileHeader: {
-    flex: 1,
+    // flex: 1,
     alignItems: "center",
   },
   profileHeaderDrawer: {
-    flex: 1,
+    // flex: 1,
   },
   initials: {
     color: "#fff",

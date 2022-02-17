@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   StatusBar,
-  ScrollView,
+  // ScrollView,
   SafeAreaView,
 } from "react-native";
 import SearchBar from "../SearchBar/SearchBar";
@@ -19,7 +19,7 @@ const SafeAreaComp: React.FC<Props> = ({ children, showSearchBar }) => {
       <StatusBar barStyle="light-content" backgroundColor="#161A1A" />
       <SafeAreaView style={styles.flex}>
         {showSearchBar && <SearchBar />}
-        <ScrollView style={styles.flex}>{children}</ScrollView>
+        <View style={styles.flex}>{children}</View>
       </SafeAreaView>
     </View>
   );

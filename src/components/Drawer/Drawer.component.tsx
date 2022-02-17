@@ -8,15 +8,19 @@ import {
   DrawerNavigationHelpers,
 } from "@react-navigation/drawer/lib/typescript/src/types";
 import { styles } from "./drawer.styles";
-// import { Ionicons } from "@expo/vector-icons";
-// import { Entypo } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-// import { FontAwesome } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { SimpleLineIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  Entypo,
+  Feather,
+  MaterialCommunityIcons,
+  SimpleLineIcons,
+  EvilIcons,
+} from "@expo/vector-icons";
+
 import { AuthContext } from "../../services/authentication/auth.service";
-import { EvilIcons } from "@expo/vector-icons";
+
 import { Avatar } from "../Avatar/Avatar.component";
+import { AntDesign } from "@expo/vector-icons";
 
 // import { Octicons } from "@expo/vector-icons";
 
@@ -48,7 +52,7 @@ const CustomDrawer: React.FC<Props> = ({ navigation }) => {
           <TouchableOpacity
             style={styles.navItem}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate("Main")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Feather
               name="music"
@@ -56,8 +60,49 @@ const CustomDrawer: React.FC<Props> = ({ navigation }) => {
               color="#2DCEEF"
               style={styles.navIcon}
             />
-            <Text style={styles.navItemText}>Music</Text>
-            {/* <FontAwesome name="dot-circle-o" size={18} color="#2DCEEF" /> */}
+            <Text style={styles.navItemText}>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.navItem}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate("Library")}
+          >
+            <Ionicons
+              name="library-outline"
+              size={24}
+              color="#2DCEEF"
+              style={styles.navIcon}
+            />
+
+            <Text style={styles.navItemText}>Library</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.navItem}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate("Search")}
+          >
+            <AntDesign
+              name="search1"
+              size={24}
+              color="#2DCEEF"
+              style={styles.navIcon}
+            />
+
+            <Text style={styles.navItemText}>Search</Text>
+          </TouchableOpacity>
+          {/* <AntDesign name="search1" size={size} color={color} /> */}
+          <TouchableOpacity
+            style={styles.navItem}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate("Browse")}
+          >
+            <Entypo
+              name="folder-music"
+              size={24}
+              color="#2DCEEF"
+              style={styles.navIcon}
+            />
+            <Text style={styles.navItemText}>Browse</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.navItem}
