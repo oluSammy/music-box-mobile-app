@@ -4,14 +4,10 @@ import React, {
   createContext,
   useState,
   useEffect,
-  useMemo,
 } from "react";
-import axios from "axios";
 import { AuthContext } from "../authentication/auth.service";
-import { API_URL } from "../../constants/url";
-// import { NativeStackScreenProps } from "@react-navigation/native-stack";
-// import { homeParamList } from "../../navigation/@types/navigation";
 import { Alert } from "react-native";
+import { ApiContext } from "../api/Api";
 
 interface Prop {
   playlist: Record<string, any>[] | null;
@@ -66,21 +62,13 @@ const PlaylistProvider = (props: PlaylistProps) => {
   const [fetchPlaylistError, setFetchPlaylistError] = useState<any>(null);
   const [isAddingSongs, setIsAddingSongs] = useState(false);
   const [addSongError, setAddSongError] = useState<any>(null);
-
-  const config = useMemo(() => {
-    return {
-      headers: { Authorization: `Bearer ${user?.data.token}` },
-    };
-  }, [user?.data.token]);
+  const { api } = useContext(ApiContext);
 
   const fetchPlaylist = useCallback(async () => {
     try {
       setIsFetchingPlaylist(true);
-      const publicPlaylists = await axios.get(`${API_URL}/playlist`, config);
-      const createdPlaylists = await axios.get(
-        `${API_URL}/playlist/created`,
-        config
-      );
+      const publicPlaylists = await api("playlist", "get");
+      const createdPlaylists = await api("playlist/created", "get");
 
       createdPlaylists.data.data.payload.forEach((playlist: any) => {
         const doc = publicPlaylists.data.data.payload.findIndex(
@@ -105,14 +93,12 @@ const PlaylistProvider = (props: PlaylistProps) => {
 
       setUserPlaylist(userPlaylist);
 
-      // console.log(userPlaylist.length, "MY USER PLAYLIST");
       setIsFetchingPlaylist(false);
     } catch (e) {
-      // console.log(e);
       setIsFetchingPlaylist(false);
       setFetchPlaylistError(e);
     }
-  }, [config, user?.data.data._id]);
+  }, [api, user?.data.data._id]);
 
   useEffect(() => {
     const getPlaylist = async () => {
@@ -124,42 +110,24 @@ const PlaylistProvider = (props: PlaylistProps) => {
 
   const createPlayList = useCallback(
     async (data: IPlaylist) => {
-      const url = `${API_URL}/playlist`;
-
-      // console.log(data, "DATA");
-
       setIsLoading(true);
       try {
-        const response = await axios.post(url, data, config);
-        // console.log(response.data);
+        const response = await api("playlist", "post", data);
         setNewPlaylist(response.data);
         await fetchPlaylist();
         setIsLoading(false);
-        // navigation.goBack()
       } catch (e: any) {
-        // console.log(e.response.data, "((**");
-        // console.log(e, "((**");
         setError("Error creating playlist");
         setIsLoading(false);
       }
     },
-    [config, fetchPlaylist]
+    [api, fetchPlaylist]
   );
 
   const addSongToPlaylist = async (song: ISong, playlistId: string) => {
-    // console.log("called", song, playlistId);
     try {
       setIsAddingSongs(true);
-
-      const response = await axios.put(
-        `${API_URL}/playlist/${playlistId}`,
-        song,
-        config
-      );
-
-      // console.log("response.data");
-      console.log(response.data);
-
+      await api(`playlist/${playlistId}`, "put", song);
       const addedToPlaylist =
         myPlaylists &&
         myPlaylists.find((el: any) => {
@@ -208,7 +176,7 @@ const PlaylistProvider = (props: PlaylistProps) => {
     >
       {props.children}
     </PlaylistContext.Provider>
-  );  
+  );
 };
 
 export default PlaylistProvider;

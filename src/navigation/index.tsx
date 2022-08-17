@@ -6,6 +6,7 @@ import GenreProvider from "../services/genre/genre.service";
 import ArtistProvider from "../services/artists/artist.service";
 import RecentlyPlayedProvider from "../services/recentlyPlayed/RecentlyPlayed.services";
 import PlaylistProvider from "../services/playlists/playlist.service";
+import ApiProvider from "../services/api/Api";
 
 const Navigation = () => {
   const { user } = useContext(AuthContext);
@@ -13,15 +14,17 @@ const Navigation = () => {
   return (
     <React.Fragment>
       {user ? (
-        <GenreProvider>
-          <PlaylistProvider>
-            <ArtistProvider>
-              <RecentlyPlayedProvider>
-                <DrawerNavigator />
-              </RecentlyPlayedProvider>
-            </ArtistProvider>
-          </PlaylistProvider>
-        </GenreProvider>
+        <ApiProvider>
+          <GenreProvider>
+            <PlaylistProvider>
+              <ArtistProvider>
+                <RecentlyPlayedProvider>
+                  <DrawerNavigator />
+                </RecentlyPlayedProvider>
+              </ArtistProvider>
+            </PlaylistProvider>
+          </GenreProvider>
+        </ApiProvider>
       ) : (
         <AccountNavigator />
       )}

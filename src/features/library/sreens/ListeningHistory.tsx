@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, FC, useEffect } from "react";
+import React, { useCallback, useContext, FC, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,32 +14,27 @@ import { libraryParamList } from "../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Accordion from "../../../components/Accordion/Accordion";
 import { styles as songStyles } from "../styles/albumSongList";
-import axios from "axios";
-import { AuthContext } from "../../../services/authentication/auth.service";
-import { API_URL } from "../../../constants/url";
+import { ApiContext } from "../../../services/api/Api";
 
 type Props = NativeStackScreenProps<libraryParamList, "AllArtists">;
 
 const ListeningHistory: FC<Props> = ({ navigation }) => {
-  const [today, setToday] = useState(null);
-  const [yesterday, setYesterday] = useState(null);
-  const [previous, setPrevious] = useState(null);
-  const [error, setError] = useState(null);
+  // const [today, setToday] = useState(null);
+  // const [yesterday, setYesterday] = useState(null);
+  // const [previous, setPrevious] = useState(null);
+  // const [error, setError] = useState(null);
 
-  const { user } = useContext(AuthContext);
+  const { api } = useContext(ApiContext);
 
   const fetchHistory = useCallback(async () => {
-    const config = {
-      headers: { Authorization: `Bearer ${user?.data.token}` },
-    };
-    const { data } = await axios.get(`${API_URL}history/getHistory`, config);
+    api("history/getHistory", "get");
     // console.log(data);
     try {
     } catch (err: any) {
-      setError(err.response);
+      // setError(err.response);
       // console.log(err.response);
     }
-  }, [user?.data.token]);
+  }, [api]);
 
   useEffect(() => {
     const getHistory = async () => {

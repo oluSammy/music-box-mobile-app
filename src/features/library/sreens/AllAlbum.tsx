@@ -13,9 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { libraryParamList } from "../../../navigation/@types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { styles } from "../styles/playlist.styles";
-import axios from "axios";
-import { API_URL } from "../../../constants/url";
-import { AuthContext } from "../../../services/authentication/auth.service";
+import { ApiContext } from "../../../services/api/Api";
 
 type Props = NativeStackScreenProps<libraryParamList, "AllAlbum">;
 
@@ -23,26 +21,23 @@ const AllALbums: FC<Props> = ({ navigation }) => {
   const [albums, setAlbums] = useState<Record<string, any>[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<any>(null);
-  const { user } = useContext(AuthContext);
+  const { api } = useContext(ApiContext);
 
   const fetchPlaylists = useCallback(async () => {
-    const config = {
-      headers: { Authorization: `Bearer ${user?.data.token}` },
-    };
     try {
       setIsLoading(true);
       const {
         data: {
           data: { payload },
         },
-      } = await axios.get(`${API_URL}album/likes`, config);
+      } = await api("album/likes", "get");
       setAlbums(payload);
       setIsLoading(false);
     } catch (e: any) {
       setIsLoading(false);
       setError(e.response);
     }
-  }, [user?.data.token]);
+  }, [api]);
 
   useEffect(() => {
     const getPlaylists = async () => {

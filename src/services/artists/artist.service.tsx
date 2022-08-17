@@ -5,9 +5,7 @@ import React, {
   useCallback,
   useContext,
 } from "react";
-import axios from "axios";
-import { API_URL } from "../../constants/url";
-import { AuthContext } from "../authentication/auth.service";
+import { ApiContext } from "../api/Api";
 
 interface Prop {
   mostPlayed: Record<string, any>[] | null;
@@ -24,7 +22,7 @@ interface ArtistProps {
 export const ArtistContext = createContext({} as Prop);
 
 const ArtistProvider = (props: ArtistProps) => {
-  const { user } = useContext(AuthContext);
+  const { api } = useContext(ApiContext);
   const [mostPlayed, setMostPlayed] = useState<Record<string, any>[] | null>(
     null
   );
@@ -32,21 +30,16 @@ const ArtistProvider = (props: ArtistProps) => {
   const [mostPlayedError, setMostPlayedError] = useState(null);
 
   const fetchMostPlayedArtist = useCallback(async () => {
-    const config = {
-      headers: { Authorization: `Bearer ${user?.data?.token}` },
-    };
-    const url = `${API_URL}/artist/mostPlayed`;
-
     try {
       setIsLoadingMostPlayed(true);
-      const { data } = await axios.get(url, config);
+      const { data } = await api("artist/mostPlayed", "get");
       setIsLoadingMostPlayed(false);
       setMostPlayed(data.data.payload);
     } catch (err: any) {
       setIsLoadingMostPlayed(false);
       setMostPlayedError(err.response);
     }
-  }, [user]);
+  }, [api]);
 
   useEffect(() => {
     const getMostPlayed = async () => {

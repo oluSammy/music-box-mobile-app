@@ -5,10 +5,8 @@ import React, {
   useCallback,
   useContext,
 } from "react";
-import axios from "axios";
-import { API_URL } from "../../constants/url";
-import { AuthContext } from "../authentication/auth.service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ApiContext } from "../api/Api";
 
 interface IRecent {
   id: string;
@@ -38,16 +36,12 @@ interface RecentlyPlayedProps {
 export const RecentlyPlayedContext = createContext({} as Prop);
 
 const RecentlyPlayedProvider = (props: RecentlyPlayedProps) => {
-  const { user } = useContext(AuthContext);
   const [recentMusic, setRecentMusic] = useState<IRecentMusic | null>(null);
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<any>(null);
+  const { api } = useContext(ApiContext);
 
   const fetchRecentMusic = useCallback(async () => {
-    const config = { headers: { Authorization: `Bearer ${user?.data.token}` } };
-    const url = `${API_URL}recently-played`;
-
     try {
       setIsLoading(true);
       const recentSongs = await AsyncStorage.getItem("music-box-recent-music");
@@ -55,7 +49,7 @@ const RecentlyPlayedProvider = (props: RecentlyPlayedProps) => {
         setRecentMusic(JSON.parse(recentSongs));
         setIsLoading(false);
       } else {
-        const { data } = await axios.get(url, config);
+        const { data } = await api("recently-played", "get");
 
         setIsLoading(false);
         const recentList = {
@@ -93,7 +87,7 @@ const RecentlyPlayedProvider = (props: RecentlyPlayedProps) => {
       setIsLoading(false);
       setError(err);
     }
-  }, [user]);
+  }, [api]);
 
   useEffect(() => {
     const getRecentMusic = async () => {

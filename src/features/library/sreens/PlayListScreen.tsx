@@ -21,11 +21,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import PlaylistList from "../components/PlaylistList";
 import { styles } from "../styles/albumScreen";
-import axios from "axios";
 import { AuthContext } from "../../../services/authentication/auth.service";
-import { API_URL } from "../../../constants/url";
 import { secondsToHms } from "../../../utils/utils";
 import { RecentlyPlayedContext } from "../../../services/recentlyPlayed/RecentlyPlayed.services";
+import { ApiContext } from "../../../services/api/Api";
 
 type Props = NativeStackScreenProps<libraryParamList, "PlayListScreen">;
 const isAndroid = Platform.OS === "android";
@@ -40,19 +39,16 @@ const PlayListScreen: React.FC<Props> = ({ navigation, route }) => {
   const [tracks, setTracks] = useState<Record<string, any>[] | null>(null);
   const [isLiked, setIsLiked] = useState(false);
   const { recentMusic, updateRecentMusic } = useContext(RecentlyPlayedContext);
+  const { api } = useContext(ApiContext);
 
   const userId = user?.data.data._id;
 
   const fetchPlaylist = useCallback(async () => {
-    const config = {
-      headers: { Authorization: `Bearer ${user?.data.token}` },
-    };
     try {
-      const url = `${API_URL}playlist/${route.params?.id}`;
       setIsLoading(true);
       const {
         data: { data },
-      } = await axios.get(url, config);
+      } = await api(`playlist/${route.params?.id}`, "get");
       setPlaylist(data.payload);
 
       setTracks(data.payload.tracks);
@@ -66,18 +62,12 @@ const PlayListScreen: React.FC<Props> = ({ navigation, route }) => {
       setIsLoading(false);
       setError(err.response);
     }
-  }, [route.params?.id, user?.data.token, userId]);
+  }, [api, route.params?.id, userId]);
 
   const handleLike = async () => {
     setIsLiked(!isLiked);
     try {
-      await axios({
-        method: "put",
-        url: `${API_URL}playlist/likes/${route.params?.id}`,
-        headers: {
-          Authorization: `Bearer ${user?.data.token}`,
-        },
-      });
+      await api(`playlist/likes/${route.params?.id}`, "put");
       if (recentMusic?.playlist.id === route.params?.id) {
         const updatedRecentPlaylist = {
           ...recentMusic.playlist,
@@ -87,9 +77,7 @@ const PlayListScreen: React.FC<Props> = ({ navigation, route }) => {
         };
         updateRecentMusic("playlist", updatedRecentPlaylist);
       }
-    } catch (e: any) {
-      // console.log(e.response);
-    }
+    } catch (e: any) {}
   };
 
   useEffect(() => {

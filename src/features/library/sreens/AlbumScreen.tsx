@@ -21,11 +21,10 @@ import { AntDesign } from "@expo/vector-icons";
 import { styles } from "../styles/albumScreen";
 import { Entypo } from "@expo/vector-icons";
 import AlbumSongsList from "../components/AlbumSongsList";
-import axios from "axios";
 import { AuthContext } from "../../../services/authentication/auth.service";
-import { API_URL } from "../../../constants/url";
 import { secondsToHms } from "../../../utils/utils";
 import { RecentlyPlayedContext } from "../../../services/recentlyPlayed/RecentlyPlayed.services";
+import { ApiContext } from "../../../services/api/Api";
 
 type Props = NativeStackScreenProps<libraryParamList, "AlbumScreen">;
 const isAndroid = Platform.OS === "android";
@@ -39,19 +38,16 @@ const AlbumScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeId, setLikeId] = useState("");
   const { recentMusic, updateRecentMusic } = useContext(RecentlyPlayedContext);
+  const { api } = useContext(ApiContext);
 
   const userId = user?.data.data._id;
 
   const fetchAlbum = useCallback(async () => {
     try {
-      const config = {
-        headers: { Authorization: `Bearer ${user?.data.token}` },
-      };
-      const url = `${API_URL}album?album=${route.params?.id}`;
       setIsLoading(true);
       const {
         data: { data },
-      } = await axios.get(url, config);
+      } = await api(`album?album=${route.params?.id}`, "get");
       const hasBeenLiked = data.result.likes.includes(userId);
 
       if (hasBeenLiked) {
@@ -65,7 +61,7 @@ const AlbumScreen: React.FC<Props> = ({ navigation, route }) => {
       setIsLoading(false);
       setError(err.response);
     }
-  }, [route.params?.id, user?.data.token, userId]);
+  }, [api, route.params?.id, userId]);
 
   useEffect(() => {
     const getAlbum = async () => {
@@ -78,13 +74,7 @@ const AlbumScreen: React.FC<Props> = ({ navigation, route }) => {
   const handleLike = async () => {
     setIsLiked(!isLiked);
     try {
-      await axios({
-        method: "put",
-        url: `${API_URL}album/likes/${likeId}`,
-        headers: {
-          Authorization: `Bearer ${user?.data.token}`,
-        },
-      });
+      await api(`album/likes/${likeId}`, "put");
       if (recentMusic?.album.id === route.params?.id) {
         const updatedRecentAlbum = {
           ...recentMusic.album,

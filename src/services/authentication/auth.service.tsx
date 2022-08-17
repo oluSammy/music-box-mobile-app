@@ -67,6 +67,7 @@ interface AuthProp {
   updateProfile: (profile: IUpdateProfile) => void;
   isUpdatingProfile: boolean;
   updateProfileError: any;
+  signOut: () => void;
 }
 
 interface Props {
@@ -110,7 +111,6 @@ const AuthProvider = (props: Props) => {
 
       if (loggedInUser) {
         const parsedUser = JSON.parse(loggedInUser);
-        // console.log(parsedUser);
         const secondsRemaining =
           new Date(parsedUser.data.tokenExpiresIn).getTime() / 1000;
         new Date().getTime() / 1000;
@@ -119,8 +119,6 @@ const AuthProvider = (props: Props) => {
           return null;
         }
 
-        // console.log(secondsRemaining);
-        // setLogOutTimer(secondsRemaining);
         return parsedUser;
       } else {
         return null;
@@ -201,7 +199,6 @@ const AuthProvider = (props: Props) => {
     }
   };
 
-  // `https://music-box-b.herokuapp.com/api/v1/music-box-api/users/profile/${id}`,
   const updateProfile = React.useCallback(
     async (profile: IUpdateProfile) => {
       try {
@@ -277,6 +274,7 @@ const AuthProvider = (props: Props) => {
     updateProfile,
     isUpdatingProfile,
     updateProfileError,
+    signOut,
   };
 
   return (

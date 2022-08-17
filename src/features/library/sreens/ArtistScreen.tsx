@@ -22,11 +22,10 @@ import { styles } from "../styles/albumScreen";
 import { Entypo } from "@expo/vector-icons";
 import ArtistPopularSongs from "../components/artistPopular";
 import ArtistAlbums from "../components/ArtistAlbums";
-import axios from "axios";
 import { AuthContext } from "../../../services/authentication/auth.service";
-import { API_URL } from "../../../constants/url";
 import { RecentlyPlayedContext } from "../../../services/recentlyPlayed/RecentlyPlayed.services";
 import { ArtistContext } from "../../../services/artists/artist.service";
+import { ApiContext } from "../../../services/api/Api";
 
 type Props = NativeStackScreenProps<libraryParamList, "ArtistScreen">;
 const isAndroid = Platform.OS === "android";
@@ -40,20 +39,17 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isLiked, setIsLiked] = useState(false);
   const { recentMusic, updateRecentMusic } = useContext(RecentlyPlayedContext);
   const { incrementArtistLikes } = useContext(ArtistContext);
+  const { api } = useContext(ApiContext);
   const [numOfLikes, setNumOfLikes] = useState(0);
 
   const userId = user?.data.data._id;
 
   const fetchArtist = useCallback(async () => {
     try {
-      const config = {
-        headers: { Authorization: `Bearer ${user?.data.token}` },
-      };
-      const url = `${API_URL}artist/${route.params?.id}`;
       setIsLoading(true);
       const {
         data: { data },
-      } = await axios.get(url, config);
+      } = await api(`artist/${route.params?.id}`, "get");
       setArtist(data);
       const hasBeenLiked = data.artist.likedBy.includes(userId);
       setNumOfLikes(data.artist.likedCount);
@@ -65,7 +61,7 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
       setIsLoading(false);
       setError(err.response);
     }
-  }, [route.params?.id, user?.data.token, userId]);
+  }, [api, route.params?.id, userId]);
 
   useEffect(() => {
     const getArtist = async () => {
@@ -85,15 +81,7 @@ const ArtistScreen: React.FC<Props> = ({ navigation, route }) => {
       setNumOfLikes(numOfLikes + 1);
     }
     try {
-      await axios.put(
-        `${API_URL}artist/like/${route.params?.id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${user?.data.token}`,
-          },
-        }
-      );
+      await api(`}artist/like/${route.params?.id}`, "put");
 
       if (recentMusic?.artist.id === route.params?.id) {
         const updatedRecentArtist = {

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useContext } from "react";
 import {
   View,
   useWindowDimensions,
@@ -16,9 +16,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import OverViewTab from "../screens/Overview";
 import PlaylistTab from "../screens/PlaylistTab";
 import ArtistTab from "../screens/ArtistTab";
-import { API_URL } from "../../../constants/url";
-// import { AuthContext } from "../../../services/authentication/auth.service";
-import axios from "axios";
+import { ApiContext } from "../../../services/api/Api";
 
 type Props = NativeStackScreenProps<genreParamList, "GenreTabs">;
 
@@ -31,14 +29,14 @@ const GenreTabView: React.FC<Props> = ({ navigation, route: routeNav }) => {
   const [isFetchingPlaylist, setIsFetchingPlaylist] = useState(false);
   const [playlist, setPlaylist] = useState(null);
   const [playlistError, setPlaylistError] = useState(null);
-  // const { user } = useContext(AuthContext);
+  const { api } = useContext(ApiContext);
 
   const fetchGenre = useCallback(async () => {
     setIsFetchingArtist(true);
     try {
       const {
         data: { data },
-      } = await axios.get(`${API_URL}genres/artist/${routeNav.params?.id}`);
+      } = await api(`genres/artist/${routeNav.params?.id}`, "get");
 
       setIsFetchingArtist(false);
       setArtist(data);
@@ -46,23 +44,21 @@ const GenreTabView: React.FC<Props> = ({ navigation, route: routeNav }) => {
       setIsFetchingArtist(false);
       setArtistErr(err.response);
     }
-  }, [routeNav.params?.id]);
+  }, [api, routeNav.params?.id]);
 
   const fetchPlaylist = useCallback(async () => {
     setIsFetchingPlaylist(true);
     try {
       const {
         data: { data },
-      } = await axios.get(
-        `${API_URL}genres/playlist/${routeNav.params?.genreId}`
-      );
+      } = await api(`genres/playlist/${routeNav.params?.genreId}`, "get");
       setPlaylist(data);
       setIsFetchingPlaylist(false);
     } catch (err: any) {
       setPlaylistError(err.response);
       setIsFetchingPlaylist(false);
     }
-  }, [routeNav.params?.genreId]);
+  }, [api, routeNav.params?.genreId]);
 
   useEffect(() => {
     const getData = async () => {

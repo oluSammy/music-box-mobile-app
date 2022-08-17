@@ -17,23 +17,21 @@ import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { searchParamsList } from "../../../navigation/@types/navigation";
 import { styles as recentStyles } from "../../library/styles/playlist.styles";
-import axios from "axios";
-import { AuthContext } from "../../../services/authentication/auth.service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ApiContext } from "../../../services/api/Api";
 
 const SafeSearchBar = SearchBar as unknown as React.FC<SearchBarBaseProps>;
 type Props = NativeStackScreenProps<searchParamsList, "SearchScreen">;
 
 const Search: React.FC<Props> = ({ navigation }) => {
   const [text, setText] = useState("");
-  const { user } = useContext(AuthContext);
-
   const [album, setAlbum] = useState([]);
   const [artist, setArtist] = useState([]);
   const [playlist, setPlaylist] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [prevSearches, setPrevSearches] = useState<string[] | []>([]);
+  const { api } = useContext(ApiContext);
 
   useEffect(() => {
     const fetchPrevSearch = async () => {
@@ -60,19 +58,10 @@ const Search: React.FC<Props> = ({ navigation }) => {
     async (searchQuery: string) => {
       console.log("got here");
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user?.data.token}`,
-          },
-        };
-
         setIsSearching(true);
         const {
           data: { data },
-        } = await axios.get(
-          `https://music-box-b.herokuapp.com/api/v1/music-box-api/search/?name=${searchQuery}`,
-          config
-        );
+        } = await api(`search/?name=${searchQuery}`, "get");
 
         const searchAlbum = data[0].album.map(
           (items: Record<string, any>) => items
@@ -113,7 +102,7 @@ const Search: React.FC<Props> = ({ navigation }) => {
         setIsSearching(false);
       }
     },
-    [prevSearches, user?.data.token]
+    [api, prevSearches]
   );
 
   return (
